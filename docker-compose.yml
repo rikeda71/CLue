@@ -1,0 +1,42 @@
+version: "3"
+volumes:
+  gradle:
+services:
+  db:
+    build: docker/db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    container_name: paper_db
+    volumes:
+      ## 永続化 ##
+       - "./docker/db/data:/var/lib/mysql"
+       - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
+       - "./docker/db/sql:/docker-entrypoint-initdb.d"
+       - "./log/mysql:/var/log/mysql"
+    env_file: .env
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_USER: ${DB_ROOT_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: ${TZ}
+    ports:
+      - "33036:3306"
+
+  api:
+    image: openjdk:11-jdk-slim-sid
+    container_name: paper_search_api
+    expose:
+      - "8088"
+    ports:
+      - "8088:8080"
+    volumes:
+      - ./:/app
+      - gradle/:/root/.gradle
+    env_file: .env
+    environment:
+      DB_USER: ${DB_ROOT_USER}
+      DB_PASSWORD: ${DB_ROOT_PASSWORD}
+    working_dir: /app
+    command: bash -c "./gradlew build --continuous & ./gradlew bootRUN"
+    depends_on:
+      - db
