@@ -16,13 +16,13 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @RequestMapping(value="/authors")
+    @RequestMapping(value="/authors", method=RequestMethod.GET)
     public List<Author> authorsAll() {
         List<Author> authors = authorService.findAll();
         return authors;
     }
 
-    @RequestMapping(value="author/{id}", method= RequestMethod.GET)
+    @RequestMapping(value="authors/{id}", method=RequestMethod.GET)
     public String authorById(@PathVariable("id") int id) {
         String name = authorService.findById(id);
         return name;

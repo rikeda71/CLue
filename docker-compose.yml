@@ -19,6 +19,8 @@ services:
       MYSQL_ROOT_USER: ${DB_ROOT_USER}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       TZ: ${TZ}
+    expose:
+      - "33036"
     ports:
       - "33036:3306"
 

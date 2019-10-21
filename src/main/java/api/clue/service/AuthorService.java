@@ -15,7 +15,6 @@ public class AuthorService {
 
     public List<Author> findAll() {
         List<Author> authors = authorMapper.findAll();
-        System.out.println(authors);
         return authors;
     }
 
