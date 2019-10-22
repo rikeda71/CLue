@@ -20,14 +20,16 @@ public class PaperController {
     }
 
     @RequestMapping(value="/papers", method=RequestMethod.GET)
-    public List<Paper> findPapers(@RequestParam(name = "task", required = false) String task,
+    public List<Paper> findPapers(@RequestParam(name = "year", required = false) Integer year,
+                                  @RequestParam(name = "task", required = false) String task,
                                   @RequestParam(name = "title", required = false) String title,
                                   @RequestParam(name = "introduction", required = false) String introduction,
                                   @RequestParam(name = "lang", required = false) String lang,
-                                  @RequestParam(name = "conference", required = false) String conference
-                                  ) {
-        List<Paper> papers = paperService.findPapers(task, title, introduction,
-                                                     lang, conference);
+                                  @RequestParam(name = "conference", required = false) String conference,
+                                  @RequestParam(name = "author", required = false) String author
+    ) {
+        List<Paper> papers = paperService.findPapers(year, task, title, introduction,
+                                                     lang, conference, author);
         return papers;
     }
 

@@ -13,14 +13,16 @@ public interface PaperMapper {
     Paper findById(int id);
 
     @SelectProvider(type= PaperSQLProvider.class, method="select")
-    List<Paper> findPapers(@Param("task") String task,
+    List<Paper> findPapers(@Param("year") Integer year,
+                           @Param("task") String task,
                            @Param("title") String title,
                            @Param("introduction") String introduction,
                            @Param("lang") String lang,
-                           @Param("conference") String conference);
+                           @Param("conference") String conference,
+                           @Param("author") String author);
 
     @InsertProvider(type=PaperSQLProvider.class, method="insert")
-    void insertPaper(@Param("year") int year,
+    void insertPaper(@Param("year") Integer year,
                      @Param("label") String label,
                      @Param("task") String  task,
                      @Param("title") String title,
@@ -30,7 +32,7 @@ public interface PaperMapper {
 
     @UpdateProvider(type=PaperSQLProvider.class, method="update")
     void updatePaper(@Param("id") int id,
-                     @Param("year") int year,
+                     @Param("year") Integer year,
                      @Param("label") String label,
                      @Param("task") String task,
                      @Param("title") String title,

@@ -7,16 +7,21 @@ public class PaperSQLProvider extends DynamicSQLProvider{
 
     // 論文検索用の動的SQL
     public String select(
+            @Param("year") Integer year,
             @Param("task") String task,
             @Param("title") String title,
             @Param("introduction") String introduction,
             @Param("lang") String lang,
-            @Param("conference") String conference
+            @Param("conference") String conference,
+            @Param("author") String author
     ) {
         return new SQL() {
             {
                 SELECT("*");
                 FROM("papers");
+                if (year != null) {
+                    WHERE("year = #{year}");
+                }
                 if (task != null) {
                     WHERE("task = #{task}");
                 }
@@ -32,13 +37,19 @@ public class PaperSQLProvider extends DynamicSQLProvider{
                 if (conference != null) {
                     WHERE("conference = #{conference}");
                 }
+                if (author != null) {
+                    String firstCondition = "(SELECT paper_id FROM paper_written_author WHERE author_id IN";
+                    String secondCondition = "(SELECT id FROM authors WHERE name = #{author}))";
+                    WHERE("id IN" + firstCondition + secondCondition);
+                    ORDER_BY("year DESC");
+                }
             }
         }.toString();
     }
 
     // 論文情報追加用の動的SQL
     public String insert(
-            @Param("year") int year,
+            @Param("year") Integer year,
             @Param("label") String label,
             @Param("task") String task,
             @Param("title") String title,
@@ -50,7 +61,7 @@ public class PaperSQLProvider extends DynamicSQLProvider{
             {
                 INSERT_INTO("papers");
                 VALUES("id", "0");
-                if (year > 0) {
+                if (year != null) {
                     VALUES("year", "#{year}");
                 }
                 if (label != null && task != null) {
@@ -77,7 +88,7 @@ public class PaperSQLProvider extends DynamicSQLProvider{
     // 論文情報更新用の動的SQL
     public String update(
             @Param("id") int id,
-            @Param("year") int year,
+            @Param("year") Integer year,
             @Param("label") String label,
             @Param("task") String task,
             @Param("title") String title,
@@ -88,7 +99,7 @@ public class PaperSQLProvider extends DynamicSQLProvider{
         return new SQL() {
             {
                 UPDATE("papers");
-                if (year > 0) {
+                if (year != null) {
                     SET("year = #{year}");
                 }
                 if (label != null && task != null) {

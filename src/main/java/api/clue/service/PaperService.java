@@ -18,10 +18,10 @@ public class PaperService {
         return paper;
     }
 
-    public List<Paper> findPapers(String task, String title, String introduction,
-                                   String lang, String conference) {
-        List<Paper> papers = paperMapper.findPapers(task, title, introduction,
-                                                    lang, conference);
+    public List<Paper> findPapers(Integer year, String task, String title, String introduction,
+                                  String lang, String conference, String author) {
+        List<Paper> papers = paperMapper.findPapers(year, task, title, introduction,
+                                                    lang, conference, author);
         return papers;
     }
 
