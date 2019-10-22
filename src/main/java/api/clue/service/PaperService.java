@@ -25,14 +25,14 @@ public class PaperService {
         return papers;
     }
 
-    public void addPaper(int year, String label, String title,
+    public void insertPaper(Integer year, String label, String task, String title,
                          String url, String introduction, String conference) {
-        paperMapper.addPaper(year, label, title, url, introduction, conference);
+        paperMapper.insertPaper(year, label, task, title, url, introduction, conference);
     }
 
-    public void updatePaper(int id, int year, String label, String title,
+    public void updatePaper(int id, Integer year, String label, String task, String title,
                             String url, String introduction, String conference) {
-        paperMapper.updatePaper(id, year, label, title, url, introduction, conference);
+        paperMapper.updatePaper(id, year, label, task, title, url, introduction, conference);
     }
 
     public void deletePaper(int id) {

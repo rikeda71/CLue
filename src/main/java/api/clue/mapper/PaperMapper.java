@@ -20,17 +20,19 @@ public interface PaperMapper {
                            @Param("conference") String conference);
 
     @InsertProvider(type=insertByAnySQLProvider.class, method="insert")
-    void addPaper(@Param("year") int year,
-                  @Param("label") String label,
-                  @Param("title") String title,
-                  @Param("url") String url,
-                  @Param("introduction") String introduction,
-                  @Param("conference") String conference);
+    void insertPaper(@Param("year") int year,
+                     @Param("label") String label,
+                     @Param("task") String  task,
+                     @Param("title") String title,
+                     @Param("url") String url,
+                     @Param("introduction") String introduction,
+                     @Param("conference") String conference);
 
     @UpdateProvider(type=updateByAnySQLProvider.class, method="update")
     void updatePaper(@Param("id") int id,
                      @Param("year") int year,
                      @Param("label") String label,
+                     @Param("task") String task,
                      @Param("title") String title,
                      @Param("url") String url,
                      @Param("introduction") String introduction,
@@ -98,6 +100,9 @@ public interface PaperMapper {
                     if (title != null) {
                         VALUES("title", "#{title}");
                     }
+                    if (url != null) {
+                        VALUES("url", "#{url}");
+                    }
                     if (introduction != null) {
                         VALUES("introduction", "#{introduction}");
                     }
@@ -114,6 +119,7 @@ public interface PaperMapper {
     class updateByAnySQLProvider {
         public String update(
                 @Param("id") int id,
+                @Param("year") int year,
                 @Param("label") String label,
                 @Param("task") String task,
                 @Param("title") String title,
@@ -124,6 +130,9 @@ public interface PaperMapper {
             return new SQL() {
                 {
                    UPDATE("papers");
+                   if (year > 0) {
+                       SET("year = #{year}");
+                   }
                    if (label != null && task != null) {
                        SET("label = #{label}");
                        SET("task = #{task}");

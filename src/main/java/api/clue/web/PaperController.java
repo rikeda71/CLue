@@ -32,28 +32,30 @@ public class PaperController {
     }
 
     @RequestMapping(value="papers", method=RequestMethod.POST)
-    public void addPaper (
-            @RequestParam(value = "year", required = false) int year,
+    public void insertPaper (
+            @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "label", required = false) String label,
+            @RequestParam(value = "task", required = false) String task,
             @RequestParam(value = "title") String title,
             @RequestParam(value = "url") String url,
             @RequestParam(value = "introduction", required = false) String introduction,
             @RequestParam(value = "conference", required = false) String conference
     ) {
-        paperService.addPaper(year, label, title, url, introduction, conference);
+        paperService.insertPaper(year, label, task, title, url, introduction, conference);
     }
 
     @RequestMapping(value="/papers/{id}", method=RequestMethod.PATCH)
     public void updatePaper(
             @PathVariable("id") int id,
-            @RequestParam(value = "year", required = false) int year,
+            @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "label", required = false) String label,
+            @RequestParam(value = "task", required = false) String task,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "url", required = false) String url,
             @RequestParam(value = "introduction", required = false) String introduction,
             @RequestParam(value = "conference", required = false) String conference
     ) {
-        paperService.updatePaper(id, year, label, title, url, introduction, conference);
+        paperService.updatePaper(id, year, label, task, title, url, introduction, conference);
     }
 
 

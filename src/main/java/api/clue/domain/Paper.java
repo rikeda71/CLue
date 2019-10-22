@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Data
 public class Paper {
 
+    @JsonProperty
     private int id;
 
     @JsonProperty
@@ -29,6 +30,7 @@ public class Paper {
     @JsonProperty
     private String introduction;
 
+    @JsonProperty
     private String lang;
 
     @JsonProperty
