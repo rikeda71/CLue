@@ -1,5 +1,6 @@
 package api.clue.sqlprovider;
 
+import api.clue.domain.Paper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
 
@@ -41,43 +42,38 @@ public class PaperSQLProvider extends DynamicSQLProvider{
                     String firstCondition = "(SELECT paper_id FROM paper_written_author WHERE author_id IN";
                     String secondCondition = "(SELECT id FROM authors WHERE name = #{author}))";
                     WHERE("id IN" + firstCondition + secondCondition);
-                    ORDER_BY("year DESC");
                 }
+                ORDER_BY("year DESC");
             }
         }.toString();
     }
 
     // 論文情報追加用の動的SQL
-    public String insert(
-            @Param("year") Integer year,
-            @Param("label") String label,
-            @Param("task") String task,
-            @Param("title") String title,
-            @Param("url") String url,
-            @Param("introduction") String introduction,
-            @Param("conference") String conference
-    ) {
+    public String insert(Paper paper) {
         return new SQL() {
             {
                 INSERT_INTO("papers");
                 VALUES("id", "0");
-                if (year != null) {
+                if (paper.getYear() > 0) {
                     VALUES("year", "#{year}");
                 }
-                if (label != null && task != null) {
+                if (paper.getLabel() != null && paper.getTask() != null) {
                     VALUES("label", "#{label}");
                     VALUES("task", "#{task}");
                 }
-                if (title != null) {
+                if (paper.getTitle() != null) {
                     VALUES("title", "#{title}");
                 }
-                if (url != null && isURL(url)) {
+                if (paper.getUrl() != null && isURL(paper.getUrl())) {
                     VALUES("url", "#{url}");
                 }
-                if (introduction != null) {
+                if (paper.getIntroduction() != null) {
                     VALUES("introduction", "#{introduction}");
                 }
-                if (conference != null) {
+                if (paper.getLang() != null) {
+                    VALUES("lang", "#{lang}");
+                }
+                if (paper.getConference() != null) {
                     VALUES("conference", "#{conference}");
                 }
 
@@ -94,6 +90,7 @@ public class PaperSQLProvider extends DynamicSQLProvider{
             @Param("title") String title,
             @Param("url") String url,
             @Param("introduction") String introduction,
+            @Param("lang") String lang,
             @Param("conference") String conference
     ) {
         return new SQL() {
@@ -114,6 +111,9 @@ public class PaperSQLProvider extends DynamicSQLProvider{
                 }
                 if (introduction != null) {
                     SET("introduction = #{introduction}");
+                }
+                if (lang != null) {
+                    SET("lang = #{lang}");
                 }
                 if (conference != null) {
                     SET("conference = #{conference}");

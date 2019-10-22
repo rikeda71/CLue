@@ -41,9 +41,13 @@ public class PaperController {
             @RequestParam(value = "title") String title,
             @RequestParam(value = "url") String url,
             @RequestParam(value = "introduction", required = false) String introduction,
-            @RequestParam(value = "conference", required = false) String conference
+            @RequestParam(value = "lang", required = false) String lang,
+            @RequestParam(value = "conference", required = false) String conference,
+            @RequestParam(value = "authors", required = false) List<String> authors
     ) {
-        paperService.insertPaper(year, label, task, title, url, introduction, conference);
+        paperService.insertPaper(
+                year, label, task, title, url, introduction, lang, conference, authors
+        );
     }
 
     @RequestMapping(value="/papers/{id}", method=RequestMethod.PATCH)
@@ -55,9 +59,13 @@ public class PaperController {
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "url", required = false) String url,
             @RequestParam(value = "introduction", required = false) String introduction,
-            @RequestParam(value = "conference", required = false) String conference
+            @RequestParam(value = "lang", required = false) String lang,
+            @RequestParam(value = "conference", required = false) String conference,
+            @RequestParam(value = "authors", required = false) List<String> authors
     ) {
-        paperService.updatePaper(id, year, label, task, title, url, introduction, conference);
+        paperService.updatePaper(
+                id, year, label, task, title, url, introduction, lang, conference, authors
+        );
     }
 
 

@@ -13,7 +13,6 @@ public class Paper {
 
     @JsonProperty
     private int year;
-
     private String label;
 
     @JsonProperty
