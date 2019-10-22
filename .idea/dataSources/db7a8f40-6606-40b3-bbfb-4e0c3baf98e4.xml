@@ -1170,12 +1170,16 @@ paper_id</ColNames>
       <RefSchemaName>research_paper_db</RefSchemaName>
       <RefTableName>authors</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <foreign-key id="292" parent="280" name="paper_written_author_ibfk_2">
       <ColNames>paper_id</ColNames>
       <RefSchemaName>research_paper_db</RefSchemaName>
       <RefTableName>papers</RefTableName>
       <RefColNames>id</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="293" parent="281" name="id">
       <Position>1</Position>
