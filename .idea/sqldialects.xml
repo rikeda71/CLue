@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/docker/db/sql/1_create_db.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/docker/db/sql/2_create_papers_table.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/docker/db/sql/3_create_authors_table.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/docker/db/sql/4_create_paper_written_author_table.sql" dialect="MySQL" />
+  </component>
+</project>

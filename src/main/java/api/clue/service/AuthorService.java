@@ -13,14 +13,24 @@ public class AuthorService {
     @Autowired
     private AuthorMapper authorMapper;
 
-    public List<Author> findAll() {
-        List<Author> authors = authorMapper.findAll();
-        System.out.println(authors);
+    public List<Author> findAuthor(String name) {
+        List<Author> authors = authorMapper.findAuthor(name);
         return authors;
     }
 
     public String findById(Integer id) {
         String name = authorMapper.findById(id);
         return name;
+    }
+
+
+    public void insertAuthor(String name) {
+        Author author = new Author();
+        author.setName(name);
+        authorMapper.insertAuthor(author);
+    }
+
+    public void deleteById(int id) {
+        authorMapper.deleteAuthor(id);
     }
 }
