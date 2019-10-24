@@ -56,3 +56,5 @@ gradle/*/*
 out/
 !.gitkeep
 .env
+.classpath
+bin/
