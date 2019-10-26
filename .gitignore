@@ -6,3 +6,4 @@ docker/db/data/*
 .project
 .settings
 env/
+mlruns/
