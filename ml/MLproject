@@ -1,0 +1,11 @@
+name: paper-task-classifier
+
+docker_env:
+    image: clue-mlimage
+
+entry_points:
+    main:
+        parameters:
+            model: str
+            vector: {type: str, default: 'BoW'}
+        command: "python train.py {model} -v {vector}"
