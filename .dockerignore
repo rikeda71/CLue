@@ -1,0 +1,12 @@
+.git/
+.vscode/
+.settings/
+env/
+log/
+README.md
+.env.sample
+backend/bin/
+backend/out/
+backend/build/
+backend/gradle/wrapper/dists
+docker/db/data/
