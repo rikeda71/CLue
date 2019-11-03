@@ -8,3 +8,10 @@ spring:
       test-on-borrow: true
       test-while-idle: true
       validation-query: select sysdate()
+  security:
+    user:
+      name: ${AUTH_USER}
+      password: ${AUTH_PASSWORD}
+      roles:
+      - USER
+      - ADMIN
