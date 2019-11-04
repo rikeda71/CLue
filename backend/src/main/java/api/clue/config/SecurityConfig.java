@@ -29,13 +29,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication() // in Memory
-                .withUser(authInfo.getName()).password(passwordEncoder().encode(authInfo.getPassword())).roles("USER");
+                .withUser(authInfo.getName()) // username
+                .password(passwordEncoder().encode(authInfo.getPassword())) // password
+                .roles("USER"); // role
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests() // csrf
-                .anyRequest().authenticated().and().httpBasic().realmName("My Basic Authentication");
+                .anyRequest().authenticated() // anyrequest
+                .and().httpBasic().realmName("My Basic Authentication"); // basic authentication
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
