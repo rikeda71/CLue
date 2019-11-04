@@ -17,24 +17,24 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @RequestMapping(value="/authors", method = RequestMethod.GET)
+    @RequestMapping(value = "/authors", method = RequestMethod.GET)
     public List<Author> findAuthors(@RequestParam(value = "name", required = false) String name) {
         List<Author> authors = authorService.findAuthor(name);
         return authors;
     }
 
-    @RequestMapping(value="/authors/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/authors/{id}", method = RequestMethod.GET)
     public String authorById(@PathVariable("id") int id) {
         String name = authorService.findById(id);
         return name;
     }
 
-    @RequestMapping(value="/authors", method = RequestMethod.POST)
+    @RequestMapping(value = "/authors", method = RequestMethod.POST)
     public void insertAuthor(@RequestParam("name") String name) {
         authorService.insertAuthor(name);
     }
 
-    @RequestMapping(value="/authors/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/authors/{id}", method = RequestMethod.DELETE)
     public void deleteById(@PathVariable("id") int id) {
         authorService.deleteById(id);
     }
