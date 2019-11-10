@@ -1,3 +1,4 @@
+USE research_paper_db;
 CREATE TABLE IF NOT EXISTS `papers`(
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `year` int(4) NOT NULL,
