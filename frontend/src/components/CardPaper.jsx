@@ -5,13 +5,11 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
-import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import { blue, pink, grey } from '@material-ui/core/colors/';
@@ -127,7 +125,7 @@ export default function CardPaper(props) {
           onClose={handleClose}
         >
           <Description />
-          {props.language == 'japanese' ? 'Introduction' : 'Abstruct'}
+          {props.language === 'japanese' ? 'Introduction' : 'Abstruct'}
         </Button>
         <Dialog
           onClose={handleClose}
