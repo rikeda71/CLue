@@ -32,7 +32,7 @@ public class PaperRepositoryImpl implements PaperRepository {
 
   @Override
   public Paper findById(Long paperId) {
-    return this.findById(paperId);
+    return this.paperMapper.findById(paperId);
   }
 
   @Override
