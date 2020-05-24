@@ -1,8 +1,8 @@
-package api.clue.sqlprovider;
+package api.clue.repository.mapper.sqlprovider;
 
 import java.util.regex.Pattern;
 
-public abstract class DynamicSQLProvider {
+public abstract class DynamicSqlProvider {
     private Pattern urlPattern =
             Pattern.compile("^https?://[a-z\\\\.:/\\\\+\\\\-\\\\#\\\\?\\\\=\\\\&\\\\;\\\\%\\\\~]+$");
 

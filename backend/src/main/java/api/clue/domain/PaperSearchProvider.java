@@ -1,28 +1,19 @@
 package api.clue.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Paper {
+public class PaperSearchProvider {
 
-  private Long paperId;
-
-  private Long year;
-
-  private String label;
+  private Integer year;
 
   private String task;
 
-  private String session;
-
   private String title;
-
-  private String url;
 
   private String introduction;
 
@@ -30,5 +21,4 @@ public class Paper {
 
   private String conference;
 
-  private List<Author> authors;
 }

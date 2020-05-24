@@ -1,16 +1,19 @@
 package api.clue.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-@Component
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Author {
-    @JsonProperty
-    private int id;
 
-    @JsonProperty
-    private String name;
+  private int authorId;
+
+  private String name;
+
+  private List<Paper> papers;
 
 }
