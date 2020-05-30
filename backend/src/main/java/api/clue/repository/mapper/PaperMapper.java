@@ -18,7 +18,7 @@ import org.apache.ibatis.jdbc.SQL;
 @Mapper
 public interface PaperMapper {
 
-  @Select("SELECT * FROM papers WHERE paperId = #{paperId}")
+  @Select("SELECT * FROM papers WHERE paper_id = #{paperId}")
   @Results(id = "Paper", value = {
       @Result(property = "paperId", column = "paper_id"),
   })
@@ -39,32 +39,34 @@ public interface PaperMapper {
   void delete(Long paperId);
 
   class PaperSqlProvider extends DynamicSqlProvider {
-    public String find(Paper paper) {
+    public String find(PaperSearchProvider provider) {
       return new SQL() {
         {
           SELECT("paper_id, year, label, task, session, title, "
               + "url, introduction, lang, conference");
           FROM("papers");
-          LEFT_OUTER_JOIN("author using(author_id)");
-          if (paper.getYear() != null) {
+          if (provider.getYear() != null) {
             WHERE("year = #{year}");
           }
-          if (paper.getTask() != null) {
+          if (provider.getLabel() != null) {
+            WHERE("label = #{label}");
+          }
+          if (provider.getTask() != null) {
             WHERE("task = #{task}");
           }
-          if (paper.getTitle() != null) {
+          if (provider.getTitle() != null) {
             WHERE("title LIKE CONCAT('%', #{title}, '%')");
           }
-          if (paper.getIntroduction() != null) {
+          if (provider.getIntroduction() != null) {
             WHERE("introduction LIKE CONCAT('%', #{introduction}, '%')");
           }
-          if (paper.getLang() != null) {
+          if (provider.getLang() != null) {
             WHERE("lang = #{lang}");
           }
-          if (paper.getConference() != null) {
+          if (provider.getConference() != null) {
             WHERE("conference = #{conference}");
           }
-          ORDER_BY("year DESC");
+          ORDER_BY("year DESC, paper_id ASC");
         }
       }.toString();
     }
@@ -127,7 +129,7 @@ public interface PaperMapper {
           if (paper.getConference() != null) {
             SET("conference = #{conference}");
           }
-          WHERE("id = #{id}");
+          WHERE("paper_id = #{paperId}");
         }
       }.toString();
     }

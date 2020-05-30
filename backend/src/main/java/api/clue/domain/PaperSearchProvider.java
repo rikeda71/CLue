@@ -11,6 +11,8 @@ public class PaperSearchProvider {
 
   private Integer year;
 
+  private String label;
+
   private String task;
 
   private String title;

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Author {
 
-  private int authorId;
+  private Long authorId;
 
   private String name;
 
