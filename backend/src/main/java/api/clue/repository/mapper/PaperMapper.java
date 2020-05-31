@@ -6,6 +6,7 @@ import api.clue.repository.mapper.sqlprovider.DynamicSqlProvider;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
@@ -21,6 +22,7 @@ public interface PaperMapper {
   @Select("SELECT * FROM papers WHERE paper_id = #{paperId}")
   @Results(id = "Paper", value = {
       @Result(property = "paperId", column = "paper_id"),
+      @Result(property = "authors", column = "paper_id", many = @Many(select = "api.clue.repository.mapper.PwaMapper.findAuthorsByPaperId"))
   })
   Paper findById(Long paperId);
 

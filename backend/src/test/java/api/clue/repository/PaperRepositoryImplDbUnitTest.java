@@ -2,6 +2,7 @@ package api.clue.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import api.clue.ClueApplication;
@@ -33,7 +34,8 @@ public class PaperRepositoryImplDbUnitTest {
     public void testFindById() {
       Long paperId = 1L;
       Paper paper = this.paperRepository.findById(paperId);
-      assertTrue(paper != null);
+      assertNotNull(paper);
+      assertFalse(paper.getAuthors().isEmpty());
     }
 
     @Test
@@ -42,15 +44,7 @@ public class PaperRepositoryImplDbUnitTest {
       Author author = new Author();
       author.setAuthorId(authorId);
       List<Paper> papers = this.paperRepository.findByAuthorId(author);
-      assertFalse(papers.isEmpty());
-    }
-
-    @Test
-    public void testFindByAuthorIdWithPwaRepository() {
-      Long authorId = 1L;
-      Author author = new Author();
-      author.setAuthorId(authorId);
-      List<Paper> papers = this.pwaRepository.findPapersByAuthorId(author);
+      assertNotNull(papers);
       assertFalse(papers.isEmpty());
     }
 
@@ -60,6 +54,7 @@ public class PaperRepositoryImplDbUnitTest {
       provider.setYear(2019);
       provider.setLabel("SA");
       List<Paper> papers = this.paperRepository.find(provider);
+      assertNotNull(papers);
       assertFalse(papers.isEmpty());
     }
   }

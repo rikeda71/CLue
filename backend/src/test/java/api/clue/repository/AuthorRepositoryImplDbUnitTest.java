@@ -25,9 +25,6 @@ public class AuthorRepositoryImplDbUnitTest {
     @Autowired
     private AuthorRepository authorRepository;
 
-    @Autowired
-    private PwaRepository pwaRepository;
-
     @Test
     public void testFindById() {
       Long authorId = 1L;
@@ -49,16 +46,6 @@ public class AuthorRepositoryImplDbUnitTest {
       Paper paper = new Paper();
       paper.setPaperId(paperId);
       List<Author> authors = this.authorRepository.findByPaperId(paper);
-      assertNotNull(authors);
-      assertFalse(authors.isEmpty());
-    }
-
-    @Test
-    public void testFindByPaperIdWithPwaRepository() {
-      Long paperId = 1L;
-      Paper paper = new Paper();
-      paper.setPaperId(paperId);
-      List<Author> authors = this.pwaRepository.findAuthorsByPaperId(paper);
       assertNotNull(authors);
       assertFalse(authors.isEmpty());
     }

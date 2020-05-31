@@ -4,7 +4,6 @@ import api.clue.domain.Author;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
 public interface PaperRepository {
 
