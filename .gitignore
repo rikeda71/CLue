@@ -5,3 +5,4 @@ docker/db/data/*
 .vscode/
 .project
 .settings
+.gradle
