@@ -1,70 +1,62 @@
-package api.clue.web;
+package api.clue.controller;
 
 import api.clue.domain.Paper;
-import api.clue.service.PaperServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import api.clue.domain.PaperSearchProvider;
+import api.clue.service.PaperService;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/papers")
 public class PaperController {
 
-    @Autowired
-    private PaperServiceImpl paperServiceImpl;
+  private final PaperService paperService;
 
-    @RequestMapping(value = "/papers/{id}", method = RequestMethod.GET)
-    public Paper paperById(@PathVariable("id") int id) {
-        Paper paper = paperServiceImpl.findById(id);
-        return paper;
-    }
+  public PaperController(PaperService paperService) {
+    this.paperService = paperService;
+  }
 
-    @RequestMapping(value = "/papers", method = RequestMethod.GET)
-    public List<Paper> findPapers(@RequestParam(name = "year", required = false) Integer year,
-            @RequestParam(name = "task", required = false) String task,
-            @RequestParam(name = "title", required = false) String title,
-            @RequestParam(name = "introduction", required = false) String introduction,
-            @RequestParam(name = "lang", required = false) String lang,
-            @RequestParam(name = "conference", required = false) String conference,
-            @RequestParam(name = "author", required = false) String author) {
-        List<Paper> papers = paperServiceImpl
-            .findPapers(year, task, title, introduction, lang, conference, author);
-        return papers;
-    }
+  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Paper> find(PaperSearchProvider provider) {
+    return this.paperService.find(provider);
+  }
 
-    @RequestMapping(value = "papers", method = RequestMethod.POST)
-    public void insertPaper(@RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "label", required = false) String label,
-            @RequestParam(value = "task", required = false) String task, @RequestParam(value = "title") String title,
-            @RequestParam(value = "url") String url,
-            @RequestParam(value = "introduction", required = false) String introduction,
-            @RequestParam(value = "lang", required = false) String lang,
-            @RequestParam(value = "conference", required = false) String conference,
-            @RequestParam(value = "authors", required = false) List<String> authors) {
-        paperServiceImpl
-            .insertPaper(year, label, task, title, url, introduction, lang, conference, authors);
-    }
+  @GetMapping(value = "/{paperId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Paper findById(@PathVariable("paperId") Long paperId) {
+    return this.paperService.findById(paperId);
+  }
 
-    @RequestMapping(value = "/papers/{id}", method = RequestMethod.PATCH)
-    public void updatePaper(@PathVariable("id") int id, @RequestParam(value = "year", required = false) Integer year,
-            @RequestParam(value = "label", required = false) String label,
-            @RequestParam(value = "task", required = false) String task,
-            @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "url", required = false) String url,
-            @RequestParam(value = "introduction", required = false) String introduction,
-            @RequestParam(value = "lang", required = false) String lang,
-            @RequestParam(value = "conference", required = false) String conference,
-            @RequestParam(value = "authors", required = false) List<String> authors) {
-        paperServiceImpl
-            .updatePaper(id, year, label, task, title, url, introduction, lang, conference, authors);
-    }
+  @GetMapping(value = "/author/{authorId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Paper> findByAuthorId(@PathVariable("authorId") Long authorId) {
+    return this.paperService.findByAuthorId(authorId);
+  }
 
-    @RequestMapping(value = "papers/{id}", method = RequestMethod.DELETE)
-    public void deletePaper(@PathVariable("id") int id) {
-        paperServiceImpl.deletePaper(id);
+  @PostMapping(value = "")
+  public void add(@RequestBody Paper paper) {
+    this.paperService.add(paper);
+  }
+
+  @PatchMapping(value = "/{paperId}")
+  public void set(@PathVariable Long paperId, @RequestBody Paper paper) {
+    if (paperId != paper.getPaperId()) {
+      paper.setPaperId(paperId);
     }
+    this.paperService.set(paper);
+  }
+
+  @DeleteMapping("/{paperId}")
+  public void remove(@PathVariable Long paperId) {
+    this.paperService.remove(paperId);
+  }
+
 }
