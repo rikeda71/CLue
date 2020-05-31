@@ -1,19 +1,19 @@
-import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Chip from '@material-ui/core/Chip';
-import Dialog from '@material-ui/core/Dialog';
-import Typography from '@material-ui/core/Typography';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import { blue, pink, grey } from '@material-ui/core/colors/';
-import { Description, SaveAlt } from '@material-ui/icons';
+import React from "react";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Chip from "@material-ui/core/Chip";
+import Dialog from "@material-ui/core/Dialog";
+import Typography from "@material-ui/core/Typography";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import { blue, pink, grey } from "@material-ui/core/colors/";
+import { Description, SaveAlt } from "@material-ui/icons";
 
 const dialogStyles = theme => ({
   root: {
@@ -21,7 +21,7 @@ const dialogStyles = theme => ({
     padding: theme.spacing(2),
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],
@@ -41,11 +41,7 @@ const DialogTitle = withStyles(dialogStyles)(props => {
     <MuiDialogTitle disableTypography className={classes.root}>
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
-        <IconButton
-          aria-label="close"
-          className={classes.closeButton}
-          onClick={onClose}
-        >
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
           <CloseIcon />
         </IconButton>
       ) : null}
@@ -67,9 +63,7 @@ const getChip = (task, predicted) => {
   if (predicted != null && !Boolean(predicted)) {
     color = blue[800];
   }
-  return (
-    <Chip label={task} color="primary" style={{ backgroundColor: color }} />
-  );
+  return <Chip label={task} color="primary" style={{ backgroundColor: color }} />;
 };
 
 const getConfName = (conf, year) => {
@@ -78,7 +72,7 @@ const getConfName = (conf, year) => {
   } else if (year == null) {
     return conf;
   }
-  return conf + ' ' + String(year);
+  return conf + " " + String(year);
 };
 
 const PaperContent = props => {
@@ -111,29 +105,14 @@ export default function CardPaper(props) {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <PaperContent
-          title={props.title}
-          conf={props.conference}
-          year={props.year}
-        />
+        <PaperContent title={props.title} conf={props.conference} year={props.year} />
       </CardActionArea>
       <CardActions>
-        <Button
-          size="small"
-          color="default"
-          onClick={handleClickOpen}
-          onClose={handleClose}
-        >
+        <Button size="small" color="default" onClick={handleClickOpen} onClose={handleClose}>
           <Description />
-          {props.language === 'japanese' ? 'Introduction' : 'Abstruct'}
+          {props.language === "japanese" ? "Introduction" : "Abstruct"}
         </Button>
-        <Dialog
-          onClose={handleClose}
-          aria-labelledby="dialog"
-          open={open}
-          fullWidth="lg"
-          maxWidth={true}
-        >
+        <Dialog onClose={handleClose} aria-labelledby="dialog" open={open} fullWidth="lg" maxWidth={true}>
           <DialogTitle id="dialog" onClose={handleClose}>
             {props.title}
           </DialogTitle>
@@ -141,11 +120,7 @@ export default function CardPaper(props) {
             <Typography gutterBottom>{props.abstruct}</Typography>
           </DialogContent>
         </Dialog>
-        <Button
-          size="small"
-          color="default"
-          href={props.url ? props.url : null}
-        >
+        <Button size="small" color="default" href={props.url ? props.url : null}>
           <SaveAlt />
           Download
         </Button>

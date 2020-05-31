@@ -1,13 +1,11 @@
-import React from 'react';
-import CardPaper from '../CardPaper.jsx';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import CardPaper from "../components/CardPaper";
+import { storiesOf } from "@storybook/react";
 
-storiesOf('CardPaper', module)
-  .add('ACL', () => (
-    <CardPaper title="paperTitle" conference="ACL" year="2019" />
-  ))
-  .add('EMNLP', () => <CardPaper title="paperTitle" conference="EMNLP" />)
-  .add('NAACL', () => (
+storiesOf("CardPaper", module)
+  .add("ACL", () => <CardPaper title="paperTitle" conference="ACL" year="2019" />)
+  .add("EMNLP", () => <CardPaper title="paperTitle" conference="EMNLP" />)
+  .add("NAACL", () => (
     <CardPaper
       title="BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
       conference="NAACL"
@@ -19,7 +17,7 @@ storiesOf('CardPaper', module)
 BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5% (7.7% point absolute improvement), MultiNLI accuracy to 86.7% (4.6% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement)."
     />
   ))
-  .add('Other', () => (
+  .add("Other", () => (
     <CardPaper
       title="Distributed Representations of Words and Phrases and their Compositionality"
       conference="NIPS"
