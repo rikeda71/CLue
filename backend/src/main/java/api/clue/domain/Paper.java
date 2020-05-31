@@ -12,7 +12,7 @@ public class Paper {
 
   private Long paperId;
 
-  private Long year;
+  private Integer year;
 
   private String label;
 

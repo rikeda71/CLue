@@ -74,7 +74,7 @@ public class PaperRepositoryImplDbUnitTest {
     @Test
     public void testInsert() {
       Paper paper = new Paper();
-      var year = 2030L;
+      var year = 2030;
       var title = "title";
       var url = "https://www.google.co.jp/";
       paper.setYear(year);
@@ -103,7 +103,7 @@ public class PaperRepositoryImplDbUnitTest {
     public void testUpdate() {
       Paper paper = new Paper();
       var paperId = 1L;
-      var year = 2020L;
+      var year = 2020;
       var title = "updatedtitle";
       paper.setPaperId(paperId);
       paper.setYear(year);
