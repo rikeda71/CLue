@@ -1,11 +1,11 @@
-import React from 'react';
-import Paper from '../Paper.jsx';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import Paper from "../components/Paper.js";
+import { storiesOf } from "@storybook/react";
 
-storiesOf('Paper', module)
-  .add('ACL', () => <Paper title="paperTitle" conference="ACL" year="2019" />)
-  .add('EMNLP', () => <Paper title="paperTitle" conference="EMNLP" />)
-  .add('NAACL', () => (
+storiesOf("Paper", module)
+  .add("ACL", () => <Paper title="paperTitle" conference="ACL" year="2019" />)
+  .add("EMNLP", () => <Paper title="paperTitle" conference="EMNLP" />)
+  .add("NAACL", () => (
     <Paper
       title="BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
       conference="NAACL"
@@ -15,7 +15,7 @@ storiesOf('Paper', module)
       url="https://www.aclweb.org/anthology/N19-1423.pdf"
     />
   ))
-  .add('Other', () => (
+  .add("Other", () => (
     <Paper
       title="Distributed Representations of Words and Phrases and their Compositionality"
       conference="NIPS"
