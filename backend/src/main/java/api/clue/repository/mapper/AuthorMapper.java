@@ -27,9 +27,9 @@ public interface AuthorMapper {
   List<Author> findByAuthorName(String name);
 
   @Insert("INSERT INTO authors(name) VALUES(#{name})")
-  void insertAuthor(Author author);
+  void insert(Author author);
 
   @Delete("DELETE FROM authors WHERE author_id = #{authorId}")
-  void deleteAuthor(Long authorId);
+  void delete(Long authorId);
 
 }

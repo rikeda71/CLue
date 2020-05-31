@@ -36,11 +36,11 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
   @Override
   public void add(Author author) {
-    this.authorMapper.insertAuthor(author);
+    this.authorMapper.insert(author);
   }
 
   @Override
   public void remove(Long authorId) {
-    this.authorMapper.deleteAuthor(authorId);
+    this.authorMapper.delete(authorId);
   }
 }
