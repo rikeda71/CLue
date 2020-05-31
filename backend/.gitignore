@@ -58,3 +58,4 @@ out/
 .env
 .classpath
 bin/
+.idea
