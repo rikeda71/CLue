@@ -1,42 +1,52 @@
-package api.clue.web;
+package api.clue.controller;
 
 import api.clue.domain.Author;
-import api.clue.service.AuthorServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import api.clue.service.AuthorService;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/authors")
 public class AuthorController {
 
-    @Autowired
-    private AuthorServiceImpl authorServiceImpl;
+  private final AuthorService authorService;
 
-    @RequestMapping(value = "/authors", method = RequestMethod.GET)
-    public List<Author> findAuthors(@RequestParam(value = "name", required = false) String name) {
-        List<Author> authors = authorServiceImpl.findAuthor(name);
-        return authors;
-    }
+  public AuthorController(AuthorService authorService) {
+    this.authorService = authorService;
+  }
 
-    @RequestMapping(value = "/authors/{id}", method = RequestMethod.GET)
-    public String authorById(@PathVariable("id") int id) {
-        String name = authorServiceImpl.findById(id);
-        return name;
-    }
+  @GetMapping(value = "/{authorId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Author findById(@PathVariable("authorId") Long authorId) {
+    return this.authorService.findById(authorId);
+  }
 
-    @RequestMapping(value = "/authors", method = RequestMethod.POST)
-    public void insertAuthor(@RequestParam("name") String name) {
-        authorServiceImpl.insertAuthor(name);
-    }
+  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Author> findByName(@RequestParam(value = "name") String name) {
+    return this.authorService.findByName(name);
+  }
 
-    @RequestMapping(value = "/authors/{id}", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable("id") int id) {
-        // authorService.deleteById(id);
-    }
+  @GetMapping(value = "/paper/{paperId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Author> findByPaperId(@PathVariable(value = "paperId") Long paperId) {
+    return this.authorService.findByPaperId(paperId);
+  }
+
+  @PostMapping(value = "")
+  public void add(@RequestBody Author author) {
+    this.authorService.add(author);
+  }
+
+  @DeleteMapping("/{authorId}")
+  public void remove(@PathVariable("authorId") Long authorId) {
+    this.authorService.remove(authorId);
+  }
 
 }
