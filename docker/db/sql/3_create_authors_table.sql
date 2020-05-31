@@ -1,3 +1,4 @@
+USE research_paper_db;
 CREATE TABLE IF NOT EXISTS `authors` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` varchar(50),

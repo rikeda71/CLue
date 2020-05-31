@@ -11,40 +11,39 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import api.clue.domain.AuthInfo;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthInfo authInfo;
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    // TODO: this is temporary settings. need to fix
+    http.cors().configurationSource(this.corsConfigurationSource()) // cors
+        .and().authorizeRequests().anyRequest().permitAll()
+        .and().csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication() // in Memory
-                .withUser(authInfo.getName()) // username
-                .password(passwordEncoder().encode(authInfo.getPassword())) // password
-                .roles("USER"); // role
-    }
+  private CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.addAllowedHeader(CorsConfiguration.ALL);
+    configuration.addAllowedMethod(CorsConfiguration.ALL);
+    configuration.addAllowedHeader("Authorization ");
+    configuration.addAllowedOrigin("http://localhost:3000");
+    configuration.setAllowCredentials(true);
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests() // csrf
-                .anyRequest().authenticated() // anyrequest
-                .and().httpBasic().realmName("My Basic Authentication"); // basic authentication
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
+    corsSource.registerCorsConfiguration("/**", configuration);
+    return corsSource;
+  }
 
 }

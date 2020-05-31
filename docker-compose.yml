@@ -10,7 +10,6 @@ services:
       ## 永続化 ##
        - "./docker/db/data:/var/lib/mysql"
        - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
-       - "./docker/db/sql:/docker-entrypoint-initdb.d"
        - "./log/mysql:/var/log/mysql"
     env_file: .env
     environment:
@@ -18,6 +17,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_USER: ${DB_ROOT_USER}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: research_paper_db
       TZ: ${TZ}
     expose:
       - "33036"
@@ -37,8 +37,8 @@ services:
       DB_USER: ${DB_ROOT_USER}
       DB_PASSWORD: ${DB_ROOT_PASSWORD}
     expose:
-      - "8088"
+      - "8080"
     ports:
-      - "8088:8080"
+      - "8080:8080"
     depends_on:
       - db

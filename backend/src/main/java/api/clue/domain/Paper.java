@@ -1,37 +1,34 @@
 package api.clue.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 import lombok.Data;
-import org.springframework.stereotype.Component;
+import lombok.NoArgsConstructor;
 
-@Component
 @Data
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Paper {
 
-    @JsonProperty
-    private int id;
+  private Long paperId;
 
-    @JsonProperty
-    private int year;
-    private String label;
+  private Integer year;
 
-    @JsonProperty
-    private String task;
+  private String label;
 
-    private String session;
+  private String task;
 
-    @JsonProperty
-    private String title;
+  private String session;
 
-    @JsonProperty
-    private String url;
+  private String title;
 
-    @JsonProperty
-    private String introduction;
+  private String url;
 
-    @JsonProperty
-    private String lang;
+  private String introduction;
 
-    @JsonProperty
-    private String conference;
+  private String lang;
+
+  private String conference;
+
+  private List<Author> authors;
 }

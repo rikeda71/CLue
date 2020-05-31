@@ -1,36 +1,18 @@
 package api.clue.service;
 
 import api.clue.domain.Author;
-import api.clue.mapper.AuthorMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class AuthorService {
+public interface AuthorService {
 
-    @Autowired
-    private AuthorMapper authorMapper;
+  Author findById(Long authorId);
 
-    public List<Author> findAuthor(String name) {
-        List<Author> authors = authorMapper.findAuthor(name);
-        return authors;
-    }
+  List<Author> findByName(String name);
 
-    public String findById(Integer id) {
-        String name = authorMapper.findById(id);
-        return name;
-    }
+  List<Author> findByPaperId(Long paperId);
 
+  void add(Author author);
 
-    public void insertAuthor(String name) {
-        Author author = new Author();
-        author.setName(name);
-        authorMapper.insertAuthor(author);
-    }
+  void remove(Long authorId);
 
-    public void deleteById(int id) {
-        authorMapper.deleteAuthor(id);
-    }
 }
