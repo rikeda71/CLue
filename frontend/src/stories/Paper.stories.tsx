@@ -1,10 +1,13 @@
 import React from "react";
-import Paper from "../components/Paper.js";
+import Paper, { Title, Tags, Conference } from "../components/Paper";
 import { storiesOf } from "@storybook/react";
 
-storiesOf("Paper", module)
-  .add("ACL", () => <Paper title="paperTitle" conference="ACL" year="2019" />)
-  .add("EMNLP", () => <Paper title="paperTitle" conference="EMNLP" />)
+storiesOf("1_atoms", module)
+  .add("Title", () => <Title>paper title</Title>)
+  .add("Tags", () => <Tags>task name</Tags>)
+  .add("Conference", () => <Conference>conference name</Conference>);
+
+storiesOf("2_molecules", module)
   .add("NAACL", () => (
     <Paper
       title="BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"

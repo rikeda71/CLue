@@ -1,65 +1,56 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
-import Link from '@material-ui/core/Link';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import { blue, pink, grey } from '@material-ui/core/colors/';
+import React from "react";
+import styled from "styled-components";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 1080,
-    backgroundColor: grey[100],
-  },
-}));
+export const PaperStyle = styled.div`
+  border: solid;
+  border-radius: 1rem;
+  border-width: thin;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+`;
 
-const getChip = (task, predicted) => {
-  let color = pink[800];
-  if (predicted != null && !Boolean(predicted)) {
-    color = blue[800];
-  }
-  return (
-    <Chip label={task} color="primary" style={{ backgroundColor: color }} />
-  );
+export const Title = styled.h1`
+  font-size: large;
+  display: inline-block;
+`;
+
+export const Tags = styled.div`
+  display: flex;
+  flex-basis: 100px;
+`;
+
+export const Conference = styled.div``;
+
+export const Task = styled.div`
+  margin-left: 1rem;
+`;
+
+type PaperProps = {
+  title: string;
+  conference: string;
+  year: number;
+  task?: string;
+  predicted?: boolean;
+  url: string;
 };
 
-const getConfName = (conf, year) => {
-  if (conf == null) {
-    return null;
-  } else if (year == null) {
-    return conf;
-  }
-  return conf + ' ' + String(year);
-};
-
-const Paper = props => {
-  const classes = useStyles();
-
+const Paper: React.FC<PaperProps> = props => {
   return (
-    <div className="paper">
-      <Link
-        href={props.url ? props.url : null}
-        color="inherit"
-        underline="none"
-      >
-        <ListItem button className={classes.root}>
-          <ListItemAvatar>
-            <Avatar>
-              <AssignmentIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            primary={props.title}
-            secondary={getConfName(props.conference, props.year)}
-          />
-          {getChip(props.task, props.predicted)}
-        </ListItem>
-      </Link>
-    </div>
+    <PaperStyle>
+      <Title>
+        <a href={props.url}>{props.title}</a>
+      </Title>
+      <Tags>
+        <Conference>
+          {props.conference}
+          {props.year}
+        </Conference>
+        {props.task != undefined && <Task>{props.task}</Task>}
+      </Tags>
+    </PaperStyle>
   );
 };
 
