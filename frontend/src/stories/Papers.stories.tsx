@@ -1,5 +1,5 @@
 import React from "react";
-import Papers from "../components/Papers";
+import Papers from "../components/paper/Papers";
 import { PapersProps } from "../components/types";
 import { storiesOf } from "@storybook/react";
 

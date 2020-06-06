@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PaperProps } from "./types";
+import { PaperProps } from "../types";
 
 export const PaperStyle = styled.div`
   border: solid;

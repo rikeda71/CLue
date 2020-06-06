@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Paper from "./Paper";
-import { PapersProps } from "./types";
+import { PapersProps } from "../types";
 
 export const PapersStyle = styled.div`
   overflow-x: hidden;
