@@ -1,11 +1,12 @@
 import React from "react";
 import Papers from "../../components/Paper/Papers";
-import { PapersProps } from "../../components/types";
+import { PapersType } from "../../types";
 import { storiesOf } from "@storybook/react";
 
-const papers: PapersProps = {
+const papers: PapersType = {
   papers: [
     {
+      paperId: 1,
       title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
       conference: "NAACL",
       year: 2019,
@@ -14,40 +15,7 @@ const papers: PapersProps = {
       url: "https://www.aclweb.org/anthology/N19-1423.pdf",
     },
     {
-      title: "Distributed Representations of Words and Phrases and their Compositionality",
-      conference: "NIPS",
-      year: 2013,
-      task: "Word-level Semantics",
-      predicted: false,
-      url:
-        "https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf",
-    },
-    {
-      title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
-      conference: "NAACL",
-      year: 2019,
-      task: "Word-level Semantics",
-      predicted: true,
-      url: "https://www.aclweb.org/anthology/N19-1423.pdf",
-    },
-    {
-      title: "Distributed Representations of Words and Phrases and their Compositionality",
-      conference: "NIPS",
-      year: 2013,
-      task: "Word-level Semantics",
-      predicted: false,
-      url:
-        "https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf",
-    },
-    {
-      title: "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
-      conference: "NAACL",
-      year: 2019,
-      task: "Word-level Semantics",
-      predicted: true,
-      url: "https://www.aclweb.org/anthology/N19-1423.pdf",
-    },
-    {
+      paperId: 2,
       title: "Distributed Representations of Words and Phrases and their Compositionality",
       conference: "NIPS",
       year: 2013,

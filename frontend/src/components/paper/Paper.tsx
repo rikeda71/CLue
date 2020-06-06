@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { PaperProps } from "../types";
+import { PaperType } from "../../types";
 
 export const PaperStyle = styled.div`
   border: solid;
@@ -29,7 +29,7 @@ export const Task = styled.div`
   margin-left: 1rem;
 `;
 
-const Paper: React.FC<PaperProps> = props => {
+const Paper: React.FC<PaperType> = props => {
   return (
     <PaperStyle>
       <Title>
