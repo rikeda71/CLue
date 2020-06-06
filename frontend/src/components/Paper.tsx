@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { PaperProps } from "./types";
 
 export const PaperStyle = styled.div`
   border: solid;
@@ -27,15 +28,6 @@ export const Conference = styled.div``;
 export const Task = styled.div`
   margin-left: 1rem;
 `;
-
-type PaperProps = {
-  title: string;
-  conference: string;
-  year: number;
-  task?: string;
-  predicted?: boolean;
-  url: string;
-};
 
 const Paper: React.FC<PaperProps> = props => {
   return (
