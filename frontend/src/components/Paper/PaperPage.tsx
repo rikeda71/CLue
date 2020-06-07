@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { PaperPageProps, PaperType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
+import { useParams } from "react-router";
 
 const PaperPageStyle = styled.section``;
 
@@ -14,8 +15,9 @@ const PaperPageAuthorStyle = styled.div``;
 const PaperPageIntroductionStyle = styled.div``;
 
 const PaperPage: React.FC<PaperPageProps> = props => {
+  const { id } = useParams();
   const [paper, setPaper] = useState<PaperType>();
-  const requestUrl = createGetRequestUrl(`/api/v1/papers/${props.paperId}`);
+  const requestUrl = createGetRequestUrl(`/api/v1/papers/${id}`);
 
   useEffect(() => {
     async function getPaper() {
