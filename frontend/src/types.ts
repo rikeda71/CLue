@@ -22,6 +22,17 @@ export type PapersType = {
   papers: Array<PaperType>;
 };
 
+export type PaperSearchConditionType = {
+  year?: number;
+  label?: string;
+  task?: string;
+  title?: string;
+  introduction?: string;
+  lang?: string;
+  conference?: string;
+};
+
 export type PaperPageProps = {
   papers?: Array<PaperType>;
+  queryParams?: PaperSearchConditionType;
 };

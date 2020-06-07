@@ -11,9 +11,10 @@ export const PapersStyle = styled.div`
 const Papers: React.FC<PapersType> = props => {
   return (
     <PapersStyle>
-      {props.papers.map(paper => {
-        return <Paper {...paper} />;
-      })}
+      {props.papers.length > 0 &&
+        props.papers.map(paper => {
+          return <Paper {...paper} key={paper.paperId} />;
+        })}
     </PapersStyle>
   );
 };
