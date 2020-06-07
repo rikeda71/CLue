@@ -36,3 +36,7 @@ export type PaperPageProps = {
   papers?: Array<PaperType>;
   queryParams?: PaperSearchConditionType;
 };
+
+export type AuthorPageProps = {
+  authorId: number;
+};
