@@ -13,51 +13,51 @@ export const PaperStyle = styled.div`
   padding-right: 1rem;
 `;
 
-export const Title = styled.h1`
+export const PaperTitle = styled.h1`
   font-size: large;
   display: inline-block;
 `;
 
-export const Tags = styled.div`
+export const PaperTags = styled.div`
   display: flex;
   flex-basis: 100px;
 `;
 
-export const Conference = styled.div``;
+export const PaperConference = styled.div``;
 
-export const Task = styled.div`
+export const PaperTask = styled.div`
   margin-left: 1rem;
 `;
 
-export const Authors = styled.div`
+export const PaperAuthors = styled.div`
   display: flex;
   margin-bottom: 0.2rem;
 `;
 
-export const Author = styled.div`
+export const PaperAuthor = styled.div`
   margin-right: 1rem;
 `;
 
 const Paper: React.FC<PaperType> = props => {
   return (
     <PaperStyle>
-      <Title>
+      <PaperTitle>
         <a href={props.url}>{props.title}</a>
-      </Title>
+      </PaperTitle>
       {!!props.authors && (
-        <Authors>
+        <PaperAuthors>
           {props.authors.map(author => (
-            <Author key={author.authorId}>{author.name}</Author>
+            <PaperAuthor key={author.authorId}>{author.name}</PaperAuthor>
           ))}
-        </Authors>
+        </PaperAuthors>
       )}
-      <Tags>
-        <Conference>
+      <PaperTags>
+        <PaperConference>
           {props.conference}
           {props.year}
-        </Conference>
-        {!!props.task && <Task>{props.task}</Task>}
-      </Tags>
+        </PaperConference>
+        {!!props.task && <PaperTask>{props.task}</PaperTask>}
+      </PaperTags>
     </PaperStyle>
   );
 };
