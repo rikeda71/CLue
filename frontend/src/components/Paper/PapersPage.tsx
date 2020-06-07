@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { PapersType, PaperPageProps } from "../../types";
+import { PapersType, PapersPageProps } from "../../types";
 import Papers from "./Papers";
 import { createGetRequestUrl } from "../../utils";
 
-const PaperPageStyle = styled.div``;
+const PapersPageStyle = styled.div``;
 
-const PaperPage: React.FC<PaperPageProps> = props => {
+const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<PapersType>({ papers: [] });
   const requestUrl = createGetRequestUrl("/api/v1/papers", props.queryParams);
   console.log(requestUrl);
@@ -33,10 +33,10 @@ const PaperPage: React.FC<PaperPageProps> = props => {
   }, []);
 
   return (
-    <PaperPageStyle>
+    <PapersPageStyle>
       <Papers {...papers} />
-    </PaperPageStyle>
+    </PapersPageStyle>
   );
 };
 
-export default PaperPage;
+export default PapersPage;

@@ -33,6 +33,10 @@ export type PaperSearchConditionType = {
 };
 
 export type PaperPageProps = {
+  paperId: number;
+};
+
+export type PapersPageProps = {
   papers?: Array<PaperType>;
   queryParams?: PaperSearchConditionType;
 };
