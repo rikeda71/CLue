@@ -8,10 +8,13 @@ export const PaperStyle = styled.div`
   border-radius: 1rem;
   border-width: thin;
   margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  width: 60%;
 `;
 
 export const PaperTitle = styled.h1`
