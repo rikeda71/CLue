@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { PaperType } from "../../types";
+import { Link } from "react-router-dom";
 
 export const PaperStyle = styled.div`
   border: solid;
@@ -42,12 +43,14 @@ const Paper: React.FC<PaperType> = props => {
   return (
     <PaperStyle>
       <PaperTitle>
-        <a href={props.url}>{props.title}</a>
+        <Link to={`/paper/${props.paperId}`}>{props.title}</Link>
       </PaperTitle>
       {!!props.authors && (
         <PaperAuthors>
           {props.authors.map(author => (
-            <PaperAuthor key={author.authorId}>{author.name}</PaperAuthor>
+            <PaperAuthor key={author.authorId}>
+              <Link to={`/author/${author.authorId}`}>{author.name}</Link>
+            </PaperAuthor>
           ))}
         </PaperAuthors>
       )}
