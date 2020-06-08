@@ -4,7 +4,7 @@ var path = require("path");
 
 module.exports = {
   context: path.join(__dirname, "/src"),
-  entry: "./index.tsx",
+  entry: ["babel-polyfill", "./index.tsx"],
   module: {
     rules: [
       {
@@ -27,6 +27,7 @@ module.exports = {
     inline: true,
     host: "0.0.0.0",
     port: 3000,
+    historyApiFallback: true,
   },
   output: {
     path: __dirname + "/src/",

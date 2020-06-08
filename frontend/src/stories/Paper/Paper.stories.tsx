@@ -1,12 +1,16 @@
 import React from "react";
-import Paper from "../components/Paper.js";
+import Paper, { PaperTitle, PaperTags, PaperConference } from "../../components/Paper/Paper";
 import { storiesOf } from "@storybook/react";
 
-storiesOf("Paper", module)
-  .add("ACL", () => <Paper title="paperTitle" conference="ACL" year="2019" />)
-  .add("EMNLP", () => <Paper title="paperTitle" conference="EMNLP" />)
+storiesOf("1_atoms", module)
+  .add("PaperTitle", () => <PaperTitle>paper title</PaperTitle>)
+  .add("PaperTags", () => <PaperTags>task name</PaperTags>)
+  .add("PaperConference", () => <PaperConference>conference name</PaperConference>);
+
+storiesOf("2_molecules", module)
   .add("NAACL", () => (
     <Paper
+      paperId={1}
       title="BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"
       conference="NAACL"
       year={2019}
@@ -17,6 +21,7 @@ storiesOf("Paper", module)
   ))
   .add("Other", () => (
     <Paper
+      paperId={1}
       title="Distributed Representations of Words and Phrases and their Compositionality"
       conference="NIPS"
       year={2013}
