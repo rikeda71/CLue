@@ -3,16 +3,7 @@ import styled from "styled-components";
 import { PaperPageProps, PaperType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
-
-const PaperPageStyle = styled.section``;
-
-const PaperPageTitleStyle = styled.h1``;
-
-const PaperPageAuthorsStyle = styled.section``;
-
-const PaperPageAuthorStyle = styled.div``;
-
-const PaperPageIntroductionStyle = styled.div``;
+import PaperDetail from "./PaperDetail";
 
 const PaperPage: React.FC<PaperPageProps> = props => {
   const { id } = useParams();
@@ -35,21 +26,7 @@ const PaperPage: React.FC<PaperPageProps> = props => {
     getPaper();
   }, []);
 
-  if (!paper) {
-    return <div></div>;
-  }
-
-  return (
-    <PaperPageStyle>
-      <PaperPageTitleStyle>{paper.title}</PaperPageTitleStyle>
-      <PaperPageAuthorsStyle>
-        {paper.authors.map(author => {
-          return <PaperPageAuthorStyle>{author.name}</PaperPageAuthorStyle>;
-        })}
-      </PaperPageAuthorsStyle>
-      <PaperPageIntroductionStyle>{paper.introduction}</PaperPageIntroductionStyle>
-    </PaperPageStyle>
-  );
+  return <PaperDetail {...paper} />;
 };
 
 export default PaperPage;

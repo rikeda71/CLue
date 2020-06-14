@@ -7,18 +7,29 @@ import PaperPage from "./components/Paper/PaperPage";
 import PapersPage from "./components/Paper/PapersPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import styled from "styled-components";
+
+const AppStyle = styled.div``;
+
+const MainPageStyle = styled.div`
+  margin: 1rem 0;
+`;
 
 export const App: React.FC = () => {
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={PapersPage} />
-        <Route exact path="/paper/:id" component={PaperPage} />
-        <Route exact path="/author/:id" component={AuthorPage} />
-      </Switch>
-      <Footer />
-    </Router>
+    <AppStyle>
+      <Router>
+        <Header />
+        <MainPageStyle>
+          <Switch>
+            <Route exact path="/" component={PapersPage} />
+            <Route exact path="/paper/:id" component={PaperPage} />
+            <Route exact path="/author/:id" component={AuthorPage} />
+          </Switch>
+        </MainPageStyle>
+        <Footer />
+      </Router>
+    </AppStyle>
   );
 };
 
