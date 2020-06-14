@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-const FooterStyle = styled.footer``;
+const FooterStyle = styled.footer`
+  margin: 3rem 0;
+  text-align: center;
+`;
 
 const Footer: React.FC = () => {
   return (

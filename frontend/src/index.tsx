@@ -11,7 +11,9 @@ import styled from "styled-components";
 
 const AppStyle = styled.div``;
 
-const MainPageStyle = styled.div``;
+const MainPageStyle = styled.div`
+  margin: 1rem 0;
+`;
 
 export const App: React.FC = () => {
   return (
