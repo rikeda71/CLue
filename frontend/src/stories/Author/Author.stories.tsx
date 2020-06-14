@@ -2,6 +2,7 @@ import React from "react";
 import Author from "../../components/Author/Author";
 import { AuthorType } from "../../types";
 import { storiesOf } from "@storybook/react";
+import { MemoryRouter } from "react-router";
 
 const author: AuthorType = {
   authorId: 1,
@@ -29,4 +30,6 @@ const author: AuthorType = {
   ],
 };
 
-storiesOf("2_molecules", module).add("Author", () => <Author {...author} />);
+storiesOf("3_organisms", module)
+  .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
+  .add("Author", () => <Author {...author} />);

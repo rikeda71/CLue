@@ -14,7 +14,7 @@ export const PaperStyle = styled.div`
   padding-bottom: 0.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  width: 60%;
+  width: 80%;
 `;
 
 export const PaperTitle = styled.h1`
