@@ -20,6 +20,7 @@ export const PaperStyle = styled.div`
 export const PaperTitle = styled.h1`
   font-size: large;
   display: inline-block;
+  margin-bottom: 0.6rem;
 `;
 
 export const PaperTags = styled.div`
@@ -28,6 +29,7 @@ export const PaperTags = styled.div`
 `;
 
 export const PaperConference = styled.div`
+  display: inline;
   border: solid;
   border-radius: 1rem;
   background: #1e90ff;
@@ -39,6 +41,7 @@ export const PaperConference = styled.div`
 `;
 
 export const PaperTask = styled.div`
+  display: inline;
   margin-left: 1rem;
   border: solid;
   border-radius: 1rem;
@@ -52,7 +55,7 @@ export const PaperTask = styled.div`
 
 export const PaperAuthors = styled.div`
   display: flex;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
   margin-left: 0.4rem;
 `;
 
