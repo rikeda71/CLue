@@ -27,19 +27,47 @@ export const PaperTags = styled.div`
   flex-basis: 100px;
 `;
 
-export const PaperConference = styled.div``;
+export const PaperConference = styled.div`
+  border: solid;
+  border-radius: 1rem;
+  background: #1e90ff;
+  border-color: #ffffff;
+  padding: 3px 10px;
+  color: #fafafa;
+  font-size: small;
+  font-weight: bold;
+`;
 
 export const PaperTask = styled.div`
   margin-left: 1rem;
+  border: solid;
+  border-radius: 1rem;
+  background: #ffb6c1;
+  border-color: #ffffff;
+  padding: 3px 10px;
+  color: #ffffff;
+  font-size: small;
+  font-weight: bold;
 `;
 
 export const PaperAuthors = styled.div`
   display: flex;
   margin-bottom: 0.2rem;
+  margin-left: 0.4rem;
 `;
 
 export const PaperAuthor = styled.div`
   margin-right: 1rem;
+  font-size: small;
+  a {
+    color: #0f0f0f;
+  }
+`;
+
+export const PaperLink = styled.div`
+  padding: 3px 0;
+  margin-left: auto;
+  margin-right: 10px;
 `;
 
 const Paper: React.FC<PaperType> = props => {
@@ -63,6 +91,9 @@ const Paper: React.FC<PaperType> = props => {
           {props.year}
         </PaperConference>
         {!!props.task && <PaperTask>{props.task}</PaperTask>}
+        <PaperLink>
+          <a href={props.url}>pdf</a>
+        </PaperLink>
       </PaperTags>
     </PaperStyle>
   );
