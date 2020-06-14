@@ -26,7 +26,7 @@ public interface PwaMapper {
 
   @Select("SELECT * FROM authors WHERE author_id in (SELECT author_id FROM paper_written_author WHERE paper_id = #{paperId})")
   @Results(id = "Author", value = {
-      @Result(property = "authorId", column = "author_id")// , many = @Many(select = "api.clue.repository.mapper.AuthorMapper.findById"))
+      @Result(property = "authorId", column = "author_id")
   })
   List<Author> findAuthorsByPaperId(Paper paper);
 

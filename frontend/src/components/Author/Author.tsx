@@ -25,7 +25,7 @@ const Author: React.FC<AuthorType> = props => {
         <AuthorPagePapers>
           論文リスト
           {props.papers
-            .sort((x, y) => x.year - y.year)
+            .sort((x, y) => y.year - x.year)
             .map(paper => (
               <Paper {...paper} key={paper.paperId} />
             ))}

@@ -18,17 +18,17 @@ const MainPageStyle = styled.div`
 export const App: React.FC = () => {
   return (
     <AppStyle>
-      <Header />
-      <MainPageStyle>
-        <Router>
+      <Router>
+        <Header />
+        <MainPageStyle>
           <Switch>
             <Route exact path="/" component={PapersPage} />
             <Route exact path="/paper/:id" component={PaperPage} />
             <Route exact path="/author/:id" component={AuthorPage} />
           </Switch>
-        </Router>
-      </MainPageStyle>
-      <Footer />
+        </MainPageStyle>
+        <Footer />
+      </Router>
     </AppStyle>
   );
 };

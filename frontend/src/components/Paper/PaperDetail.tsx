@@ -7,20 +7,13 @@ import { Link } from "react-router-dom";
 const PaperPageStyle = styled.section`
   margin-right: auto;
   margin-left: auto;
-  width: 60%;
+  width: 80%;
 `;
 
 const PaperPageTitleStyle = styled.h1`
   font-weight: bold;
-  font-size: large;
-`;
-
-const PaperPageAuthorsStyle = styled.section`
-  display: flex;
-`;
-
-const PaperPageAuthorStyle = styled.div`
-  margin: 1rem;
+  font-size: x-large;
+  margin-bottom: 0.5rem;
 `;
 
 const PaperPageIntroductionStyle = styled.div`
@@ -30,11 +23,11 @@ const PaperPageIntroductionStyle = styled.div`
   border-radius: 1rem;
   border-width: thin;
   word-wrap: break-word;
+  line-height: initial;
 `;
 
 const PaperDetail: React.FC<PaperType> = props => {
   console.log(props);
-  console.log("aaa");
   return (
     <PaperPageStyle>
       {!!props.title && (
@@ -43,11 +36,12 @@ const PaperDetail: React.FC<PaperType> = props => {
         </PaperPageTitleStyle>
       )}
       <PaperAuthors>
-        {props.authors.map(author => (
-          <PaperAuthor key={author.authorId}>
-            <Link to={`/author/${author.authorId}`}>{author.name}</Link>
-          </PaperAuthor>
-        ))}
+        {!!props.authors &&
+          props.authors.map(author => (
+            <PaperAuthor key={author.authorId}>
+              <Link to={`/author/${author.authorId}`}>{author.name}</Link>
+            </PaperAuthor>
+          ))}
       </PaperAuthors>
       <PaperTags>
         <PaperConference>

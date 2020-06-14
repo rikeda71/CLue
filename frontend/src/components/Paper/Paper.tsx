@@ -56,12 +56,11 @@ export const PaperTask = styled.div`
 export const PaperAuthors = styled.div`
   display: flex;
   margin-bottom: 0.5rem;
-  margin-left: 0.4rem;
+  margin-left: 0.2rem;
 `;
 
 export const PaperAuthor = styled.div`
   margin-right: 1rem;
-  font-size: small;
   a {
     color: #0f0f0f;
   }
