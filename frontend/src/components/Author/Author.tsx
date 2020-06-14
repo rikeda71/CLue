@@ -18,7 +18,7 @@ const Author: React.FC<AuthorType> = props => {
         <AuthorPagePapers>
           論文リスト
           {props.papers.map(paper => (
-            <AuthorPagePaper>{paper.title}</AuthorPagePaper>
+            <AuthorPagePaper key={paper.paperId}>{paper.title}</AuthorPagePaper>
           ))}
         </AuthorPagePapers>
       )}

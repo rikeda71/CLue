@@ -1,6 +1,7 @@
 import React from "react";
 import Paper, { PaperTitle, PaperTags, PaperConference } from "../../components/Paper/Paper";
 import { storiesOf } from "@storybook/react";
+import { MemoryRouter } from "react-router";
 
 storiesOf("1_atoms", module)
   .add("PaperTitle", () => <PaperTitle>paper title</PaperTitle>)
@@ -8,6 +9,7 @@ storiesOf("1_atoms", module)
   .add("PaperConference", () => <PaperConference>conference name</PaperConference>);
 
 storiesOf("2_molecules", module)
+  .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
   .add("NAACL", () => (
     <Paper
       paperId={1}

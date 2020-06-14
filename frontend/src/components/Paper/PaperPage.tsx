@@ -43,9 +43,10 @@ const PaperPage: React.FC<PaperPageProps> = props => {
     <PaperPageStyle>
       <PaperPageTitleStyle>{paper.title}</PaperPageTitleStyle>
       <PaperPageAuthorsStyle>
-        {paper.authors.map(author => {
-          return <PaperPageAuthorStyle>{author.name}</PaperPageAuthorStyle>;
-        })}
+        {!!paper.authors &&
+          paper.authors.map(author => {
+            return <PaperPageAuthorStyle>{author.name}</PaperPageAuthorStyle>;
+          })}
       </PaperPageAuthorsStyle>
       <PaperPageIntroductionStyle>{paper.introduction}</PaperPageIntroductionStyle>
     </PaperPageStyle>

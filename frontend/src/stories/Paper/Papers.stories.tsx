@@ -2,6 +2,7 @@ import React from "react";
 import Papers from "../../components/Paper/Papers";
 import { PapersType } from "../../types";
 import { storiesOf } from "@storybook/react";
+import { MemoryRouter } from "react-router";
 
 const papers: PapersType = {
   papers: [
@@ -26,4 +27,6 @@ const papers: PapersType = {
     },
   ],
 };
-storiesOf("3_organisms", module).add("Papers", () => <Papers {...papers}></Papers>);
+storiesOf("3_organisms", module)
+  .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
+  .add("Papers", () => <Papers {...papers}></Papers>);
