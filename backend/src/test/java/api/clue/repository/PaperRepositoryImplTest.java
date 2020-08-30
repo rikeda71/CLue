@@ -23,6 +23,9 @@ public class PaperRepositoryImplTest {
   @Mock
   private PwaMapper pwaMapper;
 
+  private final Integer OFFSET_VALUE = 0;
+  private final Integer LIMIT_VALUE = 10;
+
 
   @BeforeEach
   public void before() {
@@ -49,12 +52,12 @@ public class PaperRepositoryImplTest {
     var label = "SA";
     provider.setLabel(label);
     List<Paper> papers = new ArrayList<>();
-    Mockito.doReturn(papers).when(this.paperMapper).findPapers(provider);
+    Mockito.doReturn(papers).when(this.paperMapper).findPapers(provider, OFFSET_VALUE, LIMIT_VALUE);
     // when
-    var result = new PaperRepositoryImpl(this.paperMapper, this.pwaMapper).find(provider);
+    var result = new PaperRepositoryImpl(this.paperMapper, this.pwaMapper).find(provider, OFFSET_VALUE, LIMIT_VALUE);
     // then
     assertEquals(result, papers);
-    Mockito.verify(this.paperMapper, Mockito.times(1)).findPapers(provider);
+    Mockito.verify(this.paperMapper, Mockito.times(1)).findPapers(provider, OFFSET_VALUE, LIMIT_VALUE);
   }
 
   @Test

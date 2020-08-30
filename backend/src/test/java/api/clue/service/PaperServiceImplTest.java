@@ -27,6 +27,9 @@ public class PaperServiceImplTest {
   @Mock
   private PwaRepository pwaRepository;
 
+  private final Integer OFFSET_VALUE = 0;
+  private final Integer LIMIT_VALUE = 10;
+
   @BeforeEach
   public void before() {
     MockitoAnnotations.initMocks(this);
@@ -37,12 +40,12 @@ public class PaperServiceImplTest {
     // setup
     List<Paper> papers = new ArrayList<>();
     PaperSearchProvider provider = new PaperSearchProvider();
-    Mockito.doReturn(papers).when(this.paperRepository).find(provider);
+    Mockito.doReturn(papers).when(this.paperRepository).find(provider, OFFSET_VALUE, LIMIT_VALUE);
     // when
-    var result = new PaperServiceImpl(this.paperRepository, this.authorRepository, this.pwaRepository).find(provider);
+    var result = new PaperServiceImpl(this.paperRepository, this.authorRepository, this.pwaRepository).find(provider, OFFSET_VALUE, LIMIT_VALUE);
     // then
     assertEquals(result, papers);
-    Mockito.verify(this.paperRepository, Mockito.times(1)).find(provider);
+    Mockito.verify(this.paperRepository, Mockito.times(1)).find(provider,  OFFSET_VALUE, LIMIT_VALUE);
   }
 
   @Test
