@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `papers` (
-    `paper_id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `paper_id` BIGINT AUTO_INCREMENT PRIMARY KEY ,
     `year` int(4) NOT NULL,
     `label` varchar(20),
     `task` varchar(50),
