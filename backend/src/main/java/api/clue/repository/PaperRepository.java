@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PaperRepository {
 
-  List<Paper> find(PaperSearchProvider provider);
+  List<Paper> find(PaperSearchProvider provider, Integer offset, Integer limit);
 
   List<Paper> findByAuthorId(Author author);
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PaperService {
 
-  List<Paper> find(PaperSearchProvider provider);
+  List<Paper> find(PaperSearchProvider provider, Integer offset, Integer limit);
 
   Paper findById(Long paperId);
 

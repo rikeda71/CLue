@@ -3,6 +3,7 @@ package api.clue.controller;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
 import api.clue.service.PaperService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,10 @@ public class PaperController {
   }
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Paper> find(PaperSearchProvider provider) {
-    return this.paperService.find(provider);
+  public List<Paper> find(PaperSearchProvider provider, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit) {
+    offset = offset != null ? offset : 0;
+    limit = limit != null ? limit : 100;
+    return this.paperService.find(provider, offset, limit);
   }
 
   @GetMapping(value = "/{paperId}", produces = MediaType.APPLICATION_JSON_VALUE)

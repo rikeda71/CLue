@@ -28,7 +28,7 @@ public interface PaperMapper {
 
   @SelectProvider(type = PaperSqlProvider.class, method = "find")
   @ResultMap(value = "Paper")
-  List<Paper> findPapers(PaperSearchProvider provider);
+  List<Paper> findPapers(PaperSearchProvider provider, Integer offset, Integer limit);
 
   @InsertProvider(type = PaperSqlProvider.class, method = "insert")
   @ResultMap(value = "Paper")
@@ -41,34 +41,36 @@ public interface PaperMapper {
   void delete(Long paperId);
 
   class PaperSqlProvider extends DynamicSqlProvider {
-    public String find(PaperSearchProvider provider) {
+    public String find(PaperSearchProvider provider, Integer offset, Integer limit) {
       return new SQL() {
         {
           SELECT("paper_id, year, label, task, session, title, "
               + "url, introduction, lang, conference");
           FROM("papers");
           if (provider.getYear() != null) {
-            WHERE("year = #{year}");
+            WHERE("year = " + provider.getYear());
           }
           if (provider.getLabel() != null) {
-            WHERE("label = #{label}");
+            WHERE("label = '" + provider.getLabel() + "'");
           }
           if (provider.getTask() != null) {
-            WHERE("task = #{task}");
+            WHERE("task = '" + provider.getTask() + "'");
           }
           if (provider.getTitle() != null) {
-            WHERE("title LIKE CONCAT('%', #{title}, '%')");
+            WHERE("title LIKE CONCAT('%', '" + provider.getTitle() + "', '%')");
           }
           if (provider.getIntroduction() != null) {
-            WHERE("introduction LIKE CONCAT('%', #{introduction}, '%')");
+            WHERE("introduction LIKE CONCAT('%', '" + provider.getIntroduction() + "', '%')");
           }
           if (provider.getLang() != null) {
-            WHERE("lang = #{lang}");
+            WHERE("lang = '" + provider.getLang() + "'");
           }
           if (provider.getConference() != null) {
-            WHERE("conference = #{conference}");
+            WHERE("conference = '" + provider.getConference() + "'");
           }
           ORDER_BY("year DESC, paper_id ASC");
+          OFFSET(offset * limit);
+          LIMIT(limit);
         }
       }.toString();
     }
