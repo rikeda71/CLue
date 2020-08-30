@@ -41,7 +41,7 @@ public class PaperControllerTest implements ControllerTestInterface {
   public void testFindWithNullParameter() throws Exception {
     // setup
     List<Paper> papers = new ArrayList<>();
-    Mockito.doReturn(papers).when(this.paperService).find(ArgumentMatchers.any(PaperSearchProvider.class));
+    Mockito.doReturn(papers).when(this.paperService).find(ArgumentMatchers.any(PaperSearchProvider.class), ArgumentMatchers.anyInt(),  ArgumentMatchers.anyInt());
     // when
     var result = mockMvc.perform(MockMvcRequestBuilders
         .get("/api/v1/papers"))
@@ -49,7 +49,7 @@ public class PaperControllerTest implements ControllerTestInterface {
         .andReturn();
     // then
     assertEquals(result.getResponse().getContentAsString(), entity2String(papers));
-    Mockito.verify(this.paperService, Mockito.times(1)).find(ArgumentMatchers.any(PaperSearchProvider.class));
+    Mockito.verify(this.paperService, Mockito.times(1)).find(ArgumentMatchers.any(PaperSearchProvider.class), ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt());
   }
 
   @Test
@@ -59,7 +59,7 @@ public class PaperControllerTest implements ControllerTestInterface {
     PaperSearchProvider provider = new PaperSearchProvider();
     var label = "SA";
     provider.setLabel(label);
-    Mockito.doReturn(papers).when(this.paperService).find(ArgumentMatchers.any(PaperSearchProvider.class));
+    Mockito.doReturn(papers).when(this.paperService).find(ArgumentMatchers.any(PaperSearchProvider.class), ArgumentMatchers.anyInt(),  ArgumentMatchers.anyInt());
     // when
     var result = mockMvc.perform(MockMvcRequestBuilders
         .get("/api/v1/papers")
@@ -68,7 +68,7 @@ public class PaperControllerTest implements ControllerTestInterface {
         .andReturn();
     // then
     assertEquals(result.getResponse().getContentAsString(), entity2String(papers));
-    Mockito.verify(this.paperService, Mockito.times(1)).find(ArgumentMatchers.any(PaperSearchProvider.class));
+    Mockito.verify(this.paperService, Mockito.times(1)).find(ArgumentMatchers.any(PaperSearchProvider.class), ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt());
   }
 
   @Test

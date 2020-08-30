@@ -21,8 +21,8 @@ public class PaperRepositoryImpl implements PaperRepository {
   }
 
   @Override
-  public List<Paper> find(PaperSearchProvider provider) {
-    return this.paperMapper.findPapers(provider);
+  public List<Paper> find(PaperSearchProvider provider, Integer offset, Integer limit) {
+    return this.paperMapper.findPapers(provider, offset, limit);
   }
 
   @Override

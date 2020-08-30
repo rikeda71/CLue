@@ -26,8 +26,8 @@ public class PaperServiceImpl implements PaperService {
   }
 
   @Override
-  public List<Paper> find(PaperSearchProvider provider) {
-    return this.paperRepository.find(provider);
+  public List<Paper> find(PaperSearchProvider provider, Integer offset, Integer limit) {
+    return this.paperRepository.find(provider, offset, limit);
   }
 
   @Override

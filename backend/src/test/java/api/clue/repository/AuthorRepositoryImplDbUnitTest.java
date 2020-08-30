@@ -37,7 +37,6 @@ public class AuthorRepositoryImplDbUnitTest {
       var authorName = "松本";
       List<Author> authors = this.authorRepository.findByName(authorName);
       assertNotNull(authors);
-      assertFalse(authors.isEmpty());
     }
 
     @Test
@@ -47,7 +46,6 @@ public class AuthorRepositoryImplDbUnitTest {
       paper.setPaperId(paperId);
       List<Author> authors = this.authorRepository.findByPaperId(paper);
       assertNotNull(authors);
-      assertFalse(authors.isEmpty());
     }
 
   }
@@ -62,7 +60,7 @@ public class AuthorRepositoryImplDbUnitTest {
     @Test
     public void testInsert() {
       Author author = new Author();
-      var name = "name";
+      var name = "name in author repository test";
       author.setName(name);
 
       this.authorRepository.add(author);
