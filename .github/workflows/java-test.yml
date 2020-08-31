@@ -13,4 +13,4 @@ jobs:
         with:
           java-version: 11
       - name: build with gradle
-        run: ./gradlew build
+        run: cd backend && ./gradlew build
