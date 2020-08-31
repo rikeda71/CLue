@@ -26,7 +26,8 @@ services:
 
   api:
     image: openjdk:11-jdk-slim-sid
-    command: bash -c "./gradlew build --continuous & ./gradlew bootRUN"
+    # command: bash -c "./gradlew build --continuous & ./gradlew bootRUN"
+    command: java -jar build/libs/backend.jar
     container_name: paper_search_api
     working_dir: /app
     volumes:
