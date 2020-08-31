@@ -1,4 +1,5 @@
 import { apiUrl } from "./config";
+import { PaperSearchConditionType } from "./types";
 
 export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchConditionType): string {
   if (!!queryParams) {
