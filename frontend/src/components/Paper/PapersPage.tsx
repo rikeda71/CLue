@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { PapersType, PapersPageProps, PaperSearchConditionType } from "../../types";
 import Papers from "./Papers";
-import SearchBox from "../SearchBox/SearchBox";
+import SearchBox from "../Search/SearchBox";
 import { createGetRequestUrl } from "../../utils";
+import SearchModal from "../Search/SearchModal";
 
 const PapersPageStyle = styled.div``;
 
@@ -35,6 +36,7 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   return (
     <PapersPageStyle>
       <SearchBox onButtonClickFunction={getPapers} />
+      {/* <SearchModal isOpen={true} /> */}
       <Papers {...papers} />
     </PapersPageStyle>
   );

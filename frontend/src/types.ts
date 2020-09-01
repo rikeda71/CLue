@@ -30,6 +30,8 @@ export type PaperSearchConditionType = {
   introduction?: string;
   lang?: string;
   conference?: string;
+  limit?: number;
+  offset?: number;
 };
 
 export type PaperPageProps = {

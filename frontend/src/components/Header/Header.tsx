@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import SearchBox from "../SearchBox/SearchBox";
 
 export const HeaderStyle = styled.header`
-  padding: 1.2rem 0 1.2rem 3rem;
-  background-color: #f1f1f1;
+  padding: 2rem 0 1.2rem 5rem;
   display: flex;
 `;
 

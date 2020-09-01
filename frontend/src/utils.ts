@@ -12,6 +12,6 @@ export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchCo
           .join("&")
     );
   } else {
-    return apiUrl + urlPath;
+    return apiUrl + urlPath + "?limit=100&offset=0";
   }
 }

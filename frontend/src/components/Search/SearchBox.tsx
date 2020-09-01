@@ -45,10 +45,12 @@ const SearchButtonStyle = styled.input`
 
 type SearchBoxPropsType = {
   onButtonClickFunction: Function;
+  placeholder?: string;
 };
 
 const SearchBox: React.FC<SearchBoxPropsType> = props => {
   const [query, setQuery] = useState("");
+  const placeholder = !!props.placeholder ? props.placeholder : "キーワード";
 
   const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -61,7 +63,7 @@ const SearchBox: React.FC<SearchBoxPropsType> = props => {
 
   return (
     <SearchBoxStyle>
-      <FormStyle onChange={onFormChange} placeholder="キーワード"></FormStyle>
+      <FormStyle onChange={onFormChange} placeholder={placeholder}></FormStyle>
       <SearchButtonStyle onClick={onButtonClick} type="submit" value="検索" />
     </SearchBoxStyle>
   );

@@ -8,7 +8,7 @@
     "build": "webpack --mode production",
     "lint": "eslint src/index.tsx",
     "lint:fix": "eslint --fix src/index.tsx",
-    "storybook": "start-storybook -p 3000"
+    "storybook": "start-storybook -p 4000"
   },
   "author": "Ryuya Ikeda(@s14t284)",
   "license": "ISC",
@@ -24,7 +24,7 @@
     "@storybook/addon-knobs": "^5.3.19",
     "@storybook/addon-storysource": "^5.3.19",
     "@storybook/addon-viewport": "^5.3.19",
-    "@storybook/cli": "^5.3.19",
+    "@storybook/cli": "^6.0.21",
     "@storybook/react": "^5.3.19",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -39,17 +39,20 @@
     "babel-polyfill": "^6.26.0",
     "eslint": "^7.1.0",
     "eslint-plugin-react": "^7.20.0",
-    "react": "^16.13.1",
     "react-docgen-typescript-loader": "^3.7.2",
-    "react-dom": "^16.13.1",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "storybook": "^5.3.19",
-    "styled-components": "^5.1.1",
+    "storybook": "^6.0.21",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-modal": "^3.11.2",
+    "styled-components": "^5.1.1"
   }
 }
