@@ -61,9 +61,16 @@ const SearchBox: React.FC<SearchBoxPropsType> = props => {
     props.onButtonClickFunction(queryParam);
   };
 
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.which === 13) {
+      const queryParam: PaperSearchConditionType = { title: query };
+      props.onButtonClickFunction(queryParam);
+    }
+  };
+
   return (
     <SearchBoxStyle>
-      <FormStyle onChange={onFormChange} placeholder={placeholder}></FormStyle>
+      <FormStyle onChange={onFormChange} onKeyPress={onKeyPress} placeholder={placeholder}></FormStyle>
       <SearchButtonStyle onClick={onButtonClick} type="submit" value="検索" />
     </SearchBoxStyle>
   );
