@@ -40,6 +40,10 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
     console.log("search");
   };
 
+  const onSelectYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setYear(parseInt(e.target.value));
+  };
+
   return (
     <Modal isOpen={props.isOpen}>
       <table>
@@ -47,9 +51,13 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
           <tr>
             <td>年</td>
             <td>
-              <select name="year">
-                {getYearsFrom2014().map(year => {
-                  return <option value={year}>{year}</option>;
+              <select name="year" onChange={onSelectYear}>
+                {getYearsFrom2014().map((year, i) => {
+                  return (
+                    <option value={year} key={i}>
+                      {year}
+                    </option>
+                  );
                 })}
               </select>
             </td>
@@ -58,8 +66,12 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             <td>会議</td>
             <td>
               <select name="conference">
-                {getConferenceList().map(conf => {
-                  return <option value={conf}>{conf}</option>;
+                {getConferenceList().map((conf, i) => {
+                  return (
+                    <option value={conf} key={i}>
+                      {conf}
+                    </option>
+                  );
                 })}
               </select>
             </td>
@@ -68,8 +80,12 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             <td>タスク</td>
             <td>
               <select name="task">
-                {getTaskList().map(task => {
-                  return <option value={task}>{task}</option>;
+                {getTaskList().map((task, i) => {
+                  return (
+                    <option value={task} key={i}>
+                      {task}
+                    </option>
+                  );
                 })}
               </select>
             </td>
