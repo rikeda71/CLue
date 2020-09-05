@@ -1,17 +1,45 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-import SearchBox from "./SearchBox";
+import MainButton from "../MainButton";
+import { createGetRequestUrl } from "../../utils";
+import { PaperSearchConditionType } from "../../types";
 
-const SearchModalStyle = styled.div``;
+const ModalTableStyle = styled.table`
+  border-collapse: collapse;
+  border-spacing: 10;
+`;
+
+const TitleTd = styled.td`
+  padding-right: 10px;
+  padding-bottom: 15px;
+`;
+
+const DetailSearchButtonDiv = styled.div`
+  margin: 10px 0;
+  text-align: center;
+`;
+
+const customModalStyle = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 type SearchModalPropsType = {
   isOpen: boolean;
+  onRequestClose: () => void;
+  setPapers: (papers: PapersType) => void;
 };
 
 const getYearsFrom2014 = (): number[] => {
   const today = new Date();
-  const years: number[] = [];
+  const years: (number | null)[] = [null];
   for (let y = 2014; y <= today.getFullYear(); y++) {
     years.push(y);
   }
@@ -28,6 +56,7 @@ const getTaskList = (): (string | null)[] => {
   return [null, "Sentiment Analysis", "Machine Translation"];
 };
 
+Modal.setAppElement("#root");
 const SearchModal: React.FC<SearchModalPropsType> = props => {
   const [year, setYear] = useState<number | null>(null);
   const [conference, setConference] = useState<string | null>(null);
@@ -37,19 +66,58 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   const [intro, setIntro] = useState<string | null>(null);
 
   const searchPapers = () => {
-    console.log("search");
+    const queryParam: PaperSearchConditionType = {
+      year: year,
+      label: label,
+      task: task,
+      conference: conference,
+      title: title,
+      introduction: intro,
+    };
+    getpapers(queryParam);
+    props.onRequestClose();
   };
+
+  async function getpapers(queryParam: PaperSearchConditionType) {
+    const requestUrl = createGetRequestUrl("/api/v1/papers", queryParam);
+    await fetch(requestUrl, {
+      method: "GET",
+      mode: "cors",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    })
+      .then(res => res.json())
+      .then(res => {
+        return res;
+      })
+      .then(res => props.setPapers({ papers: res }));
+  }
 
   const onSelectYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setYear(parseInt(e.target.value));
   };
 
+  const onSelectConference = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setConference(e.target.value);
+  };
+
+  const onSelectTask = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTask(e.target.value);
+  };
+
+  const onSetTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const onIntroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIntro(e.target.value);
+  };
+
   return (
-    <Modal isOpen={props.isOpen}>
-      <table>
+    <Modal isOpen={props.isOpen} onRequestClose={props.onRequestClose} style={customModalStyle}>
+      <ModalTableStyle>
         <tbody>
           <tr>
-            <td>年</td>
+            <TitleTd>公開年</TitleTd>
             <td>
               <select name="year" onChange={onSelectYear}>
                 {getYearsFrom2014().map((year, i) => {
@@ -63,9 +131,9 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             </td>
           </tr>
           <tr>
-            <td>会議</td>
+            <TitleTd>Conference</TitleTd>
             <td>
-              <select name="conference">
+              <select name="conference" onChange={onSelectConference}>
                 {getConferenceList().map((conf, i) => {
                   return (
                     <option value={conf} key={i}>
@@ -77,9 +145,9 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             </td>
           </tr>
           <tr>
-            <td>タスク</td>
+            <TitleTd>タスク名</TitleTd>
             <td>
-              <select name="task">
+              <select name="task" onChange={onSelectTask}>
                 {getTaskList().map((task, i) => {
                   return (
                     <option value={task} key={i}>
@@ -91,19 +159,22 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             </td>
           </tr>
           <tr>
-            <td>タイトル</td>
+            <TitleTd>論文タイトル</TitleTd>
             <td>
-              <input />
+              <input onChange={onSetTitle} />
             </td>
           </tr>
           <tr>
-            <td>introduction / abstract</td>
+            <TitleTd>アブストに含まれる単語</TitleTd>
             <td>
-              <input />
+              <input onChange={onIntroChange} />
             </td>
           </tr>
         </tbody>
-      </table>
+      </ModalTableStyle>
+      <DetailSearchButtonDiv>
+        <MainButton onClick={searchPapers}>検索</MainButton>
+      </DetailSearchButtonDiv>
     </Modal>
   );
 };
