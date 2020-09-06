@@ -18,7 +18,7 @@ public class ConferenceController {
     this.conferenceService = conferenceService;
   }
 
-  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Conference> findAll() {
     return this.conferenceService.findAll();
   }

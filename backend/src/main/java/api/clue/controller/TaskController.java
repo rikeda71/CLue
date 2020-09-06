@@ -18,7 +18,7 @@ public class TaskController {
     this.taskService = taskService;
   }
 
-  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Task> findAll() {
     return this.taskService.findAll();
   }
