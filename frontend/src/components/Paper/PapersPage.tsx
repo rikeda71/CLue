@@ -21,6 +21,7 @@ export type PapersPageProps = {
 const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
     const requestUrl = createGetRequestUrl("/api/v1/papers", queryParam);
@@ -34,6 +35,7 @@ const PapersPage: React.FC<PapersPageProps> = props => {
         return res;
       })
       .then(res => setPapers(res));
+    setIsLoading(false);
   }
 
   if (props.papers != null) {
@@ -50,8 +52,15 @@ const PapersPage: React.FC<PapersPageProps> = props => {
       <DetailSearchButtonDiv>
         <MainButton onClick={e => setModalIsOpen(true)}>詳細検索</MainButton>
       </DetailSearchButtonDiv>
-      <SearchModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} setPapers={setPapers} />
-      <Papers papers={papers} getPapers={getPapers} />
+      <SearchModal
+        isOpen={modalIsOpen}
+        onRequestClose={() => {
+          setModalIsOpen(false);
+        }}
+        setPapers={setPapers}
+        setIsLoading={setIsLoading}
+      />
+      <Papers papers={papers} getPapers={getPapers} isLoading={isLoading} />
     </PapersPageStyle>
   );
 };

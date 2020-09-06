@@ -50,9 +50,10 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-md-spinner": "^1.0.0",
+    "react-modal": "^3.11.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-modal": "^3.11.2",
     "styled-components": "^5.1.1"
   }
 }

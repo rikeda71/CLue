@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Paper from "./Paper";
+import Loading from "../Loading";
 import { PaperType, PaperSearchConditionType } from "../../types";
 
 export const PapersStyle = styled.div`
@@ -11,6 +12,7 @@ export const PapersStyle = styled.div`
 type PapersPropsType = {
   papers: Array<PaperType>;
   getPapers?: (queryParam?: PaperSearchConditionType) => Promise<void>;
+  isLoading: boolean;
 };
 
 const Papers: React.FC<PapersPropsType> = props => {
@@ -20,6 +22,7 @@ const Papers: React.FC<PapersPropsType> = props => {
         props.papers.map(paper => {
           return <Paper paper={paper} getPapers={props.getPapers} key={paper.paperId} />;
         })}
+      <Loading isShown={props.isLoading} />
     </PapersStyle>
   );
 };

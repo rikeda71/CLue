@@ -35,6 +35,7 @@ type SearchModalPropsType = {
   isOpen: boolean;
   onRequestClose: () => void;
   setPapers: (papers: Array<PaperType>) => void;
+  setIsLoading: (boolean) => void;
 };
 
 Modal.setAppElement("#root");
@@ -60,6 +61,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
       introduction: intro,
     };
     getpapers(queryParam);
+    props.setIsLoading(false);
     props.onRequestClose();
   };
 
@@ -74,7 +76,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
       .then(res => {
         return res;
       })
-      .then(res => props.setPapers({ papers: res }));
+      .then(res => props.setPapers(res));
   }
 
   const getYears = async () => {
@@ -222,7 +224,14 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
         </tbody>
       </ModalTableStyle>
       <DetailSearchButtonDiv>
-        <MainButton onClick={searchPapers}>検索</MainButton>
+        <MainButton
+          onClick={e => {
+            props.setIsLoading(true);
+            searchPapers();
+          }}
+        >
+          検索
+        </MainButton>
       </DetailSearchButtonDiv>
     </Modal>
   );
