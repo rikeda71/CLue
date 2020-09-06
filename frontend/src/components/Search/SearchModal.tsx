@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import MainButton from "../MainButton";
 import { createGetRequestUrl } from "../../utils";
-import { PaperSearchConditionType } from "../../types";
+import { PaperSearchConditionType, PapersType, YearType, ConferenceType, TaskType } from "../../types";
 
 const ModalTableStyle = styled.table`
   border-collapse: collapse;
@@ -37,38 +37,23 @@ type SearchModalPropsType = {
   setPapers: (papers: PapersType) => void;
 };
 
-const getYearsFrom2014 = (): number[] => {
-  const today = new Date();
-  const years: (number | null)[] = [null];
-  for (let y = 2014; y <= today.getFullYear(); y++) {
-    years.push(y);
-  }
-  return years;
-};
-
-const getConferenceList = (): (string | null)[] => {
-  // TODO: APIから取得する
-  return [null, "NLP", "ACL", "NAACL", "EMNLP"];
-};
-
-const getTaskList = (): (string | null)[] => {
-  // TODO: APIから取得する
-  return [null, "Sentiment Analysis", "Machine Translation"];
-};
-
 Modal.setAppElement("#root");
 const SearchModal: React.FC<SearchModalPropsType> = props => {
+  // リクエストに付け加えるstate
   const [year, setYear] = useState<number | null>(null);
   const [conference, setConference] = useState<string | null>(null);
-  const [label, setLabel] = useState<string | null>(null);
   const [task, setTask] = useState<string | null>(null);
   const [title, setTitle] = useState<string>("");
   const [intro, setIntro] = useState<string | null>(null);
 
+  // フォームの選択肢に関するstate
+  const [years, setYears] = useState<(number | null)[]>([]);
+  const [conferences, setConferences] = useState<(string | null)[]>([]);
+  const [tasks, setTasks] = useState<(string | null)[]>([]);
+
   const searchPapers = () => {
     const queryParam: PaperSearchConditionType = {
       year: year,
-      label: label,
       task: task,
       conference: conference,
       title: title,
@@ -92,6 +77,64 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
       .then(res => props.setPapers({ papers: res }));
   }
 
+  const getYears = async () => {
+    const requestUrl = createGetRequestUrl("/api/v1/year");
+    await fetch(requestUrl, {
+      method: "GET",
+      mode: "cors",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    })
+      .then(res => res.json())
+      .then((res: YearType[]) => {
+        const years: (number | null)[] = [null];
+        res.forEach(item => {
+          years.push(item.year);
+        });
+        return years;
+      })
+      .then(res => setYears(res));
+  };
+
+  const getConferenceList = async () => {
+    const requestUrl = createGetRequestUrl("/api/v1/conference");
+    await fetch(requestUrl, {
+      method: "GET",
+      mode: "cors",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    })
+      .then(res => res.json())
+      .then((res: ConferenceType[]) => {
+        const conferences: (string | null)[] = [null];
+        res.forEach(item => {
+          conferences.push(item.conferenceName);
+        });
+        return conferences;
+      })
+      .then(res => setConferences(res));
+  };
+
+  const getTaskList = async () => {
+    const requestUrl = createGetRequestUrl("/api/v1/task");
+    await fetch(requestUrl, {
+      method: "GET",
+      mode: "cors",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    })
+      .then(res => res.json())
+      .then((res: TaskType[]) => {
+        const tasks: (string | null)[] = [null];
+        res.forEach(item => {
+          tasks.push(item.taskName);
+        });
+        return tasks;
+      })
+      .then(res => {
+        console.log(res);
+        return res;
+      })
+      .then(res => setTasks(res));
+  };
+
   const onSelectYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setYear(parseInt(e.target.value));
   };
@@ -112,6 +155,13 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
     setIntro(e.target.value);
   };
 
+  useEffect(() => {
+    // フォームの選択肢の取得
+    getYears();
+    getConferenceList();
+    getTaskList();
+  }, []);
+
   return (
     <Modal isOpen={props.isOpen} onRequestClose={props.onRequestClose} style={customModalStyle}>
       <ModalTableStyle>
@@ -120,7 +170,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             <TitleTd>公開年</TitleTd>
             <td>
               <select name="year" onChange={onSelectYear}>
-                {getYearsFrom2014().map((year, i) => {
+                {years.map((year, i) => {
                   return (
                     <option value={year} key={i}>
                       {year}
@@ -134,7 +184,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             <TitleTd>Conference</TitleTd>
             <td>
               <select name="conference" onChange={onSelectConference}>
-                {getConferenceList().map((conf, i) => {
+                {conferences.map((conf, i) => {
                   return (
                     <option value={conf} key={i}>
                       {conf}
@@ -148,7 +198,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
             <TitleTd>タスク名</TitleTd>
             <td>
               <select name="task" onChange={onSelectTask}>
-                {getTaskList().map((task, i) => {
+                {tasks.map((task, i) => {
                   return (
                     <option value={task} key={i}>
                       {task}

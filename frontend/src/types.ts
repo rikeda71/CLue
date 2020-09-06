@@ -24,7 +24,6 @@ export type PapersType = {
 
 export type PaperSearchConditionType = {
   year?: number;
-  label?: string;
   task?: string;
   title?: string;
   introduction?: string;
@@ -45,4 +44,20 @@ export type PapersPageProps = {
 
 export type AuthorPageProps = {
   authorId: number;
+};
+
+export type ConferenceType = {
+  conferenceId: number;
+  conferenceName: string;
+};
+
+export type YearType = {
+  yearId: number;
+  year: number;
+};
+
+export type TaskType = {
+  taskId: number;
+  taskName: string;
+  taskLabelName: string;
 };

@@ -15,7 +15,8 @@ export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchCo
         "?" +
         Object.entries(trueQueryParams)
           .map(map => `${map[0]}=${map[1]}`)
-          .join("&")
+          .join("&") +
+        "&limit=50&offset=0"
     );
   } else {
     return apiUrl + urlPath + "?limit=100&offset=0";
