@@ -57,13 +57,13 @@ public class PaperControllerTest implements ControllerTestInterface {
     // setup
     List<Paper> papers = new ArrayList<>();
     PaperSearchProvider provider = new PaperSearchProvider();
-    var label = "SA";
-    provider.setLabel(label);
+    var task = "Parsing";
+    provider.setLabel(task);
     Mockito.doReturn(papers).when(this.paperService).find(ArgumentMatchers.any(PaperSearchProvider.class), ArgumentMatchers.anyInt(),  ArgumentMatchers.anyInt());
     // when
     var result = mockMvc.perform(MockMvcRequestBuilders
         .get("/api/v1/papers")
-        .param("label", label))
+        .param("task", task))
         .andExpect(status().isOk())
         .andReturn();
     // then
