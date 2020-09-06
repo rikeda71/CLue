@@ -1,6 +1,7 @@
 package api.clue.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,9 @@ public class PaperSearchProvider {
   private String lang;
 
   private String conference;
+
+  private List<String> titleWords;
+
+  private List<String> introWords;
 
 }

@@ -53,11 +53,15 @@ public interface PaperMapper {
           if (provider.getTask() != null) {
             WHERE("task = '" + provider.getTask() + "'");
           }
-          if (provider.getTitle() != null) {
-            WHERE("title LIKE CONCAT('%', '" + provider.getTitle() + "', '%')");
+          if (provider.getTitleWords() != null) {
+            for (String word: provider.getTitleWords()) {
+              WHERE("title LIKE CONCAT('%', '" + word + "', '%')");
+            }
           }
-          if (provider.getIntroduction() != null) {
-            WHERE("introduction LIKE CONCAT('%', '" + provider.getIntroduction() + "', '%')");
+          if (provider.getIntroWords() != null) {
+            for (String word: provider.getIntroWords()) {
+              WHERE("introduction LIKE CONCAT('%', '" + word + "', '%')");
+            }
           }
           if (provider.getLang() != null) {
             WHERE("lang = '" + provider.getLang() + "'");
