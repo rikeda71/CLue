@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const HeaderStyle = styled.header`
-  margin: 1rem 0 3rem 3rem;
+  padding: 2rem 0 1.2rem 5rem;
+  display: flex;
 `;
 
 export const Title = styled.h1`

@@ -9,7 +9,10 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import styled from "styled-components";
 
-const AppStyle = styled.div``;
+const AppStyle = styled.div`
+  width: 85%;
+  margin: 0 auto;
+`;
 
 const MainPageStyle = styled.div`
   margin: 1rem 0;
