@@ -50,9 +50,6 @@ public interface PaperMapper {
           if (provider.getYear() != null) {
             WHERE("year = " + provider.getYear());
           }
-          if (provider.getLabel() != null) {
-            WHERE("label = '" + provider.getLabel() + "'");
-          }
           if (provider.getTask() != null) {
             WHERE("task = '" + provider.getTask() + "'");
           }
