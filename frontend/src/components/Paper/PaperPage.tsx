@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { PaperPageProps, PaperType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";

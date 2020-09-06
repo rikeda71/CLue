@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { PapersType, PapersPageProps, PaperSearchConditionType } from "../../types";
+import { PapersType, PapersPageProps, PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
 import { createGetRequestUrl } from "../../utils";
@@ -15,7 +15,7 @@ const DetailSearchButtonDiv = styled.div`
 `;
 
 const PapersPage: React.FC<PapersPageProps> = props => {
-  const [papers, setPapers] = useState<PapersType>({ papers: [] });
+  const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
@@ -29,11 +29,11 @@ const PapersPage: React.FC<PapersPageProps> = props => {
       .then(res => {
         return res;
       })
-      .then(res => setPapers({ papers: res }));
+      .then(res => setPapers(res));
   }
 
   if (props.papers != null) {
-    setPapers({ papers: props.papers });
+    setPapers(props.papers);
   }
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const PapersPage: React.FC<PapersPageProps> = props => {
         <MainButton onClick={e => setModalIsOpen(true)}>詳細検索</MainButton>
       </DetailSearchButtonDiv>
       <SearchModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} setPapers={setPapers} />
-      <Papers {...papers} />
+      <Papers papers={papers} getPapers={getPapers} />
     </PapersPageStyle>
   );
 };

@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import MainButton from "../MainButton";
 import { createGetRequestUrl } from "../../utils";
-import { PaperSearchConditionType, PapersType, YearType, ConferenceType, TaskType } from "../../types";
+import { PaperSearchConditionType, PapersType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
 
 const ModalTableStyle = styled.table`
   border-collapse: collapse;
@@ -34,7 +34,7 @@ const customModalStyle = {
 type SearchModalPropsType = {
   isOpen: boolean;
   onRequestClose: () => void;
-  setPapers: (papers: PapersType) => void;
+  setPapers: (papers: Array<PaperType>) => void;
 };
 
 Modal.setAppElement("#root");
@@ -129,7 +129,6 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
         return tasks;
       })
       .then(res => {
-        console.log(res);
         return res;
       })
       .then(res => setTasks(res));
