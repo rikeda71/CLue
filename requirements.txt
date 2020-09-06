@@ -1,0 +1,4 @@
+requests
+tqdm
+PyMySQL
+python-dotenv
