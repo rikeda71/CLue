@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { PaperPageProps, PaperType } from "../../types";
+import { PaperType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
 import PaperDetail from "./PaperDetail";
 
-const PaperPage: React.FC<PaperPageProps> = props => {
+const PaperPage: React.FC = () => {
   const { id } = useParams();
   const [paper, setPaper] = useState<PaperType>();
   const requestUrl = createGetRequestUrl(`/api/v1/papers/${id}`);

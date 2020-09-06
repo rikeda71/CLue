@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import MainButton from "../MainButton";
 import { createGetRequestUrl } from "../../utils";
-import { PaperSearchConditionType, PapersType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
+import { PaperSearchConditionType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
 
 const ModalTableStyle = styled.table`
   border-collapse: collapse;

@@ -18,10 +18,6 @@ export type AuthorType = {
   papers?: Array<PaperType>;
 };
 
-export type PapersType = {
-  papers: Array<PaperType>;
-};
-
 export type PaperSearchConditionType = {
   year?: number;
   task?: string;
@@ -31,19 +27,6 @@ export type PaperSearchConditionType = {
   conference?: string;
   limit?: number;
   offset?: number;
-};
-
-export type PaperPageProps = {
-  paperId: number;
-};
-
-export type PapersPageProps = {
-  papers?: Array<PaperType>;
-  queryParams?: PaperSearchConditionType;
-};
-
-export type AuthorPageProps = {
-  authorId: number;
 };
 
 export type ConferenceType = {

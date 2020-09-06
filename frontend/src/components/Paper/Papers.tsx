@@ -10,7 +10,7 @@ export const PapersStyle = styled.div`
 
 type PapersPropsType = {
   papers: Array<PaperType>;
-  getPapers: (queryParam?: PaperSearchConditionType) => Promise<void>;
+  getPapers?: (queryParam?: PaperSearchConditionType) => Promise<void>;
 };
 
 const Papers: React.FC<PapersPropsType> = props => {

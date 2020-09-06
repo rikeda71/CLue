@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { PapersType, PapersPageProps, PaperSearchConditionType, PaperType } from "../../types";
+import { PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
 import { createGetRequestUrl } from "../../utils";
@@ -13,6 +13,10 @@ const DetailSearchButtonDiv = styled.div`
   margin: 10px 0;
   text-align: center;
 `;
+export type PapersPageProps = {
+  papers?: Array<PaperType>;
+  queryParams?: PaperSearchConditionType;
+};
 
 const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<Array<PaperType>>([]);

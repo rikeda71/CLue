@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { AuthorPageProps, AuthorType } from "../../types";
+import { AuthorType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
 import Paper from "../Paper/Paper";
