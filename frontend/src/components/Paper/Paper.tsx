@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { PaperType } from "../../types";
 import { Link } from "react-router-dom";
+import { PaperType, PaperSearchConditionType } from "../../types";
 
 export const PaperStyle = styled.div`
   border: solid;
@@ -38,6 +38,9 @@ export const PaperConference = styled.div`
   color: #fafafa;
   font-size: small;
   font-weight: bold;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const PaperTask = styled.div`
@@ -51,6 +54,9 @@ export const PaperTask = styled.div`
   color: #ffffff;
   font-size: small;
   font-weight: bold;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const PaperAuthors = styled.div`
@@ -72,15 +78,21 @@ export const PaperLink = styled.div`
   margin-right: 10px;
 `;
 
-const Paper: React.FC<PaperType> = props => {
+type PaperPropsType = {
+  paper: PaperType;
+  getPapers?: (queryParam?: PaperSearchConditionType) => Promise<void>;
+};
+
+const Paper: React.FC<PaperPropsType> = props => {
+  console.log(props.paper);
   return (
     <PaperStyle>
       <PaperTitle>
-        <Link to={`/paper/${props.paperId}`}>{props.title}</Link>
+        <Link to={`/paper/${props.paper.paperId}`}>{props.paper.title}</Link>
       </PaperTitle>
-      {!!props.authors && (
+      {!!props.paper.authors && (
         <PaperAuthors>
-          {props.authors.map(author => (
+          {props.paper.authors.map(author => (
             <PaperAuthor key={author.authorId}>
               <Link to={`/author/${author.authorId}`}>{author.name}</Link>
             </PaperAuthor>
@@ -88,13 +100,15 @@ const Paper: React.FC<PaperType> = props => {
         </PaperAuthors>
       )}
       <PaperTags>
-        <PaperConference>
-          {props.conference}
-          {props.year}
+        <PaperConference onClick={e => props.getPapers({ conference: props.paper.conference, year: props.paper.year })}>
+          {props.paper.conference}
+          {props.paper.year}
         </PaperConference>
-        {!!props.task && <PaperTask>{props.task}</PaperTask>}
+        {!!props.paper.task && (
+          <PaperTask onClick={e => props.getPapers({ task: props.paper.task })}>{props.paper.task}</PaperTask>
+        )}
         <PaperLink>
-          <a href={props.url}>pdf</a>
+          <a href={props.paper.url}>pdf</a>
         </PaperLink>
       </PaperTags>
     </PaperStyle>

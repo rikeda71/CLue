@@ -3,6 +3,9 @@ package api.clue.controller;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
 import api.clue.service.PaperService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +34,7 @@ public class PaperController {
   public List<Paper> find(PaperSearchProvider provider, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit) {
     offset = offset != null ? offset : 0;
     limit = limit != null ? limit : 100;
+
     return this.paperService.find(provider, offset, limit);
   }
 

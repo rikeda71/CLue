@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { PapersType, PapersPageProps, PaperSearchConditionType } from "../../types";
+import { PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
 import { createGetRequestUrl } from "../../utils";
@@ -13,10 +13,15 @@ const DetailSearchButtonDiv = styled.div`
   margin: 10px 0;
   text-align: center;
 `;
+export type PapersPageProps = {
+  papers?: Array<PaperType>;
+  queryParams?: PaperSearchConditionType;
+};
 
 const PapersPage: React.FC<PapersPageProps> = props => {
-  const [papers, setPapers] = useState<PapersType>({ papers: [] });
+  const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
     const requestUrl = createGetRequestUrl("/api/v1/papers", queryParam);
@@ -29,11 +34,12 @@ const PapersPage: React.FC<PapersPageProps> = props => {
       .then(res => {
         return res;
       })
-      .then(res => setPapers({ papers: res }));
+      .then(res => setPapers(res));
+    setIsLoading(false);
   }
 
   if (props.papers != null) {
-    setPapers({ papers: props.papers });
+    setPapers(props.papers);
   }
 
   useEffect(() => {
@@ -46,8 +52,15 @@ const PapersPage: React.FC<PapersPageProps> = props => {
       <DetailSearchButtonDiv>
         <MainButton onClick={e => setModalIsOpen(true)}>詳細検索</MainButton>
       </DetailSearchButtonDiv>
-      <SearchModal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} setPapers={setPapers} />
-      <Papers {...papers} />
+      <SearchModal
+        isOpen={modalIsOpen}
+        onRequestClose={() => {
+          setModalIsOpen(false);
+        }}
+        setPapers={setPapers}
+        setIsLoading={setIsLoading}
+      />
+      <Papers papers={papers} getPapers={getPapers} isLoading={isLoading} />
     </PapersPageStyle>
   );
 };

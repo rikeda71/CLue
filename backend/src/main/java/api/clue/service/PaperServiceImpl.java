@@ -6,6 +6,7 @@ import api.clue.domain.PaperSearchProvider;
 import api.clue.repository.AuthorRepository;
 import api.clue.repository.PaperRepository;
 import api.clue.repository.PwaRepository;
+import java.util.Arrays;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,17 @@ public class PaperServiceImpl implements PaperService {
 
   @Override
   public List<Paper> find(PaperSearchProvider provider, Integer offset, Integer limit) {
+    String title = provider.getTitle();
+    String intro = provider.getIntroduction();
+    if (title != null) {
+      var titleWords = title.replaceAll("　.+", " ").replaceAll("\\s.+", " ");
+      provider.setTitleWords(Arrays.asList(titleWords.split(" ")));
+    }
+    if (intro != null) {
+      var introWords = intro.replaceAll("　.+", " ").replaceAll("\\s.+", " ");
+      provider.setIntroWords(Arrays.asList(introWords.split(" ")));
+    }
+
     return this.paperRepository.find(provider, offset, limit);
   }
 
