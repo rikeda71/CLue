@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,7 +33,7 @@ public class PaperController {
   }
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Paper> find(PaperSearchProvider provider, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit) {
+  public List<Paper> find(@AuthenticationPrincipal OidcUser user, PaperSearchProvider provider, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit) {
     offset = offset != null ? offset : 0;
     limit = limit != null ? limit : 100;
 
@@ -62,7 +64,7 @@ public class PaperController {
   }
 
   @DeleteMapping("/{paperId}")
-  public void remove(@PathVariable Long paperId) {
+  public void remove(@AuthenticationPrincipal OidcUser user, @PathVariable Long paperId) {
     this.paperService.remove(paperId);
   }
 
