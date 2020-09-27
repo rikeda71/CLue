@@ -7,8 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,11 +37,10 @@ public class PaperController {
   }
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Paper> find(@AuthenticationPrincipal OidcUser user, PaperSearchProvider provider, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit) {
+  public List<Paper> find(PaperSearchProvider provider, @RequestParam(required = false) Integer offset, @RequestParam(required = false) Integer limit) {
     offset = offset != null ? offset : 0;
     limit = limit != null ? limit : 100;
 
-    System.out.println(user);
     return this.paperService.find(provider, offset, limit);
   }
 
@@ -52,21 +55,33 @@ public class PaperController {
   }
 
   @PostMapping(value = "")
-  public void add(@RequestBody Paper paper) {
-    this.paperService.add(paper);
+  public ResponseEntity<Void> add(@AuthenticationPrincipal UserDetails user, @RequestBody Paper paper) {
+    if (user != null) {
+      this.paperService.add(paper);
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
   }
 
   @PatchMapping(value = "/{paperId}")
-  public void set(@PathVariable Long paperId, @RequestBody Paper paper) {
-    if (paperId != paper.getPaperId()) {
-      paper.setPaperId(paperId);
+  public ResponseEntity<Void> set(@AuthenticationPrincipal UserDetails user, @PathVariable Long paperId, @RequestBody Paper paper) {
+    if (user != null) {
+      if (!paperId.equals(paper.getPaperId())) {
+        paper.setPaperId(paperId);
+      }
+      this.paperService.set(paper);
+      return new ResponseEntity<>(HttpStatus.OK);
     }
-    this.paperService.set(paper);
+    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
   }
 
   @DeleteMapping("/{paperId}")
-  public void remove(@AuthenticationPrincipal OidcUser user, @PathVariable Long paperId) {
-    this.paperService.remove(paperId);
+  public ResponseEntity<Void> remove(@AuthenticationPrincipal UserDetails user, @PathVariable Long paperId) {
+    if (user != null) {
+      this.paperService.remove(paperId);
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    return new ResponseEntity<>(HttpStatus.FORBIDDEN);
   }
 
 }
