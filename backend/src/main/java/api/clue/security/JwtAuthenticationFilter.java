@@ -31,12 +31,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
     String token = req.getHeader(TOKEN_PARAM);
-    System.out.println(token);
-    System.out.println(req);
-    String username = null;
+    String email = null;
     if (token != null) {
       try {
-        username = JwtTokenUtil.getUsernameFromToken(token);
+        email = JwtTokenUtil.getEmailFromToken(token);
+        System.out.println(email);
       } catch (IllegalArgumentException e) {
         logger.error("an error occured during getting username from token", e);
       } catch (ExpiredJwtException e) {
@@ -47,16 +46,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     } else {
       logger.warn("couldn't find bearer string, will ignore the header");
     }
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+    if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-      UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+      UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
       if (JwtTokenUtil.validateToken(token, userDetails)) {
         UsernamePasswordAuthenticationToken authentication =
             new UsernamePasswordAuthenticationToken(userDetails, null,
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-        logger.info("authenticated user " + username + ", setting security context");
+        logger.info("authenticated user " + email + ", setting security context");
         SecurityContextHolder.getContext().setAuthentication(authentication);
       }
     }

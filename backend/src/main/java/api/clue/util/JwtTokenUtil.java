@@ -28,8 +28,10 @@ public class JwtTokenUtil implements Serializable {
   }
 
   public static Boolean validateToken(String token, UserDetails userDetails) {
-    final String username = getUsernameFromToken(token);
-    return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    final String email = getEmailFromToken(token);
+    // userDetailsの仕様上、usernameとpasswordを格納することになっているが、
+    // usernameにemailを格納しているためこのようになっている
+    return email.equals(userDetails.getUsername()) && !isTokenExpired(token);
   }
 
   private static Boolean isTokenExpired(String token) {
@@ -37,7 +39,7 @@ public class JwtTokenUtil implements Serializable {
     return expiration.before(new Date());
   }
 
-  public static String getUsernameFromToken(String token) {
+  public static String getEmailFromToken(String token) {
     return getClaimFromToken(token, Claims::getSubject);
   }
 
@@ -52,8 +54,8 @@ public class JwtTokenUtil implements Serializable {
 
   private static Claims getAllClaimsFromToken(String token) {
     return Jwts.parser()
-        .setSigningKey(SIGNING_KEY)
-        .parseClaimsJws(token)
+        .setSigningKey(SIGNING_KEY.getBytes())
+        .parseClaimsJws(token.replace("Bearer ", ""))
         .getBody();
   }
 
