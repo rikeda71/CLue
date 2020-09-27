@@ -2,7 +2,6 @@ package api.clue.service;
 
 import api.clue.domain.User;
 import api.clue.repository.UserRepository;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

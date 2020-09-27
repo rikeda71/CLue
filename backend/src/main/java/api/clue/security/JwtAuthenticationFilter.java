@@ -27,7 +27,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     this.userDetailsService = userDetailsService;
   }
 
-  @SuppressWarnings("checkstyle:WhitespaceAround")
   @Override
   protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
     String token = req.getHeader(TOKEN_PARAM);

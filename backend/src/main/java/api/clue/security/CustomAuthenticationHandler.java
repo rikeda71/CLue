@@ -42,10 +42,6 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
     String email = (String) attributes.get("email");
     User user = userRepository.findByEmail(email);
     String token = JwtTokenUtil.generateToken(user);
-    // String redirectionUrl = UriComponentsBuilder.fromUriString(homeUrl)
-    //     .queryParam("auth_token", token)
-    //     .build().toUriString();
-    // getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
     HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
     httpMessageConverter.write(new Token(token), MediaType.APPLICATION_JSON, outputMessage);
     response.setStatus(HttpStatus.OK.value());
