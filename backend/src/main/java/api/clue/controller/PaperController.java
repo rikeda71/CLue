@@ -37,6 +37,7 @@ public class PaperController {
     offset = offset != null ? offset : 0;
     limit = limit != null ? limit : 100;
 
+    System.out.println(user);
     return this.paperService.find(provider, offset, limit);
   }
 

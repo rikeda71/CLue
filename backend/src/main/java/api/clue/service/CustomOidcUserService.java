@@ -35,7 +35,7 @@ public class CustomOidcUserService extends OidcUserService {
 
   private void updateUser(GoogleOAuth2UserInfo userInfo) {
     User user = userRepository.findByEmail(userInfo.getEmail());
-    if(user != null) {
+    if (user != null) {
       return;
     }
     user = new User();

@@ -16,6 +16,7 @@ public interface UserMapper {
       @Result(property = "name", column = "name"),
       @Result(property = "email", column = "email"),
       @Result(property = "imageUrl", column = "image_url"),
+      @Result(property = "password", column = "password"),
       @Result(property = "userType", column = "user_type")
   })
   User findByEmail(String email);
