@@ -1,7 +1,6 @@
 package api.clue.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import api.clue.ClueApplication;
@@ -27,21 +26,21 @@ public class AuthorRepositoryImplDbUnitTest {
 
     @Test
     public void testFindById() {
-      Long authorId = 1L;
+      Long authorId = 1000L;
       Author author = this.authorRepository.findById(authorId);
       assertNotNull(author);
     }
 
     @Test
     public void testFindByName() {
-      var authorName = "松本";
+      var authorName = "1000";
       List<Author> authors = this.authorRepository.findByName(authorName);
       assertNotNull(authors);
     }
 
     @Test
     public void testFindByPaperId() {
-      Long paperId = 1L;
+      Long paperId = 1000L;
       Paper paper = new Paper();
       paper.setPaperId(paperId);
       List<Author> authors = this.authorRepository.findByPaperId(paper);
@@ -79,7 +78,7 @@ public class AuthorRepositoryImplDbUnitTest {
 
     @Test
     public void testDelete() {
-      var authorId = 10L;
+      var authorId = 3000L;
       Author author = this.authorRepository.findById(authorId);
       this.authorRepository.remove(authorId);
       this.authorRepository.add(author);
