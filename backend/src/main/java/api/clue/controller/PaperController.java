@@ -2,18 +2,12 @@ package api.clue.controller;
 
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
+import api.clue.domain.User;
 import api.clue.service.PaperService;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.regex.Pattern;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -55,7 +49,7 @@ public class PaperController {
   }
 
   @PostMapping(value = "")
-  public ResponseEntity<Void> add(@AuthenticationPrincipal UserDetails user, @RequestBody Paper paper) {
+  public ResponseEntity<Void> add(@AuthenticationPrincipal User user, @RequestBody Paper paper) {
     if (user != null) {
       this.paperService.add(paper);
       return new ResponseEntity<>(HttpStatus.OK);
@@ -64,7 +58,7 @@ public class PaperController {
   }
 
   @PatchMapping(value = "/{paperId}")
-  public ResponseEntity<Void> set(@AuthenticationPrincipal UserDetails user, @PathVariable Long paperId, @RequestBody Paper paper) {
+  public ResponseEntity<Void> set(@AuthenticationPrincipal User user, @PathVariable Long paperId, @RequestBody Paper paper) {
     if (user != null) {
       if (!paperId.equals(paper.getPaperId())) {
         paper.setPaperId(paperId);
@@ -76,7 +70,7 @@ public class PaperController {
   }
 
   @DeleteMapping("/{paperId}")
-  public ResponseEntity<Void> remove(@AuthenticationPrincipal UserDetails user, @PathVariable Long paperId) {
+  public ResponseEntity<Void> remove(@AuthenticationPrincipal User user, @PathVariable Long paperId) {
     if (user != null) {
       this.paperService.remove(paperId);
       return new ResponseEntity<>(HttpStatus.OK);

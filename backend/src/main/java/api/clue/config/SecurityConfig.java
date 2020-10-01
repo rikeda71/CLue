@@ -2,6 +2,7 @@ package api.clue.config;
 
 import api.clue.security.CustomAuthenticationHandler;
 import api.clue.security.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final CustomAuthenticationHandler authenticationHandler;
 
-  public SecurityConfig(OidcUserService oidcUserService, UserDetailsService userDetailsService, CustomAuthenticationHandler authenticationHandler) {
+  public SecurityConfig(OidcUserService oidcUserService, UserDetailsService userDetailsService,
+      CustomAuthenticationHandler authenticationHandler) {
     this.oidcUserService = oidcUserService;
     this.userDetailsService = userDetailsService;
     this.authenticationHandler = authenticationHandler;

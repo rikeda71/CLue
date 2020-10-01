@@ -1,12 +1,12 @@
 package api.clue.controller;
 
 import api.clue.domain.Author;
+import api.clue.domain.User;
 import api.clue.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +44,7 @@ public class AuthorController {
   }
 
   @PostMapping(value = "")
-  public ResponseEntity<Void> add(@AuthenticationPrincipal UserDetails user, @RequestBody Author author) {
+  public ResponseEntity<Void> add(@AuthenticationPrincipal User user, @RequestBody Author author) {
     if (user != null) {
       this.authorService.add(author);
       return new ResponseEntity<>(HttpStatus.OK);
@@ -53,7 +53,7 @@ public class AuthorController {
   }
 
   @DeleteMapping("/{authorId}")
-  public ResponseEntity<Void> remove(@AuthenticationPrincipal UserDetails user, @PathVariable("authorId") Long authorId) {
+  public ResponseEntity<Void> remove(@AuthenticationPrincipal User user, @PathVariable("authorId") Long authorId) {
     if (user != null) {
       this.authorService.remove(authorId);
       return new ResponseEntity<>(HttpStatus.OK);

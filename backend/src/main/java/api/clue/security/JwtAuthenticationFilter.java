@@ -2,6 +2,7 @@ package api.clue.security;
 
 import static api.clue.config.Constants.TOKEN_PARAM;
 
+import api.clue.domain.User;
 import api.clue.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
@@ -49,8 +50,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
       if (JwtTokenUtil.validateToken(token, userDetails)) {
+        User user = new User();
+        user.setEmail(userDetails.getUsername());
         UsernamePasswordAuthenticationToken authentication =
-            new UsernamePasswordAuthenticationToken(userDetails, null,
+            new UsernamePasswordAuthenticationToken(user, null,
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
         logger.info("authenticated user " + email + ", setting security context");

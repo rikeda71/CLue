@@ -33,5 +33,6 @@ dependencies {
 	compile 'org.springframework.security:spring-security-oauth2-jose'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
