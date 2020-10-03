@@ -20,14 +20,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
-public class CustomAuthenticationHandler implements AuthenticationSuccessHandler, AuthenticationFailureHandler {
+public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessHandler implements AuthenticationFailureHandler {
 
   private final UserRepository userRepository;
 
   private final MappingJackson2HttpMessageConverter httpMessageConverter;
+
+  private final String frontendUrl = "http://localhost:3000/";
 
   public CustomAuthenticationHandler(UserRepository userRepository, MappingJackson2HttpMessageConverter httpMessageConverter) {
     this.userRepository = userRepository;
@@ -42,9 +45,10 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
     String email = (String) attributes.get("email");
     User user = userRepository.findByEmail(email);
     String token = JwtTokenUtil.generateToken(user);
-    HttpOutputMessage outputMessage = new ServletServerHttpResponse(response);
-    httpMessageConverter.write(new Token(token), MediaType.APPLICATION_JSON, outputMessage);
-    response.setStatus(HttpStatus.OK.value());
+    String redirectionUrl = UriComponentsBuilder.fromUriString(frontendUrl)
+        .queryParam("auth_token", token)
+        .build().toUriString();
+    getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
   }
 
   @Override
