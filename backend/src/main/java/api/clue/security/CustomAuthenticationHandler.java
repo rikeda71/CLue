@@ -6,6 +6,7 @@ import api.clue.util.JwtTokenUtil;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -45,10 +46,12 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
     String email = (String) attributes.get("email");
     User user = userRepository.findByEmail(email);
     String token = JwtTokenUtil.generateToken(user);
-    String redirectionUrl = UriComponentsBuilder.fromUriString(frontendUrl)
-        .queryParam("auth_token", token)
-        .build().toUriString();
-    getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
+    response.addCookie(new Cookie("auto_token", token));
+    getRedirectStrategy().sendRedirect(request, response, frontendUrl);
+    // String redirectionUrl = UriComponentsBuilder.fromUriString(frontendUrl)
+    //     .queryParam("auth_token", token)
+    //     .build().toUriString();
+    // getRedirectStrategy().sendRedirect(request, response, redirectionUrl);
   }
 
   @Override
