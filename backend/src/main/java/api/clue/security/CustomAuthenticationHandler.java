@@ -3,6 +3,7 @@ package api.clue.security;
 import api.clue.domain.User;
 import api.clue.repository.UserRepository;
 import api.clue.util.JwtTokenUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -22,7 +23,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
 public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessHandler implements AuthenticationFailureHandler {
@@ -46,7 +46,9 @@ public class CustomAuthenticationHandler extends SimpleUrlAuthenticationSuccessH
     String email = (String) attributes.get("email");
     User user = userRepository.findByEmail(email);
     String token = JwtTokenUtil.generateToken(user);
-    response.addCookie(new Cookie("auto_token", token));
+    var cookie = new Cookie("auth_token", token);
+    cookie.setPath("/");
+    response.addCookie(cookie);
     getRedirectStrategy().sendRedirect(request, response, frontendUrl);
     // String redirectionUrl = UriComponentsBuilder.fromUriString(frontendUrl)
     //     .queryParam("auth_token", token)

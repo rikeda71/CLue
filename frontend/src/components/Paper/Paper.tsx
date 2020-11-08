@@ -84,7 +84,6 @@ type PaperPropsType = {
 };
 
 const Paper: React.FC<PaperPropsType> = props => {
-  console.log(props.paper);
   return (
     <PaperStyle>
       <PaperTitle>
