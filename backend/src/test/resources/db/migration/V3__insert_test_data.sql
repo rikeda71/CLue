@@ -1,0 +1,10 @@
+INSERT INTO papers VALUES(1000, 2020, '', '', '', 'title1', 'http://example.com/1000.pdf', 'intro', '', '');
+INSERT INTO papers VALUES(2000, 2020, '', '', '', 'title2', 'http://example.com/2000.pdf', 'intro', '', '');
+INSERT INTO papers VALUES(3000, 2020, '', '', '', 'title3', 'http://example.com/3000.pdf', 'intro', '', '');
+INSERT INTO authors VALUES(1000, '1000');
+INSERT INTO authors VALUES(2000, '2000');
+INSERT INTO authors VALUES(3000, '3000');
+INSERT INTO paper_written_author VALUES(1000, 1000);
+INSERT INTO paper_written_author VALUES(1000, 2000);
+INSERT INTO paper_written_author VALUES(2000, 2000);
+INSERT INTO paper_written_author VALUES(2000, 3000);

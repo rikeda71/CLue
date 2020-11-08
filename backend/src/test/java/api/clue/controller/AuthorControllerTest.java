@@ -94,6 +94,7 @@ public class AuthorControllerTest implements ControllerTestInterface {
   public void testAdd() throws Exception {
     // setup
     Author author = new Author();
+    author.setName("author");
     Mockito.doNothing().when(this.authorService).add(ArgumentMatchers.any(Author.class));
     // when
     mockMvc.perform(MockMvcRequestBuilders

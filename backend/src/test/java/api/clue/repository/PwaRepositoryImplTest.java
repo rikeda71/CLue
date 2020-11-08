@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import api.clue.domain.Author;
 import api.clue.domain.Paper;
-import api.clue.repository.mapper.AuthorMapper;
 import api.clue.repository.mapper.PwaMapper;
 import java.util.ArrayList;
 import java.util.List;

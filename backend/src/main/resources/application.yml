@@ -9,9 +9,9 @@ spring:
       test-while-idle: true
       validation-query: select sysdate()
   security:
-    user:
-      name: ${AUTH_USER}
-      password: ${AUTH_PASSWORD}
-      roles:
-      - USER
-      - ADMIN
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}

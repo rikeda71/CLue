@@ -27,8 +27,8 @@ public class PaperRepositoryImplDbUnitTest {
 
   private final Integer OFFSET_VALUE = 0;
   private final Integer LIMIT_VALUE = 10;
-  private final Long AUTHOR_ID = 2L;
-  private final Long PAPER_ID = 2L;
+  private final Long AUTHOR_ID = 2000L;
+  private final Long PAPER_ID = 2000L;
 
   @Autowired
   private PaperRepository paperRepository;
@@ -66,6 +66,7 @@ public class PaperRepositoryImplDbUnitTest {
   @Test
   @Order(1)
   public void testInsert() {
+    int beforePaperNum = this.paperRepository.find(new PaperSearchProvider(), 0, 100).size();
     Paper paper = new Paper();
     var year = 2019;
     var title = "title";
@@ -84,10 +85,8 @@ public class PaperRepositoryImplDbUnitTest {
 
     this.paperRepository.add(paper);
 
-    Paper result = this.paperRepository.findById(PAPER_ID);
-    assertEquals(result.getYear(), year);
-    assertEquals(result.getTitle(), title);
-    assertEquals(result.getUrl(), url);
+    int afterPaperNum = this.paperRepository.find(new PaperSearchProvider(), 0, 100).size();
+    assertEquals(beforePaperNum + 1, afterPaperNum);
   }
 
   @Test
@@ -106,11 +105,11 @@ public class PaperRepositoryImplDbUnitTest {
   @Test
   @Order(4)
   public void testDelete() {
-    int paperNum = this.paperRepository.find(new PaperSearchProvider(), OFFSET_VALUE, LIMIT_VALUE).size();
+    int beforePaperNum = this.paperRepository.find(new PaperSearchProvider(), OFFSET_VALUE, LIMIT_VALUE).size();
 
     this.paperRepository.remove(PAPER_ID);
 
-    int paperNumAfterDelete = this.paperRepository.find(new PaperSearchProvider(), OFFSET_VALUE, LIMIT_VALUE).size();
-    assertEquals(paperNum - 1, paperNumAfterDelete);
+    int afterPaperNum = this.paperRepository.find(new PaperSearchProvider(), OFFSET_VALUE, LIMIT_VALUE).size();
+    assertEquals(beforePaperNum - 1, afterPaperNum);
   }
 }

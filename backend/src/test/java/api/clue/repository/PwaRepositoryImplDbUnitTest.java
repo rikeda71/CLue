@@ -26,14 +26,8 @@ public class PwaRepositoryImplDbUnitTest {
   @Autowired
   private PwaRepository pwaRepository;
 
-  @Autowired
-  private AuthorRepository authorRepository;
-
-  @Autowired
-  private PaperRepository paperRepository;
-
-  private final Long AUTHOR_ID = 1L;
-  private final Long PAPER_ID = 1L;
+  private final Long AUTHOR_ID = 1000L;
+  private final Long PAPER_ID = 3000L;
 
   @Test
   @Order(2)
@@ -49,9 +43,8 @@ public class PwaRepositoryImplDbUnitTest {
   @Test
   @Order(2)
   public void testFindAuthorsByPaperId() {
-    Long paperId = 1L;
     Paper paper = new Paper();
-    paper.setPaperId(paperId);
+    paper.setPaperId(PAPER_ID);
     List<Author> authors = this.pwaRepository.findAuthorsByPaperId(paper);
     assertNotNull(authors);
     assertFalse(authors.isEmpty());
@@ -62,20 +55,11 @@ public class PwaRepositoryImplDbUnitTest {
   public void testInsert() {
     Author author = new Author();
     author.setAuthorId(AUTHOR_ID);
-    author.setName("name in pwa repository test");
     Paper paper = new Paper();
     paper.setPaperId(PAPER_ID);
-    paper.setTitle("paper title");
-    paper.setLabel("SA");
-    paper.setLang("english");
-    paper.setConference("ACL2019");
-    paper.setYear(2019);
-    paper.setUrl("https://www.google.com");
 
     author.setPapers(new ArrayList<>(){{add(paper);}});
     paper.setAuthors(new ArrayList<>(){{add(author);}});
-    this.authorRepository.add(author);
-    this.paperRepository.add(paper);
     this.pwaRepository.add(author, paper);
   }
 
