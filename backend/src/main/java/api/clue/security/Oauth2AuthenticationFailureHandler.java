@@ -1,6 +1,6 @@
 package api.clue.security;
 
-import static api.clue.security.CookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+import static api.clue.config.Constants.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 import api.clue.util.CookieUtil;
 import java.io.IOException;

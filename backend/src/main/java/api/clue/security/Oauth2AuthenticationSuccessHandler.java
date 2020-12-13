@@ -1,6 +1,6 @@
 package api.clue.security;
 
-import static api.clue.security.CookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+import static api.clue.config.Constants.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 import api.clue.domain.User;
 import api.clue.repository.UserRepository;
@@ -47,19 +47,16 @@ public class Oauth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     getRedirectStrategy().sendRedirect(request, response, targetUrl);
   }
 
-  protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response,
-      Authentication authentication) {
+  protected String determineTargetUrl(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      Authentication authentication
+  ) {
     Optional<String> redirectUri = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
         .map(Cookie::getValue);
 
     String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
-    DefaultOidcUser oidcUser = (DefaultOidcUser) authentication.getPrincipal();
-    var attributes = oidcUser.getAttributes();
-    String email = (String) attributes.get("email");
-    User user = userRepository.findByEmail(email);
-    String token = JwtTokenUtil.generateToken(user);
-
+    String token = getJwtToken(authentication);
     return UriComponentsBuilder.fromUriString(targetUrl)
         .queryParam("token", token)
         .build().toUriString();
@@ -71,18 +68,12 @@ public class Oauth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     oauth2RequestRepository.removeAuthorizationRequestCookies(request, response);
   }
 
+  private String getJwtToken(Authentication authentication) {
+    DefaultOidcUser oidcUser = (DefaultOidcUser) authentication.getPrincipal();
+    var attributes = oidcUser.getAttributes();
+    String email = (String) attributes.get("email");
+    User user = userRepository.findByEmail(email);
+    return JwtTokenUtil.generateToken(user);
+  }
 
-  // @Override
-  // public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-  //     Authentication authentication) throws IOException, ServletException {
-  //   CookieUtil.addCookie(response, "auth_token", token, 24 * 60 * 60);
-  //   getRedirectStrategy().sendRedirect(request, response, frontendUrl);
-  // }
-
-  // @Data
-  // @AllArgsConstructor
-  // public static class Token {
-
-  //   private String token;
-  // }
 }

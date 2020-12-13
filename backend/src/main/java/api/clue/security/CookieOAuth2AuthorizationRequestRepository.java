@@ -4,6 +4,9 @@
 
 package api.clue.security;
 
+import static api.clue.config.Constants.OAUTH2_REQUEST_COOKIE_NAME;
+import static api.clue.config.Constants.REDIRECT_URI_PARAM_COOKIE_NAME;
+
 import api.clue.util.CookieUtil;
 import com.nimbusds.oauth2.sdk.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
@@ -16,13 +19,11 @@ import org.springframework.stereotype.Component;
 public class CookieOAuth2AuthorizationRequestRepository
     implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
-  public static final String OUATH2_REQUEST_COOKIE_NAME = "oauth2_auth_request";
-  public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
   private static final int cookieExpireSeconds = 180;
 
   @Override
   public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
-    return CookieUtil.getCookie(request, OUATH2_REQUEST_COOKIE_NAME)
+    return CookieUtil.getCookie(request, OAUTH2_REQUEST_COOKIE_NAME)
         .map(cookie -> CookieUtil.deserialize(cookie, OAuth2AuthorizationRequest.class))
         .orElse(null);
   }
@@ -33,12 +34,12 @@ public class CookieOAuth2AuthorizationRequestRepository
       HttpServletRequest request, HttpServletResponse response
   ) {
     if (authorizationRequest == null) {
-      CookieUtil.deleteCookie(request, response, OUATH2_REQUEST_COOKIE_NAME);
+      CookieUtil.deleteCookie(request, response, OAUTH2_REQUEST_COOKIE_NAME);
       CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
       return;
     }
 
-    CookieUtil.addCookie(response, OUATH2_REQUEST_COOKIE_NAME,
+    CookieUtil.addCookie(response, OAUTH2_REQUEST_COOKIE_NAME,
         CookieUtil.serialize(authorizationRequest), cookieExpireSeconds);
     String redirectUriAfterLogin = request.getParameter(REDIRECT_URI_PARAM_COOKIE_NAME);
     if (StringUtils.isNotBlank(redirectUriAfterLogin)) {
@@ -54,7 +55,7 @@ public class CookieOAuth2AuthorizationRequestRepository
 
   public void removeAuthorizationRequestCookies(HttpServletRequest request,
       HttpServletResponse response) {
-    CookieUtil.deleteCookie(request, response, OUATH2_REQUEST_COOKIE_NAME);
+    CookieUtil.deleteCookie(request, response, OAUTH2_REQUEST_COOKIE_NAME);
     CookieUtil.deleteCookie(request, response, REDIRECT_URI_PARAM_COOKIE_NAME);
   }
 

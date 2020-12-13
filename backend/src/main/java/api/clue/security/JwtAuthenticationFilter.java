@@ -33,7 +33,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
       FilterChain chain) throws IOException, ServletException {
     Optional<String> token = Optional.ofNullable(req.getHeader(TOKEN_PARAM));
-    System.out.println(req.getHeader(TOKEN_PARAM));
     Optional<String> email = Optional.empty();
     if (token.isPresent()) {
       try {
