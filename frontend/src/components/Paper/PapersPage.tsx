@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
-import { createGetRequestUrl, getAuthTokenFromCookie, mapToObject } from "../../utils";
+import { createGetRequestUrl, getAuthTokenFromCookie, getUrlParameter, mapToObject } from "../../utils";
 import SearchModal from "../Search/SearchModal";
 import MainButton from "../MainButton";
 import { authTokenKey } from "../../config";
@@ -24,9 +24,14 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const authToken = getAuthTokenFromCookie();
-  if (authToken !== "") {
-    localStorage.setItem(authTokenKey, authToken);
+  const jwtToken = getUrlParameter("token");
+  if (jwtToken !== "") {
+    localStorage.setItem(authTokenKey, jwtToken);
+  } else {
+    const authToken = getAuthTokenFromCookie();
+    if (authToken !== "") {
+      localStorage.setItem(authTokenKey, authToken);
+    }
   }
 
   const mapHeaders = new Map<string, string>();

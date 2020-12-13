@@ -23,7 +23,7 @@ export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchCo
   }
 }
 
-export function getAuthTokenFromCookie(authTokenKey: string = "auth_token"): string {
+export function getAuthTokenFromCookie(authTokenKey: string = "oauth2_jwt_token"): string {
   const cookies = document.cookie.split("; ");
 
   for (const c of cookies) {
@@ -31,6 +31,16 @@ export function getAuthTokenFromCookie(authTokenKey: string = "auth_token"): str
     const cArray = c.split("="); //さらに=で分割して配列に
     if (cArray[0] == authTokenKey) {
       return cArray[1];
+    }
+  }
+  return "";
+}
+
+export function getUrlParameter(key: string): string {
+  const arr = new Array(...new URL(location.href).searchParams.entries());
+  for (let obj of arr) {
+    if (obj[0] === key) {
+      return obj[1];
     }
   }
   return "";
