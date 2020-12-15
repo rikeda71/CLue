@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
-import { createGetRequestUrl, getAuthTokenFromCookie, getUrlParameter, mapToObject } from "../../utils";
+import { getAuthTokenFromCookie, getUrlParameter, mapToObject } from "../../utils";
 import SearchModal from "../Search/SearchModal";
 import MainButton from "../MainButton";
-import { OAUTH_TOKEN_KEY, PAPER_ENDPOINT } from "../../constants";
+import { OAUTH_TOKEN_KEY } from "../../constants";
+import { FetchPaperAPIService } from "../../api";
 
 const PapersPageStyle = styled.div``;
 
@@ -23,6 +24,7 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const fetchPaperApiService = new FetchPaperAPIService();
 
   const jwtToken = getUrlParameter("token");
   if (jwtToken !== "") {
@@ -42,15 +44,10 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   const headers = mapToObject(mapHeaders);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
-    const requestUrl = createGetRequestUrl(PAPER_ENDPOINT, queryParam);
-    await fetch(requestUrl, {
-      method: "GET",
-      mode: "cors",
-      headers: headers,
-    })
-      .then(res => res.json())
+    await fetchPaperApiService
+      .fetchPaperAPI("GET", {}, queryParam)
       .then(res => {
-        return res;
+        return res.json();
       })
       .then(res => setPapers(res));
     setIsLoading(false);

@@ -1,27 +1,4 @@
-import { API_URL, OAUTH_TOKEN_KEY } from "./constants";
-import { PaperSearchConditionType } from "./types";
-
-export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchConditionType): string {
-  const trueQueryParams: PaperSearchConditionType = {};
-  if (!!queryParams) {
-    for (let k in queryParams) {
-      if (!!queryParams[k]) {
-        trueQueryParams[k] = queryParams[k];
-      }
-    }
-    return encodeURI(
-      API_URL +
-        urlPath +
-        "?" +
-        Object.entries(trueQueryParams)
-          .map(map => `${map[0]}=${map[1]}`)
-          .join("&") +
-        "&limit=50&offset=0"
-    );
-  } else {
-    return API_URL + urlPath + "?limit=100&offset=0";
-  }
-}
+import { OAUTH_TOKEN_KEY } from "./constants";
 
 export function getAuthTokenFromCookie(authTokenKey: string = OAUTH_TOKEN_KEY): string {
   const cookies = document.cookie.split("; ");

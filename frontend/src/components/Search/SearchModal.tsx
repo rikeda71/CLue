@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import MainButton from "../MainButton";
-import { createGetRequestUrl } from "../../utils";
 import { PaperSearchConditionType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
-import { CONFERENCE_ENDPOINT, PAPER_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
+import { API_URL, CONFERENCE_ENDPOINT, PAPER_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
+import { FetchAPIService, FetchPaperAPIService } from "../../api";
 
 const ModalTableStyle = styled.table`
   border-collapse: collapse;
@@ -53,6 +53,11 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   const [conferences, setConferences] = useState<(string | null)[]>([]);
   const [tasks, setTasks] = useState<(string | null)[]>([]);
 
+  const fetchPaperApiService = new FetchPaperAPIService();
+  const fetchConfApiService = new FetchAPIService(API_URL, CONFERENCE_ENDPOINT);
+  const fetchTaskApiService = new FetchAPIService(API_URL, TASK_ENDPOINT);
+  const fetchYearApiService = new FetchAPIService(API_URL, YEAR_ENDPOINT);
+
   const searchPapers = () => {
     const queryParam: PaperSearchConditionType = {
       year: year,
@@ -61,33 +66,26 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
       title: title,
       introduction: intro,
     };
-    getpapers(queryParam);
+    getPapers(queryParam);
     props.setIsLoading(false);
     props.onRequestClose();
   };
 
-  async function getpapers(queryParam: PaperSearchConditionType) {
-    const requestUrl = createGetRequestUrl(PAPER_ENDPOINT, queryParam);
-    await fetch(requestUrl, {
-      method: "GET",
-      mode: "cors",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-    })
-      .then(res => res.json())
+  async function getPapers(queryParam: PaperSearchConditionType) {
+    fetchPaperApiService
+      .fetchPaperAPI("GET", {}, queryParam)
       .then(res => {
-        return res;
+        return res.json();
       })
       .then(res => props.setPapers(res));
   }
 
   const getYears = async () => {
-    const requestUrl = createGetRequestUrl(YEAR_ENDPOINT);
-    await fetch(requestUrl, {
-      method: "GET",
-      mode: "cors",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-    })
-      .then(res => res.json())
+    fetchYearApiService
+      .fetchAPI("GET")
+      .then(res => {
+        return res.json();
+      })
       .then((res: YearType[]) => {
         const years: (number | null)[] = [null];
         res.forEach(item => {
@@ -99,13 +97,11 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   };
 
   const getConferenceList = async () => {
-    const requestUrl = createGetRequestUrl(CONFERENCE_ENDPOINT);
-    await fetch(requestUrl, {
-      method: "GET",
-      mode: "cors",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-    })
-      .then(res => res.json())
+    fetchConfApiService
+      .fetchAPI("GET")
+      .then(res => {
+        return res.json();
+      })
       .then((res: ConferenceType[]) => {
         const conferences: (string | null)[] = [null];
         res.forEach(item => {
@@ -117,22 +113,17 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   };
 
   const getTaskList = async () => {
-    const requestUrl = createGetRequestUrl(TASK_ENDPOINT);
-    await fetch(requestUrl, {
-      method: "GET",
-      mode: "cors",
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-    })
-      .then(res => res.json())
+    fetchTaskApiService
+      .fetchAPI("GET")
+      .then(res => {
+        return res.json();
+      })
       .then((res: TaskType[]) => {
         const tasks: (string | null)[] = [null];
         res.forEach(item => {
           tasks.push(item.taskName);
         });
         return tasks;
-      })
-      .then(res => {
-        return res;
       })
       .then(res => setTasks(res));
   };
