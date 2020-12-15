@@ -9,11 +9,12 @@ import java.io.IOException;
 
 @Configuration
 public class ClueConfig {
-    @Bean
-    public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource) throws IOException {
-        SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-        factory.setDataSource(dataSource);
 
-        return factory;
-    }
+  @Bean
+  public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource) throws IOException {
+    SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+    factory.setDataSource(dataSource);
+
+    return factory;
+  }
 }

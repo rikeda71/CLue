@@ -8,4 +8,8 @@ public class Constants {
 
   public static final String SIGNING_KEY = "000s14t284";
 
+  public static final String OAUTH2_REQUEST_COOKIE_NAME = "oauth2_jwt_token";
+
+  public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
+
 }

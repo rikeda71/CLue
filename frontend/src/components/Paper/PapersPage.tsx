@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
-import { createGetRequestUrl, getAuthTokenFromCookie, mapToObject } from "../../utils";
 import SearchModal from "../Search/SearchModal";
 import MainButton from "../MainButton";
-import { authTokenKey } from "../../config";
+import { FetchPaperAPIService } from "../../api";
 
 const PapersPageStyle = styled.div``;
 
@@ -23,29 +22,13 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
-  const authToken = getAuthTokenFromCookie();
-  if (authToken !== "") {
-    localStorage.setItem(authTokenKey, authToken);
-  }
-
-  const mapHeaders = new Map<string, string>();
-  mapHeaders.set("Content-Type", "application/json; charset=utf-8");
-  if (!!localStorage.getItem(authTokenKey)) {
-    mapHeaders.set("Authorization", "Bearer " + localStorage.getItem(authTokenKey));
-  }
-  const headers = mapToObject(mapHeaders);
+  const fetchPaperApiService = new FetchPaperAPIService();
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
-    const requestUrl = createGetRequestUrl("/api/v1/papers", queryParam);
-    await fetch(requestUrl, {
-      method: "GET",
-      mode: "cors",
-      headers: headers,
-    })
-      .then(res => res.json())
+    await fetchPaperApiService
+      .fetchPaperAPI("GET", {}, queryParam)
       .then(res => {
-        return res;
+        return res.json();
       })
       .then(res => setPapers(res));
     setIsLoading(false);

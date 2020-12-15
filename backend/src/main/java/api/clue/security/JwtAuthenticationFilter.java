@@ -8,6 +8,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,12 +30,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   }
 
   @Override
-  protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-    String token = req.getHeader(TOKEN_PARAM);
-    String email = null;
-    if (token != null) {
+  protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
+      FilterChain chain) throws IOException, ServletException {
+    Optional<String> token = Optional.ofNullable(req.getHeader(TOKEN_PARAM));
+    Optional<String> email = Optional.empty();
+    if (token.isPresent()) {
       try {
-        email = JwtTokenUtil.getEmailFromToken(token);
+        email = Optional.of(JwtTokenUtil.getEmailFromToken(token.get()));
       } catch (IllegalArgumentException e) {
         logger.error("an error occurred during getting username from token", e);
       } catch (ExpiredJwtException e) {
@@ -45,11 +47,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     } else {
       logger.warn("couldn't find bearer string, will ignore the header");
     }
-    if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+    if (email.isPresent() && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = userDetailsService.loadUserByUsername(email.get());
 
-      UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
-      if (JwtTokenUtil.validateToken(token, userDetails)) {
+      if (JwtTokenUtil.validateToken(token.get(), userDetails)) {
         User user = new User();
         user.setEmail(userDetails.getUsername());
         UsernamePasswordAuthenticationToken authentication =

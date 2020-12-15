@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { PaperType } from "../../types";
-import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
 import PaperDetail from "./PaperDetail";
+import { API_URL, PAPER_ENDPOINT } from "../../constants";
+import { FetchAPIService } from "../../api";
 
 const PaperPage: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [paper, setPaper] = useState<PaperType>();
-  const requestUrl = createGetRequestUrl(`/api/v1/papers/${id}`);
+  const fetchApiService = new FetchAPIService(API_URL, `${PAPER_ENDPOINT}/${id}`);
 
   useEffect(() => {
     async function getPaper() {
-      await fetch(requestUrl, {
-        method: "GET",
-        mode: "cors",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-      })
-        .then(res => res.json())
+      fetchApiService
+        .fetchAPI("GET")
         .then(res => {
-          return res;
+          return res.json();
         })
         .then(res => setPaper(res));
     }

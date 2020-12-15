@@ -1,8 +1,9 @@
 package api.clue.config;
 
-import api.clue.security.CustomAuthenticationHandler;
+import api.clue.security.CookieOAuth2AuthorizationRequestRepository;
+import api.clue.security.Oauth2AuthenticationFailureHandler;
+import api.clue.security.Oauth2AuthenticationSuccessHandler;
 import api.clue.security.JwtAuthenticationFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,9 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
-import org.springframework.security.oauth2.client.web.HttpSessionOAuth2AuthorizationRequestRepository;
-import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -30,13 +28,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final UserDetailsService userDetailsService;
 
-  private final CustomAuthenticationHandler authenticationHandler;
+  private final Oauth2AuthenticationSuccessHandler successHandler;
+
+  private final Oauth2AuthenticationFailureHandler failureHandler;
+
+  private final CookieOAuth2AuthorizationRequestRepository oauth2RequestRepository;
 
   public SecurityConfig(OidcUserService oidcUserService, UserDetailsService userDetailsService,
-      CustomAuthenticationHandler authenticationHandler) {
+      Oauth2AuthenticationSuccessHandler successHandler,
+      Oauth2AuthenticationFailureHandler failureHandler,
+      CookieOAuth2AuthorizationRequestRepository oauth2RequestRepository
+  ) {
     this.oidcUserService = oidcUserService;
     this.userDetailsService = userDetailsService;
-    this.authenticationHandler = authenticationHandler;
+    this.successHandler = successHandler;
+    this.failureHandler = failureHandler;
+    this.oauth2RequestRepository = oauth2RequestRepository;
   }
 
   @Override
@@ -46,7 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    // TODO: this is temporary settings. need to fix
     http.cors().configurationSource(this.corsConfigurationSource()) // cors
         .and().authorizeRequests()
         .antMatchers(HttpMethod.GET).permitAll()
@@ -54,16 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().oauth2Login()
         .userInfoEndpoint().oidcUserService(oidcUserService)
         .and().authorizationEndpoint().baseUri("/oauth2/authorize")
-        .authorizationRequestRepository(customAuthorizationRequestRepository())
-        .and().successHandler(this.authenticationHandler).failureHandler(this.authenticationHandler)
+        .authorizationRequestRepository(this.oauth2RequestRepository)
+        .and().successHandler(this.successHandler).failureHandler(this.failureHandler)
         .and().csrf().disable()
         .addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-  }
-
-  @Bean
-  public AuthorizationRequestRepository<OAuth2AuthorizationRequest> customAuthorizationRequestRepository() {
-    return new HttpSessionOAuth2AuthorizationRequestRepository();
   }
 
   @Bean

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AuthorType } from "../../types";
-import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
 import Paper from "../Paper/Paper";
+import { API_URL, AUTHOR_ENDPOINT } from "../../constants";
+import { FetchAPIService } from "../../api";
 
 const AuthorPageStyle = styled.div`
   margin-right: auto;
@@ -20,24 +21,17 @@ const AuthorPageName = styled.h1`
 const AuthorPagePapers = styled.div``;
 
 const AuthorPage: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [author, setAuthor] = useState<AuthorType>();
-  const requestUrl = createGetRequestUrl(`/api/v1/authors/${id}`);
+  const fetchApiService = new FetchAPIService(API_URL, AUTHOR_ENDPOINT);
 
   useEffect(() => {
-    async function getAuthor() {
-      await fetch(requestUrl, {
-        method: "GET",
-        mode: "cors",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
+    fetchApiService
+      .fetchAPI("GET")
+      .then(res => {
+        return res.json();
       })
-        .then(res => res.json())
-        .then(res => {
-          return res;
-        })
-        .then(res => setAuthor(res));
-    }
-    getAuthor();
+      .then(res => setAuthor(res));
   }, []);
 
   return (

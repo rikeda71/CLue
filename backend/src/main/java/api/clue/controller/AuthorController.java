@@ -53,7 +53,8 @@ public class AuthorController {
   }
 
   @DeleteMapping("/{authorId}")
-  public ResponseEntity<Void> remove(@AuthenticationPrincipal User user, @PathVariable("authorId") Long authorId) {
+  public ResponseEntity<Void> remove(@AuthenticationPrincipal User user,
+      @PathVariable("authorId") Long authorId) {
     if (user != null) {
       this.authorService.remove(authorId);
       return new ResponseEntity<>(HttpStatus.OK);
