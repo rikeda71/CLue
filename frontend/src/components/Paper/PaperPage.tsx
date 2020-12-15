@@ -3,11 +3,12 @@ import { PaperType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
 import PaperDetail from "./PaperDetail";
+import { PAPER_ENDPOINT } from "../../constants";
 
 const PaperPage: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [paper, setPaper] = useState<PaperType>();
-  const requestUrl = createGetRequestUrl(`/api/v1/papers/${id}`);
+  const requestUrl = createGetRequestUrl(`${PAPER_ENDPOINT}/${id}`);
 
   useEffect(() => {
     async function getPaper() {

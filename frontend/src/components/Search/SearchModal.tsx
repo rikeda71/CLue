@@ -4,6 +4,7 @@ import styled from "styled-components";
 import MainButton from "../MainButton";
 import { createGetRequestUrl } from "../../utils";
 import { PaperSearchConditionType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
+import { CONFERENCE_ENDPOINT, PAPER_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
 
 const ModalTableStyle = styled.table`
   border-collapse: collapse;
@@ -66,7 +67,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   };
 
   async function getpapers(queryParam: PaperSearchConditionType) {
-    const requestUrl = createGetRequestUrl("/api/v1/papers", queryParam);
+    const requestUrl = createGetRequestUrl(PAPER_ENDPOINT, queryParam);
     await fetch(requestUrl, {
       method: "GET",
       mode: "cors",
@@ -80,7 +81,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   }
 
   const getYears = async () => {
-    const requestUrl = createGetRequestUrl("/api/v1/year");
+    const requestUrl = createGetRequestUrl(YEAR_ENDPOINT);
     await fetch(requestUrl, {
       method: "GET",
       mode: "cors",
@@ -98,7 +99,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   };
 
   const getConferenceList = async () => {
-    const requestUrl = createGetRequestUrl("/api/v1/conference");
+    const requestUrl = createGetRequestUrl(CONFERENCE_ENDPOINT);
     await fetch(requestUrl, {
       method: "GET",
       mode: "cors",
@@ -116,7 +117,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   };
 
   const getTaskList = async () => {
-    const requestUrl = createGetRequestUrl("/api/v1/task");
+    const requestUrl = createGetRequestUrl(TASK_ENDPOINT);
     await fetch(requestUrl, {
       method: "GET",
       mode: "cors",

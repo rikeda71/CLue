@@ -1,4 +1,4 @@
-import { apiUrl } from "./config";
+import { API_URL, OAUTH_TOKEN_KEY } from "./constants";
 import { PaperSearchConditionType } from "./types";
 
 export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchConditionType): string {
@@ -10,7 +10,7 @@ export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchCo
       }
     }
     return encodeURI(
-      apiUrl +
+      API_URL +
         urlPath +
         "?" +
         Object.entries(trueQueryParams)
@@ -19,11 +19,11 @@ export function createGetRequestUrl(urlPath: string, queryParams?: PaperSearchCo
         "&limit=50&offset=0"
     );
   } else {
-    return apiUrl + urlPath + "?limit=100&offset=0";
+    return API_URL + urlPath + "?limit=100&offset=0";
   }
 }
 
-export function getAuthTokenFromCookie(authTokenKey: string = "oauth2_jwt_token"): string {
+export function getAuthTokenFromCookie(authTokenKey: string = OAUTH_TOKEN_KEY): string {
   const cookies = document.cookie.split("; ");
 
   for (const c of cookies) {

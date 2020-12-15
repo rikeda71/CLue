@@ -4,6 +4,7 @@ import { AuthorType } from "../../types";
 import { createGetRequestUrl } from "../../utils";
 import { useParams } from "react-router";
 import Paper from "../Paper/Paper";
+import { AUTHOR_ENDPOINT } from "../../constants";
 
 const AuthorPageStyle = styled.div`
   margin-right: auto;
@@ -20,9 +21,9 @@ const AuthorPageName = styled.h1`
 const AuthorPagePapers = styled.div``;
 
 const AuthorPage: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [author, setAuthor] = useState<AuthorType>();
-  const requestUrl = createGetRequestUrl(`/api/v1/authors/${id}`);
+  const requestUrl = createGetRequestUrl(`${AUTHOR_ENDPOINT}/${id}`);
 
   useEffect(() => {
     async function getAuthor() {

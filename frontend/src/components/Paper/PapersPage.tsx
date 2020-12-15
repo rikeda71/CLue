@@ -6,7 +6,7 @@ import SearchBox from "../Search/SearchBox";
 import { createGetRequestUrl, getAuthTokenFromCookie, getUrlParameter, mapToObject } from "../../utils";
 import SearchModal from "../Search/SearchModal";
 import MainButton from "../MainButton";
-import { authTokenKey } from "../../config";
+import { OAUTH_TOKEN_KEY, PAPER_ENDPOINT } from "../../constants";
 
 const PapersPageStyle = styled.div``;
 
@@ -26,23 +26,23 @@ const PapersPage: React.FC<PapersPageProps> = props => {
 
   const jwtToken = getUrlParameter("token");
   if (jwtToken !== "") {
-    localStorage.setItem(authTokenKey, jwtToken);
+    localStorage.setItem(OAUTH_TOKEN_KEY, jwtToken);
   } else {
     const authToken = getAuthTokenFromCookie();
     if (authToken !== "") {
-      localStorage.setItem(authTokenKey, authToken);
+      localStorage.setItem(OAUTH_TOKEN_KEY, authToken);
     }
   }
 
   const mapHeaders = new Map<string, string>();
   mapHeaders.set("Content-Type", "application/json; charset=utf-8");
-  if (!!localStorage.getItem(authTokenKey)) {
-    mapHeaders.set("Authorization", "Bearer " + localStorage.getItem(authTokenKey));
+  if (!!localStorage.getItem(OAUTH_TOKEN_KEY)) {
+    mapHeaders.set("Authorization", "Bearer " + localStorage.getItem(OAUTH_TOKEN_KEY));
   }
   const headers = mapToObject(mapHeaders);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
-    const requestUrl = createGetRequestUrl("/api/v1/papers", queryParam);
+    const requestUrl = createGetRequestUrl(PAPER_ENDPOINT, queryParam);
     await fetch(requestUrl, {
       method: "GET",
       mode: "cors",
