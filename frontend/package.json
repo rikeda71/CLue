@@ -8,7 +8,8 @@
     "build": "webpack --mode production",
     "lint": "eslint src/index.tsx",
     "lint:fix": "eslint --fix src/index.tsx",
-    "storybook": "start-storybook -p 4000"
+    "storybook": "start-storybook -p 4000",
+    "build-storybook": "build-storybook"
   },
   "author": "Ryuya Ikeda(@s14t284)",
   "license": "ISC",
