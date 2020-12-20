@@ -1,5 +1,5 @@
 import React from "react";
-import PapersPage from "../../components/Paper/PapersPage";
+import PapersPage from "../../components/Page/PapersPage";
 import { storiesOf } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 

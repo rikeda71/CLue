@@ -49,7 +49,7 @@ const PaperPageIntroductionStyle = styled.div`
   line-height: initial;
 `;
 
-const PaperDetailTemplate: React.FC<PaperType> = props => {
+export const PaperDetailTemplate: React.FC<PaperType> = props => {
   console.log(props);
   return (
     <PaperPageStyle>

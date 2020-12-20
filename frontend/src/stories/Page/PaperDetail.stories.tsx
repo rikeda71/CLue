@@ -1,5 +1,5 @@
 import React from "react";
-import PaperDetail from "../../components/Paper/PaperDetail";
+import { PaperDetailTemplate } from "../../components/Page/PaperDetail";
 import { PaperType } from "../../types";
 import { storiesOf } from "@storybook/react";
 import { MemoryRouter } from "react-router";
@@ -24,4 +24,4 @@ const paper: PaperType = {
 
 storiesOf("3_organisms", module)
   .addDecorator(story => <MemoryRouter initialEntries={["/"]}>{story()}</MemoryRouter>)
-  .add("PaperDetail", () => <PaperDetail {...paper} />);
+  .add("PaperDetail", () => <PaperDetailTemplate {...paper} />);

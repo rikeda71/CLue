@@ -23,7 +23,7 @@ const AuthorPagePapers = styled.div``;
 const AuthorPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [author, setAuthor] = useState<AuthorType>();
-  const fetchApiService = new FetchAPIService(API_URL, AUTHOR_ENDPOINT);
+  const fetchApiService = new FetchAPIService(API_URL, `${AUTHOR_ENDPOINT}/${id}`);
 
   useEffect(() => {
     fetchApiService
