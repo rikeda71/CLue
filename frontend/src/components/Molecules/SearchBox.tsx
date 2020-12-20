@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { PaperSearchConditionType } from "../../types";
+import { SearchForm } from "../Atoms/SearchForm";
+import { SearchButton } from "../Atoms/SearchButton";
 
 const MainColor = "#3879D9";
 
@@ -17,30 +19,6 @@ const SearchBoxStyle = styled.div`
     color: ${MainColor};
   }
   margin: 5px auto;
-`;
-
-const FormStyle = styled.input`
-  border: none;
-  height: 1.8em;
-  width: 230px;
-  :focus {
-    outline: 0;
-  }
-  background-color: inherit;
-`;
-
-const SearchButtonStyle = styled.input`
-  cursor: pointer;
-  font-family: FontAwesome;
-  border: none;
-  background: #3879d9;
-  color: #fff;
-  position: absolute;
-  width: 4em;
-  height: 3.6em;
-  right: 0px;
-  top: -5px;
-  outline: none;
 `;
 
 type SearchBoxPropsType = {
@@ -70,8 +48,8 @@ const SearchBox: React.FC<SearchBoxPropsType> = props => {
 
   return (
     <SearchBoxStyle>
-      <FormStyle onChange={onFormChange} onKeyPress={onKeyPress} placeholder={placeholder}></FormStyle>
-      <SearchButtonStyle onClick={onButtonClick} type="submit" value="検索" />
+      <SearchForm onChange={onFormChange} onKeyPress={onKeyPress} placeholder={placeholder}></SearchForm>
+      <SearchButton onClick={onButtonClick} type="submit" value="検索" />
     </SearchBoxStyle>
   );
 };
