@@ -1,5 +1,6 @@
 package api.clue.security;
 
+import static api.clue.config.Constants.FRONTEND_URL;
 import static api.clue.config.Constants.REDIRECT_URI_PARAM_COOKIE_NAME;
 
 import api.clue.domain.User;
@@ -55,7 +56,7 @@ public class Oauth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     Optional<String> redirectUri = CookieUtil.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
         .map(Cookie::getValue);
 
-    String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
+    String targetUrl = redirectUri.orElse(FRONTEND_URL);
     String token = getJwtToken(authentication);
     return UriComponentsBuilder.fromUriString(targetUrl)
         .queryParam("token", token)
