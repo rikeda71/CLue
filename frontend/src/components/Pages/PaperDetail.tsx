@@ -3,9 +3,11 @@ import { useParams } from "react-router";
 import { PaperType } from "../../types";
 import { API_URL, PAPER_ENDPOINT } from "../../constants";
 import { FetchAPIService } from "../../api";
-import { PaperTags, PaperConference, PaperTask, PaperAuthors, PaperAuthor } from "../Molecules/Paper";
+import { PaperTags, PaperAuthors, PaperAuthor } from "../Molecules/Paper";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { ConferenceTag } from "../Atoms/ConferenceTag";
+import { TaskTag } from "../Atoms/TaskTag";
 
 const PaperDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -67,11 +69,11 @@ export const PaperDetailTemplate: React.FC<PaperType> = props => {
           ))}
       </PaperAuthors>
       <PaperTags>
-        <PaperConference>
+        <ConferenceTag>
           {props.conference}
           {props.year}
-        </PaperConference>
-        {!!props.task && <PaperTask>{props.task}</PaperTask>}
+        </ConferenceTag>
+        {!!props.task && <TaskTag>{props.task}</TaskTag>}
       </PaperTags>
       {!!props.introduction && <PaperPageIntroductionStyle>{props.introduction}</PaperPageIntroductionStyle>}
     </PaperPageStyle>
