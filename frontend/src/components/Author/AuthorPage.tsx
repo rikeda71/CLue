@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AuthorType } from "../../types";
 import { useParams } from "react-router";
-import Paper from "../Paper/Paper";
+import Paper from "../Molecules/Paper";
 import { API_URL, AUTHOR_ENDPOINT } from "../../constants";
 import { FetchAPIService } from "../../api";
 

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import AuthorPage from "./components/Author/AuthorPage";
-import PaperPage from "./components/Paper/PaperPage";
+import PaperDetail from "./components/Paper/PaperPage";
 import PapersPage from "./components/Paper/PapersPage";
 import Header from "./components/Organisms/Header";
 import Footer from "./components/Organisms/Footer";
@@ -26,7 +26,7 @@ export const App: React.FC = () => {
         <MainPageStyle>
           <Switch>
             <Route exact path="/" component={PapersPage} />
-            <Route exact path="/paper/:id" component={PaperPage} />
+            <Route exact path="/paper/:id" component={PaperDetail} />
             <Route exact path="/author/:id" component={AuthorPage} />
           </Switch>
         </MainPageStyle>
