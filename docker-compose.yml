@@ -26,7 +26,7 @@ services:
 
   api:
     image: openjdk:11-jdk-slim-sid
-    command: ./gradlew bootRUN
+    command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRUN
     # command: java -jar build/libs/backend.jar
     container_name: paper_search_api
     working_dir: /app

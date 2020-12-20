@@ -1,5 +1,5 @@
 import React from "react";
-import Papers from "../../components/Paper/Papers";
+import Papers from "../../components/Organisms/Papers";
 import { storiesOf } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 
@@ -34,6 +34,6 @@ const papers = [
     ],
   },
 ];
-storiesOf("3_organisms", module)
+storiesOf("Organisms", module)
   .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
-  .add("Papers", () => <Papers papers={papers}></Papers>);
+  .add("Papers", () => <Papers papers={papers} isLoading={false}></Papers>);

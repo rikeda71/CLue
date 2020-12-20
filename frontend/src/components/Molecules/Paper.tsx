@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { PaperType, PaperSearchConditionType } from "../../types";
+import { PaperTitle } from "../Atoms/PaperTitle";
+import { ConferenceTag } from "../Atoms/ConferenceTag";
+import { TaskTag } from "../Atoms/TaskTag";
 
 export const PaperStyle = styled.div`
   border: solid;
@@ -17,46 +20,9 @@ export const PaperStyle = styled.div`
   width: 80%;
 `;
 
-export const PaperTitle = styled.h1`
-  font-size: large;
-  display: inline-block;
-  margin-bottom: 0.6rem;
-`;
-
 export const PaperTags = styled.div`
   display: flex;
   flex-basis: 100px;
-`;
-
-export const PaperConference = styled.div`
-  display: inline;
-  border: solid;
-  border-radius: 1rem;
-  background: #1e90ff;
-  border-color: #ffffff;
-  padding: 3px 10px;
-  color: #fafafa;
-  font-size: small;
-  font-weight: bold;
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-export const PaperTask = styled.div`
-  display: inline;
-  margin-left: 1rem;
-  border: solid;
-  border-radius: 1rem;
-  background: #ffb6c1;
-  border-color: #ffffff;
-  padding: 3px 10px;
-  color: #ffffff;
-  font-size: small;
-  font-weight: bold;
-  :hover {
-    cursor: pointer;
-  }
 `;
 
 export const PaperAuthors = styled.div`
@@ -99,12 +65,12 @@ const Paper: React.FC<PaperPropsType> = props => {
         </PaperAuthors>
       )}
       <PaperTags>
-        <PaperConference onClick={e => props.getPapers({ conference: props.paper.conference, year: props.paper.year })}>
+        <ConferenceTag onClick={e => props.getPapers({ conference: props.paper.conference, year: props.paper.year })}>
           {props.paper.conference}
           {props.paper.year}
-        </PaperConference>
+        </ConferenceTag>
         {!!props.paper.task && (
-          <PaperTask onClick={e => props.getPapers({ task: props.paper.task })}>{props.paper.task}</PaperTask>
+          <TaskTag onClick={e => props.getPapers({ task: props.paper.task })}>{props.paper.task}</TaskTag>
         )}
         <PaperLink>
           <a href={props.paper.url}>pdf</a>

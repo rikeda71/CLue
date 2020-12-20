@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import AuthorPage from "./components/Author/AuthorPage";
-import PaperPage from "./components/Paper/PaperPage";
-import PapersPage from "./components/Paper/PapersPage";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import AuthorPage from "./components/Pages/AuthorPage";
+import PaperDetail from "./components/Pages/PaperDetail";
+import PapersPage from "./components/Pages/PapersPage";
+import Header from "./components/Organisms/Header";
+import Footer from "./components/Organisms/Footer";
 import styled from "styled-components";
 
 const AppStyle = styled.div`
@@ -26,7 +26,7 @@ export const App: React.FC = () => {
         <MainPageStyle>
           <Switch>
             <Route exact path="/" component={PapersPage} />
-            <Route exact path="/paper/:id" component={PaperPage} />
+            <Route exact path="/paper/:id" component={PaperDetail} />
             <Route exact path="/author/:id" component={AuthorPage} />
           </Switch>
         </MainPageStyle>

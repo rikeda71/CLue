@@ -1,15 +1,9 @@
 import React from "react";
-import Paper, { PaperTitle, PaperTags, PaperConference, PaperTask } from "../../components/Paper/Paper";
+import Paper from "../../components/Molecules/Paper";
 import { storiesOf } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 
-storiesOf("1_atoms", module)
-  .add("PaperTitle", () => <PaperTitle>paper title</PaperTitle>)
-  .add("PaperTags", () => <PaperTags>task name</PaperTags>)
-  .add("PaperConference", () => <PaperConference>conference name</PaperConference>)
-  .add("PaperTask", () => <PaperTask>Information Extraction</PaperTask>);
-
-storiesOf("2_molecules", module)
+storiesOf("Molecules", module)
   .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
   .add("NAACL", () => (
     <Paper

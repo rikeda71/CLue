@@ -1,8 +1,33 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router";
 import { PaperType } from "../../types";
-import { PaperTags, PaperConference, PaperTask, PaperLink, PaperAuthors, PaperAuthor } from "./Paper";
+import { API_URL, PAPER_ENDPOINT } from "../../constants";
+import { FetchAPIService } from "../../api";
+import { PaperTags, PaperAuthors, PaperAuthor } from "../Molecules/Paper";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { ConferenceTag } from "../Atoms/ConferenceTag";
+import { TaskTag } from "../Atoms/TaskTag";
+
+const PaperDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [paper, setPaper] = useState<PaperType>();
+  const fetchApiService = new FetchAPIService(API_URL, `${PAPER_ENDPOINT}/${id}`);
+
+  useEffect(() => {
+    async function getPaper() {
+      fetchApiService
+        .fetchAPI("GET")
+        .then(res => {
+          return res.json();
+        })
+        .then(res => setPaper(res));
+    }
+    getPaper();
+  }, []);
+
+  return <PaperDetailTemplate {...paper} />;
+};
 
 const PaperPageStyle = styled.section`
   margin-right: auto;
@@ -26,7 +51,7 @@ const PaperPageIntroductionStyle = styled.div`
   line-height: initial;
 `;
 
-const PaperDetail: React.FC<PaperType> = props => {
+export const PaperDetailTemplate: React.FC<PaperType> = props => {
   console.log(props);
   return (
     <PaperPageStyle>
@@ -44,11 +69,11 @@ const PaperDetail: React.FC<PaperType> = props => {
           ))}
       </PaperAuthors>
       <PaperTags>
-        <PaperConference>
+        <ConferenceTag>
           {props.conference}
           {props.year}
-        </PaperConference>
-        {!!props.task && <PaperTask>{props.task}</PaperTask>}
+        </ConferenceTag>
+        {!!props.task && <TaskTag>{props.task}</TaskTag>}
       </PaperTags>
       {!!props.introduction && <PaperPageIntroductionStyle>{props.introduction}</PaperPageIntroductionStyle>}
     </PaperPageStyle>

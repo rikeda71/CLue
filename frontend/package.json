@@ -39,6 +39,7 @@
     "babel-polyfill": "^6.26.0",
     "eslint": "^7.1.0",
     "eslint-plugin-react": "^7.20.0",
+    "fetch-mock": "^9.11.0",
     "react-docgen-typescript-loader": "^3.7.2",
     "storybook": "^6.0.21",
     "ts-loader": "^7.0.5",

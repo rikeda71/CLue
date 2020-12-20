@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Paper from "./Paper";
-import Loading from "../Loading";
+import Paper from "../Molecules/Paper";
+import Loading from "../Atoms/Loading";
 import { PaperType, PaperSearchConditionType } from "../../types";
 
 export const PapersStyle = styled.div`

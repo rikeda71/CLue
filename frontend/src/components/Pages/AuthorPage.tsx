@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AuthorType } from "../../types";
 import { useParams } from "react-router";
-import Paper from "../Paper/Paper";
+import Paper from "../Molecules/Paper";
 import { API_URL, AUTHOR_ENDPOINT } from "../../constants";
 import { FetchAPIService } from "../../api";
 
@@ -23,7 +23,7 @@ const AuthorPagePapers = styled.div``;
 const AuthorPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [author, setAuthor] = useState<AuthorType>();
-  const fetchApiService = new FetchAPIService(API_URL, AUTHOR_ENDPOINT);
+  const fetchApiService = new FetchAPIService(API_URL, `${AUTHOR_ENDPOINT}/${id}`);
 
   useEffect(() => {
     fetchApiService
@@ -34,22 +34,22 @@ const AuthorPage: React.FC = () => {
       .then(res => setAuthor(res));
   }, []);
 
+  return <AuthorPageStyle>{!!author && <AuthorPageTemplate author={author} />}</AuthorPageStyle>;
+};
+
+export const AuthorPageTemplate: React.FC<{ author: AuthorType }> = props => {
   return (
-    <AuthorPageStyle>
-      {!!author && (
-        <React.Fragment>
-          <AuthorPageName>{author.name}</AuthorPageName>
-          <AuthorPagePapers>
-            論文リスト
-            {author.papers
-              .sort((x, y) => y.year - x.year)
-              .map(paper => (
-                <Paper paper={paper} key={paper.paperId} />
-              ))}
-          </AuthorPagePapers>
-        </React.Fragment>
-      )}
-    </AuthorPageStyle>
+    <React.Fragment>
+      <AuthorPageName>{props.author.name}</AuthorPageName>
+      <AuthorPagePapers>
+        論文リスト
+        {props.author.papers
+          .sort((x, y) => y.year - x.year)
+          .map(paper => (
+            <Paper paper={paper} key={paper.paperId} />
+          ))}
+      </AuthorPagePapers>
+    </React.Fragment>
   );
 };
 

@@ -12,4 +12,6 @@ public class Constants {
 
   public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
 
+  public static final String FRONTEND_URL = "http://localhost:3000";
+
 }

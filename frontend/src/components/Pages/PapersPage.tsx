@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { PaperSearchConditionType, PaperType } from "../../types";
-import Papers from "./Papers";
-import SearchBox from "../Search/SearchBox";
-import SearchModal from "../Search/SearchModal";
-import MainButton from "../MainButton";
+import Papers from "../Organisms/Papers";
+import SearchBox from "../Molecules/SearchBox";
+import SearchModal from "../Organisms/SearchModal";
+import MainButton from "../Atoms/MainButton";
 import { FetchPaperAPIService } from "../../api";
 
 const PapersPageStyle = styled.div``;

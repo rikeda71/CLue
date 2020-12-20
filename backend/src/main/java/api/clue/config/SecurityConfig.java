@@ -1,5 +1,7 @@
 package api.clue.config;
 
+import static api.clue.config.Constants.FRONTEND_URL;
+
 import api.clue.security.CookieOAuth2AuthorizationRequestRepository;
 import api.clue.security.Oauth2AuthenticationFailureHandler;
 import api.clue.security.Oauth2AuthenticationSuccessHandler;
@@ -82,8 +84,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     configuration.addAllowedHeader(CorsConfiguration.ALL);
     configuration.addAllowedMethod(CorsConfiguration.ALL);
     configuration.addAllowedHeader("Authorization ");
-    configuration.addAllowedOrigin("http://localhost:3000");
-    configuration.addAllowedOrigin("http://0.0.0.0:3000");
+    configuration.addAllowedOrigin(FRONTEND_URL);
+    configuration.addAllowedOrigin(FRONTEND_URL.replaceFirst("localhost", "0.0.0.0"));
     configuration.setAllowCredentials(true);
 
     UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
