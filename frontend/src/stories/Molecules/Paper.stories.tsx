@@ -1,5 +1,5 @@
 import React from "react";
-import Paper from "../../components/Paper/Paper";
+import Paper from "../../components/Molecules/Paper";
 import { storiesOf } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { PaperTitle, PaperTags, PaperConference, PaperTask } from "../../components/Paper/Paper";
+import { PaperTitle, PaperTags, PaperConference, PaperTask } from "../../components/Molecules/Paper";
 import { storiesOf } from "@storybook/react";
 
 storiesOf("Atoms", module)
