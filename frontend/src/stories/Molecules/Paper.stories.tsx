@@ -1,9 +1,9 @@
 import React from "react";
-import Paper, { PaperTitle, PaperTags, PaperConference, PaperTask } from "../../components/Paper/Paper";
+import Paper from "../../components/Paper/Paper";
 import { storiesOf } from "@storybook/react";
 import { MemoryRouter } from "react-router";
 
-storiesOf("2_molecules", module)
+storiesOf("Molecules", module)
   .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
   .add("NAACL", () => (
     <Paper
