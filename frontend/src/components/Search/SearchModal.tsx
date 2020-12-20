@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
-import MainButton from "../MainButton";
+import MainButton from "../Atoms/MainButton";
 import { PaperSearchConditionType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
 import { API_URL, CONFERENCE_ENDPOINT, PAPER_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
 import { FetchAPIService, FetchPaperAPIService } from "../../api";

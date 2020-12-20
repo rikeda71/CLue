@@ -4,7 +4,7 @@ import { PaperSearchConditionType, PaperType } from "../../types";
 import Papers from "./Papers";
 import SearchBox from "../Search/SearchBox";
 import SearchModal from "../Search/SearchModal";
-import MainButton from "../MainButton";
+import MainButton from "../Atoms/MainButton";
 import { FetchPaperAPIService } from "../../api";
 
 const PapersPageStyle = styled.div``;
