@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import AuthorPage from "./components/Page/AuthorPage";
-import PaperDetail from "./components/Page/PaperDetail";
-import PapersPage from "./components/Page/PapersPage";
+import AuthorPage from "./components/Pages/AuthorPage";
+import PaperDetail from "./components/Pages/PaperDetail";
+import PapersPage from "./components/Pages/PapersPage";
 import Header from "./components/Organisms/Header";
 import Footer from "./components/Organisms/Footer";
 import styled from "styled-components";

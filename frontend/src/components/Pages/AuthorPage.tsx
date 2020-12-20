@@ -34,22 +34,22 @@ const AuthorPage: React.FC = () => {
       .then(res => setAuthor(res));
   }, []);
 
+  return <AuthorPageStyle>{!!author && <AuthorPageTemplate author={author} />}</AuthorPageStyle>;
+};
+
+export const AuthorPageTemplate: React.FC<{ author: AuthorType }> = props => {
   return (
-    <AuthorPageStyle>
-      {!!author && (
-        <React.Fragment>
-          <AuthorPageName>{author.name}</AuthorPageName>
-          <AuthorPagePapers>
-            論文リスト
-            {author.papers
-              .sort((x, y) => y.year - x.year)
-              .map(paper => (
-                <Paper paper={paper} key={paper.paperId} />
-              ))}
-          </AuthorPagePapers>
-        </React.Fragment>
-      )}
-    </AuthorPageStyle>
+    <React.Fragment>
+      <AuthorPageName>{props.author.name}</AuthorPageName>
+      <AuthorPagePapers>
+        論文リスト
+        {props.author.papers
+          .sort((x, y) => y.year - x.year)
+          .map(paper => (
+            <Paper paper={paper} key={paper.paperId} />
+          ))}
+      </AuthorPagePapers>
+    </React.Fragment>
   );
 };
 
