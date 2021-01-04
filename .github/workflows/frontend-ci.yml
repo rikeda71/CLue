@@ -16,4 +16,8 @@ jobs:
       - name: run eslint
         run: npm lint
       - name: run unit test
-        run: npm test
+        run: npm test --coverage && coveralls < coverage/lcov.info
+      - name: coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
