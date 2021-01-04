@@ -1,6 +1,6 @@
 name: Frontend CI
 
-on: [push]
+on: [push, pull_request]
 
 defaults:
   run:
@@ -18,7 +18,7 @@ jobs:
       - name: npm install
         run: npm ci
       - name: run eslint
-        run: npm lint
+        run: npm run lint
       - name: run unit test
         run: npm test --coverage && coveralls < coverage/lcov.info
       - name: coveralls
