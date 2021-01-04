@@ -1,6 +1,12 @@
 name: Frontend CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
 
 defaults:
   run:
@@ -20,7 +26,7 @@ jobs:
       - name: run eslint
         run: npm run lint
       - name: run unit test
-        run: npm test --coverage && coveralls < coverage/lcov.info
+        run: npm test -- --coverage && coveralls < coverage/lcov.info
       - name: coveralls
         uses: coverallsapp/github-action@master
         with:
