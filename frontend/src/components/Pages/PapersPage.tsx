@@ -46,7 +46,7 @@ const PapersPage: React.FC<PapersPageProps> = props => {
     <PapersPageStyle>
       <SearchBox onButtonClickFunction={getPapers} />
       <DetailSearchButtonDiv>
-        <MainButton onClick={e => setModalIsOpen(true)}>詳細検索</MainButton>
+        <MainButton onClick={() => setModalIsOpen(true)}>詳細検索</MainButton>
       </DetailSearchButtonDiv>
       <SearchModal
         isOpen={modalIsOpen}

@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import MainButton from "../Atoms/MainButton";
 import { PaperSearchConditionType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
-import { API_URL, CONFERENCE_ENDPOINT, PAPER_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
+import { API_URL, CONFERENCE_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
 import { FetchAPIService, FetchPaperAPIService } from "../../api";
 
 const ModalTableStyle = styled.table`
@@ -217,7 +217,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
       </ModalTableStyle>
       <DetailSearchButtonDiv>
         <MainButton
-          onClick={e => {
+          onClick={() => {
             props.setIsLoading(true);
             searchPapers();
           }}
