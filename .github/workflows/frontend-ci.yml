@@ -1,0 +1,19 @@
+name: Frontend CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: npm install
+        run: npm ci
+      - name: run eslint
+        run: npm lint
+      - name: run unit test
+        run: npm test
