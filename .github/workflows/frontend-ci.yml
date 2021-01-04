@@ -2,6 +2,10 @@ name: Frontend CI
 
 on: [push]
 
+defaults:
+  run:
+    working-directory: ./frontend
+
 jobs:
   build:
     runs-on: ubuntu-latest
