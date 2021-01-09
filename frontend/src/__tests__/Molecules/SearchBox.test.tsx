@@ -7,16 +7,20 @@ jest.spyOn(console, "log");
 
 describe("render test", () => {
   it("looks test", () => {
+    const placeholderText = "placeholder";
     render(
       <SearchBox
-        placeholder="placeholder"
+        placeholder={placeholderText}
         onButtonClickFunction={(param: PaperSearchConditionType) => {
           console.log(param);
         }}
       />
     );
 
-    const placeholder = screen.getByText(/placeholder/);
+    const searchBox = screen.getByText(/検索/);
+    expect(searchBox).toBeInTheDocument();
+
+    const placeholder = screen.getByPlaceholderText(placeholderText);
     expect(placeholder).toBeInTheDocument();
   });
 });
