@@ -1,8 +1,6 @@
-import { OAUTH_TOKEN_KEY } from "./constants";
-
 export function getUrlParameter(key: string): string {
   const arr = new Array(...new URL(location.href).searchParams.entries());
-  for (let obj of arr) {
+  for (const obj of arr) {
     if (obj[0] === key) {
       return obj[1];
     }

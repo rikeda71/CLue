@@ -6,3 +6,5 @@ export const AUTHOR_ENDPOINT = "/api/v1/authors";
 export const CONFERENCE_ENDPOINT = "/api/v1/conference";
 export const TASK_ENDPOINT = "/api/v1/task";
 export const YEAR_ENDPOINT = "/api/v1/year";
+export const OAUTH_ENDPOINT = "/oauth2/authorize/google";
+export const USER_ENDPOINT = "/api/v1/user";

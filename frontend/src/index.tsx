@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 import AuthorPage from "./components/Pages/AuthorPage";
 import PaperDetail from "./components/Pages/PaperDetail";
 import PapersPage from "./components/Pages/PapersPage";
 import Header from "./components/Organisms/Header";
 import Footer from "./components/Organisms/Footer";
 import styled from "styled-components";
+import { API_URL, USER_ENDPOINT } from "./constants";
+import { UserType } from "./types";
+import { OAuthFetchAPIService } from "./api";
 
 const AppStyle = styled.div`
   width: 85%;
@@ -19,10 +21,24 @@ const MainPageStyle = styled.div`
 `;
 
 export const App: React.FC = () => {
+  const [email, setEmail] = useState<string>("");
+  const userFetchService = new OAuthFetchAPIService(API_URL, USER_ENDPOINT);
+  const isLogined = userFetchService.isLogined();
+  if (isLogined) {
+    const getLoginedUser = async () => {
+      await userFetchService
+        .fetchAPIWithAuth()
+        .then(res => {
+          return res.json();
+        })
+        .then((res: UserType) => setEmail(res.email));
+    };
+    getLoginedUser();
+  }
   return (
     <AppStyle>
       <Router>
-        <Header />
+        <Header isLogined={isLogined} email={email} />
         <MainPageStyle>
           <Switch>
             <Route exact path="/" component={PapersPage} />
