@@ -7,10 +7,9 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     container_name: paper_db
     volumes:
-      ## 永続化 ##
-       - "./docker/db/data:/var/lib/mysql"
-       - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
-       - "./log/mysql:/var/log/mysql"
+      - "./docker/db/data:/var/lib/mysql"
+      - "./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf"
+      - "./log/mysql:/var/log/mysql"
     env_file: .env
     environment:
       MYSQL_USER: ${DB_USER}
@@ -25,23 +24,37 @@ services:
       - "33036:3306"
 
   api:
-    image: openjdk:11-jdk-slim-sid
-    command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRUN
-    # command: java -jar build/libs/backend.jar
+    build: docker/backend
+    command: ./run.sh
     container_name: paper_search_api
     working_dir: /app
     volumes:
       - ./backend/:/app
-      - ./backend/gradle/:/root/.gradle
     env_file: .env
     environment:
       DB_USER: ${DB_ROOT_USER}
       DB_PASSWORD: ${DB_ROOT_PASSWORD}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GRADLE_USER_HOME: /app/.cache
     expose:
       - "8080"
     ports:
       - "8080:8080"
     depends_on:
       - db
+
+  front:
+    build: docker/frontend
+    command: npm start
+    container_name: paper_search_front
+    working_dir: /app
+    volumes:
+      - ./frontend/:/app
+    env_file: .env
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
