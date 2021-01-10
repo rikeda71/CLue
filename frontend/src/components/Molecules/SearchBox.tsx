@@ -22,25 +22,30 @@ const SearchBoxStyle = styled.div`
 `;
 
 type SearchBoxPropsType = {
-  onButtonClickFunction: Function;
+  onButtonClickFunction: (param: PaperSearchConditionType) => void;
   placeholder?: string;
 };
 
 const SearchBox: React.FC<SearchBoxPropsType> = props => {
   const [query, setQuery] = useState("");
-  const placeholder = !!props.placeholder ? props.placeholder : "キーワード";
+  let placeholder: string;
+  if (props.placeholder !== null && props.placeholder !== undefined) {
+    placeholder = props.placeholder;
+  } else {
+    placeholder = "キーワード";
+  }
 
-  const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
+  const onFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
   };
 
-  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onButtonClick = () => {
     const queryParam: PaperSearchConditionType = { title: query };
     props.onButtonClickFunction(queryParam);
   };
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.which === 13) {
+  const onKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.which === 13) {
       const queryParam: PaperSearchConditionType = { title: query };
       props.onButtonClickFunction(queryParam);
     }

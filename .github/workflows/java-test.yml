@@ -1,6 +1,16 @@
 name: Java CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+
+defaults:
+  run:
+    working-directory: ./backend
 
 jobs:
   build:
@@ -8,9 +18,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: setup
+      - name: setup Java
         uses: actions/setup-java@v1
         with:
           java-version: 11
       - name: build with gradle
-        run: cd backend && ./gradlew build
+        run: ./gradlew build

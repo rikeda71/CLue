@@ -5,7 +5,7 @@ import { MemoryRouter } from "react-router";
 
 storiesOf("Molecules", module)
   .addDecorator(story => <MemoryRouter initialEntries={["/", "posts"]}>{story()}</MemoryRouter>)
-  .add("NAACL", () => (
+  .add("Paper in Papers component", () => (
     <Paper
       paper={{
         paperId: 1,
@@ -24,21 +24,15 @@ storiesOf("Molecules", module)
       }}
     />
   ))
-  .add("Other", () => (
+  .add("Minimum information Paper", () => (
     <Paper
       paper={{
         paperId: 1,
         title: "Distributed Representations of Words and Phrases and their Compositionality",
         conference: "NIPS",
         year: 2013,
-        task: "Word-level Semantics",
-        predicted: false,
         url:
           "https://papers.nips.cc/paper/5021-distributed-representations-of-words-and-phrases-and-their-compositionality.pdf",
-        authors: [
-          { authorId: 1, name: "author1" },
-          { authorId: 2, name: "author2" },
-        ],
       }}
     />
   ));

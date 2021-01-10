@@ -65,12 +65,12 @@ const Paper: React.FC<PaperPropsType> = props => {
         </PaperAuthors>
       )}
       <PaperTags>
-        <ConferenceTag onClick={e => props.getPapers({ conference: props.paper.conference, year: props.paper.year })}>
+        <ConferenceTag onClick={() => props.getPapers({ conference: props.paper.conference, year: props.paper.year })}>
           {props.paper.conference}
           {props.paper.year}
         </ConferenceTag>
         {!!props.paper.task && (
-          <TaskTag onClick={e => props.getPapers({ task: props.paper.task })}>{props.paper.task}</TaskTag>
+          <TaskTag onClick={() => props.getPapers({ task: props.paper.task })}>{props.paper.task}</TaskTag>
         )}
         <PaperLink>
           <a href={props.paper.url}>pdf</a>

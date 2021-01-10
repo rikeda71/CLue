@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 var debug = process.env.NODE_DEV !== "production";
 var webpack = require("webpack");
 var path = require("path");
