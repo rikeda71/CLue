@@ -98,11 +98,11 @@ export class OAuthFetchAPIService extends FetchAPIService {
   /**
    * ログインしているかを返却する
    */
-  public isLoggined(): boolean {
+  public isLogined(): boolean {
     return this.jwtToken !== "";
   }
 
-  public updateJwtToken() {
+  public updateJwtToken(): void {
     // cookie から token を取得
     this.jwtToken = this.getAuthTokenFromCookie(this.authTokenKey);
     // cookieになければURLパラメータから token を取得
