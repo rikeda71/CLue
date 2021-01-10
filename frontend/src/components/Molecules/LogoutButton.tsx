@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { OAUTH_TOKEN_KEY } from "../../constants";
 import MainButtonStyle from "../Atoms/MainButton";
 
-const LogoutButtonStyle = styled(MainButtonStyle)`
-  margin: 0 0 0 auto;
-`;
+const LogoutButtonStyle = styled(MainButtonStyle)``;
 
 const LogoutButton: React.FC = () => {
   const handleClick = () => {
