@@ -20,7 +20,7 @@ export class FetchAPIService {
    * @param headers http header
    * @param url endpoint url(指定されなければ初期化時に渡したURLとendpointが対象)
    */
-  public fetchAPI(method: string = "GET", headers: HeadersInit = {}, url: string = this.targetURL): Promise<Response> {
+  public fetchAPI(method = "GET", headers: HeadersInit = {}, url: string = this.targetURL): Promise<Response> {
     headers["Content-Type"] = "application/json; charset=utf-8";
     const call = async () => {
       return await fetch(url, {
@@ -40,7 +40,7 @@ export class FetchPaperAPIService extends FetchAPIService {
   }
 
   public fetchPaperAPI(
-    method: string = "GET",
+    method = "GET",
     headers: HeadersInit = {},
     queryParams?: PaperSearchConditionType
   ): Promise<Response> {
@@ -51,9 +51,9 @@ export class FetchPaperAPIService extends FetchAPIService {
 
   private createGetRequestUrl(queryParams?: PaperSearchConditionType): string {
     const trueQueryParams: PaperSearchConditionType = {};
-    if (!!queryParams) {
-      for (let k in queryParams) {
-        if (!!queryParams[k]) {
+    if (queryParams) {
+      for (const k in queryParams) {
+        if (queryParams[k]) {
           trueQueryParams[k] = queryParams[k];
         }
       }
@@ -88,22 +88,25 @@ export class OAuthFetchAPIService extends FetchAPIService {
    * @param headers http header
    * @param url endpoint url(指定されなければ初期化時に渡したURLとendpointが対象)
    */
-  public fetchAPIWithAuth(
-    method: string = "GET",
-    headers: HeadersInit = {},
-    url: string = this.targetURL
-  ): Promise<Response> {
+  public fetchAPIWithAuth(method = "GET", headers: HeadersInit = {}, url: string = this.targetURL): Promise<Response> {
     if (this.jwtToken !== "") {
       headers["Authorization"] = "Bearer " + this.jwtToken;
     }
     return this.fetchAPI(method, headers, url);
   }
 
+  /**
+   * ログインしているかを返却する
+   */
+  public isLoggined(): boolean {
+    return this.jwtToken !== "";
+  }
+
   public updateJwtToken() {
     // cookie から token を取得
     this.jwtToken = this.getAuthTokenFromCookie(this.authTokenKey);
     // cookieになければURLパラメータから token を取得
-    if (this.jwtToken !== "") {
+    if (this.jwtToken === "") {
       this.jwtToken = getUrlParameter("token");
     }
   }

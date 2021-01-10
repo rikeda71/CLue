@@ -44,3 +44,8 @@ export type TaskType = {
   taskName: string;
   taskLabelName: string;
 };
+
+export type UserType = {
+  id: number;
+  email: string;
+};
