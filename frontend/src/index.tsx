@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { API_URL, USER_ENDPOINT } from "./constants";
 import { UserType } from "./types";
 import { OAuthFetchAPIService } from "./api";
+import PostPaperPage from "./components/Pages/PostPaperPage";
 
 const AppStyle = styled.div`
   width: 85%;
@@ -44,6 +45,7 @@ export const App: React.FC = () => {
             <Route exact path="/" component={PapersPage} />
             <Route exact path="/paper/:id" component={PaperDetail} />
             <Route exact path="/author/:id" component={AuthorPage} />
+            <Route exact path="/paper/add" component={PostPaperPage} />
           </Switch>
         </MainPageStyle>
         <Footer />

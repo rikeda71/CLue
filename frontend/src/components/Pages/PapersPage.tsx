@@ -6,13 +6,23 @@ import SearchBox from "../Molecules/SearchBox";
 import SearchModal from "../Organisms/SearchModal";
 import MainButton from "../Atoms/MainButton";
 import { FetchPaperAPIService } from "../../api";
+import { Link } from "react-router-dom";
 
 const PapersPageStyle = styled.div``;
 
-const DetailSearchButtonDiv = styled.div`
+const ButtonsDiv = styled.div`
   margin: 10px 0;
   text-align: center;
+  display: flex;
 `;
+
+const DetailSearchButton = styled(MainButton)`
+  margin-left: auto;
+  margin-right: 10px;
+`;
+
+const MovePostPaperPageButton = styled(MainButton)``;
+
 export type PapersPageProps = {
   papers?: Array<PaperType>;
   queryParams?: PaperSearchConditionType;
@@ -45,9 +55,18 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   return (
     <PapersPageStyle>
       <SearchBox onButtonClickFunction={getPapers} />
-      <DetailSearchButtonDiv>
-        <MainButton onClick={() => setModalIsOpen(true)}>詳細検索</MainButton>
-      </DetailSearchButtonDiv>
+      <ButtonsDiv>
+        <DetailSearchButton onClick={() => setModalIsOpen(true)}>詳細検索</DetailSearchButton>
+        <Link
+          to={`/paper/add`}
+          style={{
+            marginLeft: "10px",
+            marginRight: "auto",
+          }}
+        >
+          <MovePostPaperPageButton>論文情報追加</MovePostPaperPageButton>
+        </Link>
+      </ButtonsDiv>
       <SearchModal
         isOpen={modalIsOpen}
         onRequestClose={() => {
