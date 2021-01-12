@@ -26,6 +26,7 @@ const MovePostPaperPageButton = styled(MainButton)``;
 export type PapersPageProps = {
   papers?: Array<PaperType>;
   queryParams?: PaperSearchConditionType;
+  isLogined: boolean;
 };
 
 const PapersPage: React.FC<PapersPageProps> = props => {
@@ -56,16 +57,24 @@ const PapersPage: React.FC<PapersPageProps> = props => {
     <PapersPageStyle>
       <SearchBox onButtonClickFunction={getPapers} />
       <ButtonsDiv>
-        <DetailSearchButton onClick={() => setModalIsOpen(true)}>詳細検索</DetailSearchButton>
-        <Link
-          to={`/paper/add`}
-          style={{
-            marginLeft: "10px",
-            marginRight: "auto",
-          }}
-        >
-          <MovePostPaperPageButton>論文情報追加</MovePostPaperPageButton>
-        </Link>
+        {props.isLogined ? (
+          <React.Fragment>
+            <DetailSearchButton onClick={() => setModalIsOpen(true)}>詳細検索</DetailSearchButton>
+            <Link
+              to={"/paper/add"}
+              style={{
+                marginLeft: "10px",
+                marginRight: "auto",
+              }}
+            >
+              <MovePostPaperPageButton>論文情報追加</MovePostPaperPageButton>
+            </Link>
+          </React.Fragment>
+        ) : (
+          <DetailSearchButton onClick={() => setModalIsOpen(true)} style={{ margin: "0 auto 0 auto" }}>
+            詳細検索
+          </DetailSearchButton>
+        )}
       </ButtonsDiv>
       <SearchModal
         isOpen={modalIsOpen}

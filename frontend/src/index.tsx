@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AuthorPage from "./components/Pages/AuthorPage";
@@ -21,6 +21,8 @@ const MainPageStyle = styled.div`
   margin: 1rem 0;
 `;
 
+export const IsLoginedContext = createContext(false);
+
 export const App: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const userFetchService = new OAuthFetchAPIService(API_URL, USER_ENDPOINT);
@@ -38,18 +40,20 @@ export const App: React.FC = () => {
   }
   return (
     <AppStyle>
-      <Router>
-        <Header isLogined={isLogined} email={email} />
-        <MainPageStyle>
-          <Switch>
-            <Route exact path="/" component={PapersPage} />
-            <Route exact path="/paper/:id" component={PaperDetail} />
-            <Route exact path="/author/:id" component={AuthorPage} />
-            <Route exact path="/paper/add" component={PostPaperPage} />
-          </Switch>
-        </MainPageStyle>
-        <Footer />
-      </Router>
+      <IsLoginedContext.Provider value={isLogined}>
+        <Router>
+          <Header isLogined={isLogined} email={email} />
+          <MainPageStyle>
+            <Switch>
+              <Route exact path="/" render={() => <PapersPage isLogined={isLogined} />} />
+              <Route exact path="/paper/add" component={PostPaperPage} />
+              <Route exact path="/paper/:id" component={PaperDetail} />
+              <Route exact path="/author/:id" component={AuthorPage} />
+            </Switch>
+          </MainPageStyle>
+          <Footer />
+        </Router>
+      </IsLoginedContext.Provider>
     </AppStyle>
   );
 };
