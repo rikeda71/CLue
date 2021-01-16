@@ -2,6 +2,7 @@ package api.clue.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import api.clue.ClueServiceException;
 import api.clue.domain.Author;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
@@ -9,6 +10,7 @@ import api.clue.repository.AuthorRepository;
 import api.clue.repository.PaperRepository;
 import api.clue.repository.PwaRepository;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,14 +80,22 @@ public class PaperServiceImplTest {
   }
 
   @Test
-  public void testAdd() {
+  public void testAddWhenAuthorNotExist() throws ClueServiceException {
     // setup
     Paper paper = new Paper();
+    String authorName = "author";
     Author author = new Author();
+    author.setName(authorName);
     List<Author> authors = new ArrayList<>();
     authors.add(author);
-    paper.setAuthors(authors);
+    paper.setAuthorNames(Collections.singletonList(authorName));
+    author.setPapers(Collections.singletonList(paper));
+    PaperSearchProvider provider = new PaperSearchProvider();
+    provider.setTitle(paper.getTitle());
+
     Mockito.doNothing().when(this.paperRepository).add(paper);
+    Mockito.doReturn(Collections.singletonList(paper)).when(this.paperRepository).find(provider, 0, 1);
+    Mockito.doReturn(null).doReturn(Collections.singletonList(author)).when(this.authorRepository).findByName(authorName);
     Mockito.doNothing().when(this.authorRepository).add(author);
     Mockito.doNothing().when(this.pwaRepository).add(author, paper);
     // when
@@ -93,8 +103,38 @@ public class PaperServiceImplTest {
     target.add(paper);
     // then
     Mockito.verify(this.paperRepository, Mockito.times(1)).add(paper);
-    Mockito.verify(this.authorRepository).add(author);
-    Mockito.verify(this.pwaRepository).add(author, paper);
+    Mockito.verify(this.paperRepository, Mockito.times(1)).find(provider, 0, 1);
+    Mockito.verify(this.authorRepository, Mockito.times(2)).findByName(authorName);
+    Mockito.verify(this.authorRepository, Mockito.times(1)).add(author);
+    Mockito.verify(this.pwaRepository, Mockito.times(1)).add(author, paper);
+  }
+
+  @Test
+  public void testAddWhenAuthorExist() throws ClueServiceException {
+    // setup
+    Paper paper = new Paper();
+    String authorName = "author";
+    Author author = new Author();
+    author.setName(authorName);
+    List<Author> authors = new ArrayList<>();
+    authors.add(author);
+    paper.setAuthorNames(Collections.singletonList(authorName));
+    author.setPapers(Collections.singletonList(paper));
+    PaperSearchProvider provider = new PaperSearchProvider();
+    provider.setTitle(paper.getTitle());
+
+    Mockito.doNothing().when(this.paperRepository).add(paper);
+    Mockito.doReturn(Collections.singletonList(paper)).when(this.paperRepository).find(provider, 0, 1);
+    Mockito.doReturn(Collections.singletonList(author)).when(this.authorRepository).findByName(authorName);
+    Mockito.doNothing().when(this.pwaRepository).add(author, paper);
+    // when
+    var target = new PaperServiceImpl(this.paperRepository, this.authorRepository, this.pwaRepository);
+    target.add(paper);
+    // then
+    Mockito.verify(this.paperRepository, Mockito.times(1)).add(paper);
+    Mockito.verify(this.paperRepository, Mockito.times(1)).find(provider, 0, 1);
+    Mockito.verify(this.authorRepository, Mockito.times(1)).findByName(authorName);
+    Mockito.verify(this.pwaRepository, Mockito.times(1)).add(author, paper);
   }
 
   @Test

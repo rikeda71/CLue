@@ -1,5 +1,6 @@
 package api.clue.service;
 
+import api.clue.ClueServiceException;
 import api.clue.domain.Author;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
@@ -7,6 +8,7 @@ import api.clue.repository.AuthorRepository;
 import api.clue.repository.PaperRepository;
 import api.clue.repository.PwaRepository;
 import java.util.Arrays;
+import java.util.Collections;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,15 +57,28 @@ public class PaperServiceImpl implements PaperService {
   }
 
   @Override
-  public void add(Paper paper) {
+  public void add(Paper paper) throws ClueServiceException {
+    if (paper.getAuthorNames() == null) {
+      throw new ClueServiceException("Request Body of paper must have `author names` parameter");
+    }
     this.paperRepository.add(paper);
-    // 著者が存在しない場合追加する
-    for (Author author : paper.getAuthors()) {
-      var findResult = this.authorRepository.findByName(author.getName());
+    // paper id が必要になるので取得
+    List<String> authorNames = paper.getAuthorNames();
+    PaperSearchProvider provider = new PaperSearchProvider();
+    provider.setTitle(paper.getTitle());
+    paper = this.paperRepository.find(provider, 0, 1).get(0);
+    paper.setAuthorNames(authorNames);
+    for (String name : paper.getAuthorNames()) {
+      Author author = new Author();
+      author.setName(name);
+      author.setPapers(Collections.singletonList(paper));
+      var findResult = this.authorRepository.findByName(name);
+      // 著者が存在しない場合追加する
       if (findResult == null || findResult.size() == 0) {
         this.authorRepository.add(author);
+        findResult = this.authorRepository.findByName(name);
       }
-      this.pwaRepository.add(author, paper);
+      this.pwaRepository.add(findResult.get(0), paper);
     }
 
   }

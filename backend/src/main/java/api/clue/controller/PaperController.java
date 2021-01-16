@@ -1,5 +1,6 @@
 package api.clue.controller;
 
+import api.clue.ClueServiceException;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
 import api.clue.domain.User;
@@ -49,7 +50,8 @@ public class PaperController {
   }
 
   @PostMapping(value = "")
-  public ResponseEntity<Void> add(@AuthenticationPrincipal User user, @RequestBody Paper paper) {
+  public ResponseEntity<Void> add(@AuthenticationPrincipal User user, @RequestBody Paper paper)
+      throws ClueServiceException {
     if (user != null) {
       this.paperService.add(paper);
       return new ResponseEntity<>(HttpStatus.OK);
