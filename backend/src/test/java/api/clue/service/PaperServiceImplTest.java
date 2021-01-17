@@ -91,7 +91,7 @@ public class PaperServiceImplTest {
     paper.setAuthorNames(Collections.singletonList(authorName));
     author.setPapers(Collections.singletonList(paper));
     PaperSearchProvider provider = new PaperSearchProvider();
-    provider.setTitle(paper.getTitle());
+    provider.setTitleWords(Collections.singletonList(paper.getTitle()));
 
     Mockito.doNothing().when(this.paperRepository).add(paper);
     Mockito.doReturn(Collections.singletonList(paper)).when(this.paperRepository).find(provider, 0, 1);
@@ -121,7 +121,7 @@ public class PaperServiceImplTest {
     paper.setAuthorNames(Collections.singletonList(authorName));
     author.setPapers(Collections.singletonList(paper));
     PaperSearchProvider provider = new PaperSearchProvider();
-    provider.setTitle(paper.getTitle());
+    provider.setTitleWords(Collections.singletonList(paper.getTitle()));
 
     Mockito.doNothing().when(this.paperRepository).add(paper);
     Mockito.doReturn(Collections.singletonList(paper)).when(this.paperRepository).find(provider, 0, 1);

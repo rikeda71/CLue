@@ -22,7 +22,8 @@ public class PaperServiceImpl implements PaperService {
 
   private final PwaRepository pwaRepository;
 
-  public PaperServiceImpl(PaperRepository paperRepository, AuthorRepository authorRepository, PwaRepository pwaRepository) {
+  public PaperServiceImpl(PaperRepository paperRepository, AuthorRepository authorRepository,
+      PwaRepository pwaRepository) {
     this.paperRepository = paperRepository;
     this.authorRepository = authorRepository;
     this.pwaRepository = pwaRepository;
@@ -65,7 +66,7 @@ public class PaperServiceImpl implements PaperService {
     // paper id が必要になるので取得
     List<String> authorNames = paper.getAuthorNames();
     PaperSearchProvider provider = new PaperSearchProvider();
-    provider.setTitle(paper.getTitle());
+    provider.setTitleWords(Collections.singletonList(paper.getTitle()));
     paper = this.paperRepository.find(provider, 0, 1).get(0);
     paper.setAuthorNames(authorNames);
     for (String name : paper.getAuthorNames()) {
