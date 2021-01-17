@@ -5,8 +5,9 @@ import Papers from "../Organisms/Papers";
 import SearchBox from "../Molecules/SearchBox";
 import SearchModal from "../Organisms/SearchModal";
 import MainButton from "../Atoms/MainButton";
-import { FetchPaperAPIService } from "../../api";
 import { Link } from "react-router-dom";
+import { FetchAPIService } from "../../api";
+import { API_URL, PAPER_ENDPOINT } from "../../constants";
 
 const PapersPageStyle = styled.div``;
 
@@ -33,11 +34,11 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const fetchPaperApiService = new FetchPaperAPIService();
+  const fetchPaperApiService = new FetchAPIService(API_URL, PAPER_ENDPOINT);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
     await fetchPaperApiService
-      .fetchPaperAPI("GET", {}, queryParam)
+      .fetchGetRequest(queryParam)
       .then(res => {
         return res.json();
       })

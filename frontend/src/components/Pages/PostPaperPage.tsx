@@ -24,6 +24,8 @@ const ConfForm = styled.input``;
 
 const AuthorForm = styled.input``;
 
+const UrlForm = styled.input``;
+
 const PostButton = styled(MainButtonStyle)``;
 
 // 論文情報を追加するページ
@@ -34,7 +36,8 @@ const PostPaperPage: React.FC = () => {
   const [label, setLabel] = useState("");
   const [lang, setLang] = useState("");
   const [conf, setConf] = useState("");
-  const [author, setAuthor] = useState([""]);
+  const [authors, setAuthors] = useState([""]);
+  const [url, setUrl] = useState("");
 
   const handleYearFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setYear(Number.parseInt(event.target.value));
@@ -49,7 +52,16 @@ const PostPaperPage: React.FC = () => {
   };
 
   const handleAuthorFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthor([event.target.value]);
+    if (authors.length > 0) {
+      authors[0] = event.target.value;
+    } else {
+      authors.push(event.target.value);
+    }
+    setAuthors([...authors]);
+  };
+
+  const handleUrlFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUrl(event.target.value);
   };
 
   const handleClick = () => {
@@ -61,13 +73,9 @@ const PostPaperPage: React.FC = () => {
       authorNames: ["name"], // TODO: 可変にする
       url: "https://google.com", // TODO: 可変にする
     };
-    oauthFetchService
-      .fetchAPIWithAuth("POST", {}, JSON.stringify(body))
-      .then(res => {
-        console.log(res);
-        return res.json();
-      })
-      .then(res => console.log(res));
+    oauthFetchService.fetchPostWithAuth(body).then(res => {
+      console.log(res);
+    });
   };
 
   return (
@@ -95,6 +103,12 @@ const PostPaperPage: React.FC = () => {
           <td>著者</td>
           <td>
             <AuthorForm onChange={handleAuthorFormChange} />
+          </td>
+        </tr>
+        <tr>
+          <td>URL</td>
+          <td>
+            <UrlForm onChange={handleUrlFormChange} />
           </td>
         </tr>
       </tbody>

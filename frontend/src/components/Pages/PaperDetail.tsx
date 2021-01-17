@@ -17,7 +17,7 @@ const PaperDetail: React.FC = () => {
   useEffect(() => {
     async function getPaper() {
       fetchApiService
-        .fetchAPI("GET")
+        .fetchGetRequest()
         .then(res => {
           return res.json();
         })

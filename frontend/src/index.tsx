@@ -30,7 +30,7 @@ export const App: React.FC = () => {
   if (isLogined) {
     const getLoginedUser = async () => {
       await userFetchService
-        .fetchAPIWithAuth()
+        .fetchGetWithAuth()
         .then(res => {
           return res.json();
         })
