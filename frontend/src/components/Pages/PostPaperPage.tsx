@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { OAuthFetchAPIService } from "../../api";
+import { API_URL, PAPER_ENDPOINT } from "../../constants";
+import MainButtonStyle from "../Atoms/MainButton";
 
-const PostPaperPageStyle = styled.div``;
+const PostPaperPageStyle = styled.div`
+  display: block;
+`;
 
-const YearForm = styled.input``;
+const YearForm = styled.input`
+  margin: 0 auto;
+`;
 
 const TitleForm = styled.input``;
 
@@ -16,6 +23,8 @@ const LangForm = styled.select``;
 const ConfForm = styled.input``;
 
 const AuthorForm = styled.input``;
+
+const PostButton = styled(MainButtonStyle)``;
 
 // 論文情報を追加するページ
 const PostPaperPage: React.FC = () => {
@@ -43,12 +52,53 @@ const PostPaperPage: React.FC = () => {
     setAuthor([event.target.value]);
   };
 
+  const handleClick = () => {
+    const oauthFetchService = new OAuthFetchAPIService(API_URL, PAPER_ENDPOINT);
+    const body = {
+      year: year,
+      title: title,
+      introduction: intro,
+      authorNames: ["name"], // TODO: 可変にする
+      url: "https://google.com", // TODO: 可変にする
+    };
+    oauthFetchService
+      .fetchAPIWithAuth("POST", {}, JSON.stringify(body))
+      .then(res => {
+        console.log(res);
+        return res.json();
+      })
+      .then(res => console.log(res));
+  };
+
   return (
     <PostPaperPageStyle>
-      <YearForm onChange={handleYearFormChange} />
-      <TitleForm onChange={handleTitleFormChange} />
-      <IntroForm onChange={handleIntroFormChange} />
-      <AuthorForm onChange={handleAuthorFormChange} />
+      <tbody>
+        <tr>
+          <td>年</td>
+          <td>
+            <YearForm onChange={handleYearFormChange} />
+          </td>
+        </tr>
+        <tr>
+          <td>タイトル</td>
+          <td>
+            <TitleForm onChange={handleTitleFormChange} />
+          </td>
+        </tr>
+        <tr>
+          <td>イントロダクション</td>
+          <td>
+            <IntroForm onChange={handleIntroFormChange} />
+          </td>
+        </tr>
+        <tr>
+          <td>著者</td>
+          <td>
+            <AuthorForm onChange={handleAuthorFormChange} />
+          </td>
+        </tr>
+      </tbody>
+      <PostButton onClick={handleClick} />
     </PostPaperPageStyle>
   );
 };

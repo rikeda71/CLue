@@ -20,36 +20,26 @@ export class FetchAPIService {
    * @param headers http header
    * @param url endpoint url(指定されなければ初期化時に渡したURLとendpointが対象)
    */
-  public fetchAPI(method = "GET", headers: HeadersInit = {}, url: string = this.targetURL): Promise<Response> {
+  public fetchAPI(
+    method = "GET",
+    headers: HeadersInit = {},
+    body?: any,
+    url: string = this.targetURL
+  ): Promise<Response> {
     headers["Content-Type"] = "application/json; charset=utf-8";
+    console.log(headers);
     const call = async () => {
       return await fetch(url, {
         method: method,
         mode: "cors",
         headers: headers,
+        body: body,
       });
     };
     return call();
   }
-}
 
-// /api/v1/papers を叩くサービス
-export class FetchPaperAPIService extends FetchAPIService {
-  constructor() {
-    super(API_URL, PAPER_ENDPOINT);
-  }
-
-  public fetchPaperAPI(
-    method = "GET",
-    headers: HeadersInit = {},
-    queryParams?: PaperSearchConditionType
-  ): Promise<Response> {
-    headers["Content-Type"] = "application/json; charset=utf-8";
-    const url = this.createGetRequestUrl(queryParams);
-    return this.fetchAPI(method, headers, url);
-  }
-
-  private createGetRequestUrl(queryParams?: PaperSearchConditionType): string {
+  protected createGetRequestUrl(queryParams?: PaperSearchConditionType): string {
     const trueQueryParams: PaperSearchConditionType = {};
     if (queryParams) {
       for (const k in queryParams) {
@@ -71,6 +61,24 @@ export class FetchPaperAPIService extends FetchAPIService {
   }
 }
 
+// /api/v1/papers を叩くサービス
+export class FetchPaperAPIService extends FetchAPIService {
+  constructor() {
+    super(API_URL, PAPER_ENDPOINT);
+  }
+
+  public fetchPaperAPI(
+    method = "GET",
+    headers: HeadersInit = {},
+    queryParams?: PaperSearchConditionType,
+    body?: any
+  ): Promise<Response> {
+    headers["Content-Type"] = "application/json; charset=utf-8";
+    const url = this.createGetRequestUrl(queryParams);
+    return this.fetchAPI(method, headers, body, url);
+  }
+}
+
 // jwtによる認証情報を加えてリクエストしてくれるサービス
 export class OAuthFetchAPIService extends FetchAPIService {
   private jwtToken: string;
@@ -83,16 +91,24 @@ export class OAuthFetchAPIService extends FetchAPIService {
   }
 
   /**
-   * 認証情報を加えてAPIにリクエスト
+   * 認証情報を加えてapiにリクエスト
    * @param method http method
    * @param headers http header
-   * @param url endpoint url(指定されなければ初期化時に渡したURLとendpointが対象)
+   * @param url endpoint url(指定されなければ初期化時に渡したurlとendpointが対象)
    */
-  public fetchAPIWithAuth(method = "GET", headers: HeadersInit = {}, url: string = this.targetURL): Promise<Response> {
+  public fetchAPIWithAuth(
+    method = "GET",
+    headers: HeadersInit = {},
+    body?: any,
+    url: string = this.targetURL
+  ): Promise<Response> {
     if (this.jwtToken !== "") {
       headers["Authorization"] = "Bearer " + this.jwtToken;
+      headers["Access-Control-Allow-Origin"] = "*";
+      headers["Access-Control-Allow-Headers"] = "Authorization";
+      headers["Access-Control-Allow-Methods"] = "POST";
     }
-    return this.fetchAPI(method, headers, url);
+    return this.fetchAPI(method, headers, body, url);
   }
 
   /**
@@ -108,6 +124,7 @@ export class OAuthFetchAPIService extends FetchAPIService {
     // cookieになければURLパラメータから token を取得
     if (this.jwtToken === "") {
       this.jwtToken = getUrlParameter("token");
+      document.cookie = `${OAUTH_TOKEN_KEY}=${this.jwtToken}; `;
     }
   }
 

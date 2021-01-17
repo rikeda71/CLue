@@ -52,7 +52,6 @@ const PaperPageIntroductionStyle = styled.div`
 `;
 
 export const PaperDetailTemplate: React.FC<PaperType> = props => {
-  console.log(props);
   return (
     <PaperPageStyle>
       {!!props.title && (
