@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-var debug = process.env.NODE_DEV !== "production";
-var webpack = require("webpack");
-var path = require("path");
+const debug = process.env.NODE_DEV !== "production";
+const webpack = require("webpack");
+const path = require("path");
+const dotenv = require("dotenv");
+const env = dotenv.config().parsed;
 
 module.exports = {
   context: path.join(__dirname, "/src"),
@@ -35,7 +37,11 @@ module.exports = {
     filename: "index.min.js",
   },
   plugins: debug
-    ? []
+    ? [
+        new webpack.DefinePlugin({
+          "process.env": env ? JSON.stringify(env) : {},
+        }),
+      ]
     : [
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({ mangle: false, sourceMap: false }),

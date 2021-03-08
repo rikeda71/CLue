@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:${JAWSDB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driverClassName: com.mysql.cj.jdbc.Driver
+    dbcp2:
+      test-on-borrow: true
+      test-while-idle: true
+      validation-query: select sysdate()
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+server:
+  port: ${PORT}
