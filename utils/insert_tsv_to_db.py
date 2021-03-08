@@ -108,13 +108,24 @@ if __name__ == "__main__":
                         default `english`",
     )
     args = parser.parse_args()
+    port = os.environ.get("DB_PORT")
+    host = os.environ.get("DB_HOST")
+    db = os.environ.get("DB_NAME")
+    if port == "":
+        port = 33036
+    else:
+        port = int(os.environ.get("DB_PORT"))
+    if host == "":
+        host = "localhost"
+    if db == "":
+        db = "research_paper_db"
     conn = pymysql.connect(
-        host="localhost",
+        host=host,
         user=os.environ.get("DB_ROOT_USER"),
         password=os.environ.get("DB_ROOT_PASSWORD"),
-        db="research_paper_db",
+        db=db,
         charset="utf8mb4",
-        port=33036,
+        port=port,
         cursorclass=pymysql.cursors.DictCursor,
     )
     query = "INSERT IGNORE INTO conference VALUES(0, %s)"
