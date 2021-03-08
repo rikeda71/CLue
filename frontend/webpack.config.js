@@ -3,7 +3,6 @@ const debug = process.env.NODE_DEV !== "production";
 const webpack = require("webpack");
 const path = require("path");
 const dotenv = require("dotenv");
-
 const env = dotenv.config().parsed;
 
 module.exports = {
@@ -40,7 +39,7 @@ module.exports = {
   plugins: debug
     ? [
         new webpack.DefinePlugin({
-          "process.env": JSON.stringify(env),
+          "process.env": env ? JSON.stringify(env) : {},
         }),
       ]
     : [
