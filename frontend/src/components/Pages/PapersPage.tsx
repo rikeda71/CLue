@@ -6,6 +6,7 @@ import SearchBox from "../Molecules/SearchBox";
 import SearchModal from "../Organisms/SearchModal";
 import MainButton from "../Atoms/MainButton";
 import { FetchPaperAPIService } from "../../api";
+import { API_URL } from "../../constants";
 
 const PapersPageStyle = styled.div``;
 
