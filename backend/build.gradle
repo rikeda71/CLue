@@ -38,6 +38,7 @@ dependencies {
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     compile group: 'javax.validation', name: 'validation-api'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
 }
 
 jacoco {
