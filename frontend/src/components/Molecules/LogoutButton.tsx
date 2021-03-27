@@ -7,6 +7,7 @@ const LogoutButtonStyle = styled(MainButtonStyle)``;
 
 const LogoutButton: React.FC = () => {
   const handleClick = () => {
+    // cookieを削除
     document.cookie = `${OAUTH_TOKEN_KEY}=; expires=0;`;
     window.open("http://localhost:3000", "_self");
   };

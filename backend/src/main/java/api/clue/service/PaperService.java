@@ -1,5 +1,6 @@
 package api.clue.service;
 
+import api.clue.ClueServiceException;
 import api.clue.domain.Paper;
 import api.clue.domain.PaperSearchProvider;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface PaperService {
 
   List<Paper> findByAuthorId(Long authorId);
 
-  void add(Paper paper);
+  void add(Paper paper) throws ClueServiceException;
 
   void set(Paper paper);
 

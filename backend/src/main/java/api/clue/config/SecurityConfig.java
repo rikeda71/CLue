@@ -6,6 +6,7 @@ import api.clue.security.CookieOAuth2AuthorizationRequestRepository;
 import api.clue.security.Oauth2AuthenticationFailureHandler;
 import api.clue.security.Oauth2AuthenticationSuccessHandler;
 import api.clue.security.JwtAuthenticationFilter;
+import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -83,10 +84,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.addAllowedHeader(CorsConfiguration.ALL);
     configuration.addAllowedMethod(CorsConfiguration.ALL);
-    configuration.addAllowedHeader("Authorization ");
     configuration.addAllowedOrigin(FRONTEND_URL);
     configuration.addAllowedOrigin(FRONTEND_URL.replaceFirst("localhost", "0.0.0.0"));
     configuration.setAllowCredentials(true);
+    configuration.setAllowedHeaders(Arrays.asList(
+        "Access-Control-Allow-Headers",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Methods",
+        "Access-Control-Request-Method",
+        "Access-Control-Request-Headers",
+        "Authorization",
+        "Cache-Control",
+        "Content-Type",
+        "Accept-Language"
+    ));
 
     UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
     corsSource.registerCorsConfiguration("/**", configuration);

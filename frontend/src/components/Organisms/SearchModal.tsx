@@ -3,8 +3,8 @@ import Modal from "react-modal";
 import styled from "styled-components";
 import MainButton from "../Atoms/MainButton";
 import { PaperSearchConditionType, YearType, ConferenceType, TaskType, PaperType } from "../../types";
-import { API_URL, CONFERENCE_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
-import { FetchAPIService, FetchPaperAPIService } from "../../api";
+import { API_URL, CONFERENCE_ENDPOINT, PAPER_ENDPOINT, TASK_ENDPOINT, YEAR_ENDPOINT } from "../../constants";
+import { FetchAPIService } from "../../api";
 
 const ModalTableStyle = styled.table`
   border-collapse: collapse;
@@ -53,7 +53,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
   const [conferences, setConferences] = useState<(string | null)[]>([]);
   const [tasks, setTasks] = useState<(string | null)[]>([]);
 
-  const fetchPaperApiService = new FetchPaperAPIService();
+  const fetchPaperApiService = new FetchAPIService(API_URL, PAPER_ENDPOINT);
   const fetchConfApiService = new FetchAPIService(API_URL, CONFERENCE_ENDPOINT);
   const fetchTaskApiService = new FetchAPIService(API_URL, TASK_ENDPOINT);
   const fetchYearApiService = new FetchAPIService(API_URL, YEAR_ENDPOINT);
@@ -73,7 +73,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
 
   async function getPapers(queryParam: PaperSearchConditionType) {
     fetchPaperApiService
-      .fetchPaperAPI("GET", {}, queryParam)
+      .fetchGetRequest(queryParam)
       .then(res => {
         return res.json();
       })
@@ -82,7 +82,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
 
   const getYears = async () => {
     fetchYearApiService
-      .fetchAPI("GET")
+      .fetchGetRequest()
       .then(res => {
         return res.json();
       })
@@ -98,7 +98,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
 
   const getConferenceList = async () => {
     fetchConfApiService
-      .fetchAPI("GET")
+      .fetchGetRequest()
       .then(res => {
         return res.json();
       })
@@ -114,7 +114,7 @@ const SearchModal: React.FC<SearchModalPropsType> = props => {
 
   const getTaskList = async () => {
     fetchTaskApiService
-      .fetchAPI("GET")
+      .fetchGetRequest()
       .then(res => {
         return res.json();
       })

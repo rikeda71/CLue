@@ -8,6 +8,7 @@ import api.clue.domain.Author;
 import api.clue.domain.Paper;
 import api.clue.repository.util.DataSetExecutorListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -53,10 +54,13 @@ public class PwaRepositoryImplDbUnitTest {
   @Test
   @Order(1)
   public void testInsert() {
+    String authorName = "author";
     Author author = new Author();
     author.setAuthorId(AUTHOR_ID);
+    author.setName(authorName);
     Paper paper = new Paper();
     paper.setPaperId(PAPER_ID);
+    paper.setAuthorNames(Collections.singletonList(authorName));
 
     author.setPapers(new ArrayList<>(){{add(paper);}});
     paper.setAuthors(new ArrayList<>(){{add(author);}});

@@ -17,7 +17,7 @@ const PaperDetail: React.FC = () => {
   useEffect(() => {
     async function getPaper() {
       fetchApiService
-        .fetchAPI("GET")
+        .fetchGetRequest()
         .then(res => {
           return res.json();
         })
@@ -52,7 +52,6 @@ const PaperPageIntroductionStyle = styled.div`
 `;
 
 export const PaperDetailTemplate: React.FC<PaperType> = props => {
-  console.log(props);
   return (
     <PaperPageStyle>
       {!!props.title && (

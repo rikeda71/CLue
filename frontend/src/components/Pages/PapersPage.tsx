@@ -5,28 +5,40 @@ import Papers from "../Organisms/Papers";
 import SearchBox from "../Molecules/SearchBox";
 import SearchModal from "../Organisms/SearchModal";
 import MainButton from "../Atoms/MainButton";
-import { FetchPaperAPIService } from "../../api";
+import { Link } from "react-router-dom";
+import { FetchAPIService } from "../../api";
+import { API_URL, PAPER_ENDPOINT } from "../../constants";
 
 const PapersPageStyle = styled.div``;
 
-const DetailSearchButtonDiv = styled.div`
+const ButtonsDiv = styled.div`
   margin: 10px 0;
   text-align: center;
+  display: flex;
 `;
+
+const DetailSearchButton = styled(MainButton)`
+  margin-left: auto;
+  margin-right: 10px;
+`;
+
+const MovePostPaperPageButton = styled(MainButton)``;
+
 export type PapersPageProps = {
   papers?: Array<PaperType>;
   queryParams?: PaperSearchConditionType;
+  isLogined: boolean;
 };
 
 const PapersPage: React.FC<PapersPageProps> = props => {
   const [papers, setPapers] = useState<Array<PaperType>>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const fetchPaperApiService = new FetchPaperAPIService();
+  const fetchPaperApiService = new FetchAPIService(API_URL, PAPER_ENDPOINT);
 
   async function getPapers(queryParam?: PaperSearchConditionType) {
     await fetchPaperApiService
-      .fetchPaperAPI("GET", {}, queryParam)
+      .fetchGetRequest(queryParam)
       .then(res => {
         return res.json();
       })
@@ -45,9 +57,26 @@ const PapersPage: React.FC<PapersPageProps> = props => {
   return (
     <PapersPageStyle>
       <SearchBox onButtonClickFunction={getPapers} />
-      <DetailSearchButtonDiv>
-        <MainButton onClick={() => setModalIsOpen(true)}>詳細検索</MainButton>
-      </DetailSearchButtonDiv>
+      <ButtonsDiv>
+        {props.isLogined ? (
+          <React.Fragment>
+            <DetailSearchButton onClick={() => setModalIsOpen(true)}>詳細検索</DetailSearchButton>
+            <Link
+              to={"/paper/add"}
+              style={{
+                marginLeft: "10px",
+                marginRight: "auto",
+              }}
+            >
+              <MovePostPaperPageButton>論文情報追加</MovePostPaperPageButton>
+            </Link>
+          </React.Fragment>
+        ) : (
+          <DetailSearchButton onClick={() => setModalIsOpen(true)} style={{ margin: "0 auto 0 auto" }}>
+            詳細検索
+          </DetailSearchButton>
+        )}
+      </ButtonsDiv>
       <SearchModal
         isOpen={modalIsOpen}
         onRequestClose={() => {
